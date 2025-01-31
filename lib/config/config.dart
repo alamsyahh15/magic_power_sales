@@ -4,3 +4,4 @@ export 'string.dart';
 export 'style_assets.dart';
 export 'helpers/helpers.dart';
 export 'helpers/ui_helper.dart';
+export 'asset_styles.dart';

@@ -66,4 +66,20 @@ class ColorAsset {
   static Color accent20 = const Color.fromRGBO(204, 127, 255, 1);
   static Color accent10 = const Color.fromRGBO(229, 191, 255, 1);
   static Color accent = const Color.fromRGBO(245, 230, 255, 1);
+
+  static Color grey = const Color.fromRGBO(133, 155, 189, 1);
+  static Color grey10 = const Color.fromRGBO(243, 245, 248, 1);
+  static Color grey20 = const Color.fromRGBO(218, 225, 235, 1);
+  static Color grey30 = const Color.fromRGBO(194, 205, 222, 1);
+  static Color grey40 = const Color.fromRGBO(170, 185, 209, 1);
+
+  static LinearGradient gradientColor = LinearGradient(
+    begin: Alignment.bottomLeft,
+    colors: [primaryNegative10, primary, primaryNegative10],
+  );
+
+  static LinearGradient textgradientColor = LinearGradient(
+    begin: Alignment.bottomLeft,
+    colors: [primaryNegative10, primary, primaryNegative10],
+  );
 }
