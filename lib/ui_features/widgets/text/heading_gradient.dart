@@ -20,7 +20,7 @@ class HeadingGradient extends StatelessWidget {
       child: Text(
         title,
         textAlign: TextAlign.center,
-        style: AssetStyles.displayLgMedium
+        style: AssetStyles.heading5Bold
             .copyWith(fontSize: screenHeight(context) / 26),
       ),
     );

@@ -3,15 +3,27 @@ import 'package:flutter/material.dart';
 import 'color_assets.dart';
 
 class AssetStyles {
-  static TextStyle displayLgMedium = TextStyle(
-    fontWeight: FontWeight.w500,
+  static TextStyle heading5Bold = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: 32,
+    color: ColorAsset.black,
+  );
+
+  static TextStyle heading5Reguler = TextStyle(
+    fontWeight: FontWeight.w400,
     fontSize: 32,
     color: ColorAsset.black,
   );
 
   static TextStyle heading4Bold = TextStyle(
-    fontWeight: FontWeight.w700,
-    fontSize: 20,
+    fontWeight: FontWeight.w600,
+    fontSize: 24,
+    color: ColorAsset.black,
+  );
+
+  static TextStyle heading4Reguler = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: 24,
     color: ColorAsset.black,
   );
 
