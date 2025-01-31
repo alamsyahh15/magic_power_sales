@@ -4,15 +4,15 @@ class ColorAsset {
   static Color black = const Color.fromARGB(255, 0, 0, 0);
   static Color white = const Color.fromRGBO(255, 255, 255, 1);
 
-  static Color neutralPlus90 = const Color.fromRGBO(13, 15, 19, 1);
-  static Color neutralPlus80 = const Color.fromRGBO(27, 31, 38, 1);
-  static Color neutralPlus70 = const Color.fromRGBO(40, 46, 57, 1);
-  static Color neutralPlus60 = const Color.fromRGBO(53, 62, 76, 1);
-  static Color neutralPlus50 = const Color.fromRGBO(67, 78, 95, 1);
-  static Color neutralPlus40 = const Color.fromRGBO(80, 93, 113, 1);
-  static Color neutralPlus30 = const Color.fromRGBO(93, 109, 132, 1);
-  static Color neutralPlus20 = const Color.fromRGBO(108, 126, 153, 1);
-  static Color neutralPlus10 = const Color.fromRGBO(120, 140, 170, 1);
+  static Color neutral90 = const Color.fromRGBO(13, 15, 19, 1);
+  static Color neutral80 = const Color.fromRGBO(27, 31, 38, 1);
+  static Color neutral70 = const Color.fromRGBO(40, 46, 57, 1);
+  static Color neutral60 = const Color.fromRGBO(53, 62, 76, 1);
+  static Color neutral50 = const Color.fromRGBO(67, 78, 95, 1);
+  static Color neutral40 = const Color.fromRGBO(80, 93, 113, 1);
+  static Color neutral30 = const Color.fromRGBO(93, 109, 132, 1);
+  static Color neutral20 = const Color.fromRGBO(108, 126, 153, 1);
+  static Color neutral10 = const Color.fromRGBO(120, 140, 170, 1);
   static Color neutral = const Color.fromRGBO(133, 155, 189, 1);
   static Color neutralNegative10 = const Color.fromRGBO(145, 165, 196, 1);
   static Color neutralNegative20 = const Color.fromRGBO(157, 175, 202, 1);

@@ -65,7 +65,7 @@ class TextFieldPrimary extends StatelessWidget {
         if (label != null) ...[
           Text(
             label!,
-            style: AssetStyles.textLgSemibold.copyWith(
+            style: StyleAsset.captionSemiBold.copyWith(
               fontSize: screenHeight(context) / 62.4,
               color: labelColor,
             ),
@@ -90,7 +90,7 @@ class TextFieldPrimary extends StatelessWidget {
                   : TextInputAction.done,
               inputFormatters: inputFormater,
               textAlignVertical: TextAlignVertical.top,
-              style: AssetStyles.textLgRegular.copyWith(
+              style: StyleAsset.heading1SemiBold.copyWith(
                 color: Colors.black,
                 fontSize: fontSize ?? screenHeight(context) / 62.4,
               ),
@@ -113,14 +113,14 @@ class TextFieldPrimary extends StatelessWidget {
                         padding: const EdgeInsets.only(bottom: 8.0, top: 0),
                         child: Text(
                           "$errorText",
-                          style: AssetStyles.textXLRegular.copyWith(
+                          style: StyleAsset.paragraph2SemiBold.copyWith(
                             fontSize: screenHeight(context) / 78,
                             fontWeight: FontWeight.w400,
                             color: ColorAsset.error30,
                           ),
                         ),
                       ),
-                hintStyle: AssetStyles.textLgRegular.copyWith(
+                hintStyle: StyleAsset.paragraph2SemiBold.copyWith(
                     fontSize: fontSize ?? screenHeight(context) / 62.4,
                     color: ColorAsset.grey),
                 // errorStyle: AssetStyles.textXLRegular.copyWith(
@@ -129,7 +129,7 @@ class TextFieldPrimary extends StatelessWidget {
                 //   color: AssetColors.errorColor,
                 // ),
                 // errorText: errorText,
-                helperStyle: AssetStyles.textXLRegular.copyWith(
+                helperStyle: StyleAsset.paragraph2SemiBold.copyWith(
                   fontSize: screenHeight(context) / 78,
                   fontWeight: FontWeight.w400,
                 ),

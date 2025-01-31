@@ -35,15 +35,14 @@ class PrimaryButton extends StatelessWidget {
       onTap: () {
         if (!isLoading) onTap();
       },
-      child: Container(
+      child: Ink(
         width: width ?? screenWidth(context),
         height: height ?? screenHeight(context) / 20.8,
         padding: padding,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: color ?? ColorAsset.black,
+          color: color ?? ColorAsset.primary,
         ),
-        alignment: Alignment.center,
         child: Row(
           mainAxisAlignment: mainAxisAlignment,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -65,7 +64,7 @@ class PrimaryButton extends StatelessWidget {
                 : Text(
                     label,
                     style: fontStyle ??
-                        AssetStyles.textLgRegular.copyWith(
+                        StyleAsset.paragraph2SemiBold.copyWith(
                           fontWeight: FontWeight.bold,
                           color: textColor ?? ColorAsset.white,
                           fontSize: screenHeight(context) / 62.4,

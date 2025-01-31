@@ -41,7 +41,7 @@ class ButtonGradient extends StatelessWidget {
             ? const CircularProgressIndicator()
             : Text(
                 label,
-                style: AssetStyles.textLgRegular.copyWith(
+                style: StyleAsset.paragraph2SemiBold.copyWith(
                   fontWeight: FontWeight.bold,
                   color: ColorAsset.grey,
                   fontSize: screenHeight(context) / 62.4,

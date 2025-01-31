@@ -107,7 +107,6 @@ class StyleAsset {
 
   static TextStyle paragraph2 = const TextStyle(
     fontSize: 14,
-    fontWeight: FontWeight.w700,
     letterSpacing: -0.4,
   );
 

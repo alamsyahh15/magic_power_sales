@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:magic_power_sales/config/color_assets.dart';
 
 import '../../../config/config.dart';
 
@@ -20,8 +19,9 @@ class HeadingGradient extends StatelessWidget {
       child: Text(
         title,
         textAlign: TextAlign.center,
-        style: AssetStyles.heading5Bold
-            .copyWith(fontSize: screenHeight(context) / 26),
+        style: StyleAsset.paragraph1Bold.copyWith(
+          fontSize: screenHeight(context) / 26,
+        ),
       ),
     );
   }

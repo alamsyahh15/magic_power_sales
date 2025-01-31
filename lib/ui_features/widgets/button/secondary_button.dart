@@ -42,7 +42,7 @@ class SecondaryButton extends StatelessWidget {
       alignment: Alignment.center,
       child: Text(
         label,
-        style: AssetStyles.textLgRegular.copyWith(
+        style: StyleAsset.paragraph2SemiBold.copyWith(
             fontWeight: FontWeight.bold,
             color: textColor ?? ColorAsset.primary,
             fontSize: screenHeight(context) / 62.4),

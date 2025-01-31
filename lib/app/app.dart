@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:magic_power_sales/config/color_assets.dart';
 import 'package:magic_power_sales/config/navigation_services.dart';
+import 'package:magic_power_sales/ui_features/pages/onboarding/onboarding.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -16,6 +17,7 @@ class App extends StatelessWidget {
         ),
       ),
       navigatorKey: navigatorKey,
+      home: const OnBoardingPage(),
     );
   }
 }

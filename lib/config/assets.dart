@@ -1,6 +1,7 @@
 class Assets {
   static const String _path = "assets";
   static const String _icons = "$_path/icons";
+  static const String _images = "$_path/images";
   static const String _illustrations = "$_path/illustrations";
 
   static String qrcode = "$_icons/qr_code.svg";
@@ -11,4 +12,6 @@ class Assets {
   static String shape1 = "$_illustrations/shape1.svg";
   static String shape2 = "$_illustrations/shape2.svg";
   static String success = "$_illustrations/success.svg";
+
+  static String exampleBanner = "$_images/example-banner.png";
 }
