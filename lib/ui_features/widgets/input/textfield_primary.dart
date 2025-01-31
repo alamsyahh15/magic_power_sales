@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:magic_power_sales/config/color_assets.dart';
 import 'package:magic_power_sales/config/config.dart';
 
 class TextFieldPrimary extends StatelessWidget {
@@ -17,13 +16,14 @@ class TextFieldPrimary extends StatelessWidget {
     this.errorText,
     this.helperText,
     this.isPassword = false,
-    this.borderSide = BorderSide.none,
+    this.inputBorder,
     this.contentPadding = const EdgeInsets.symmetric(horizontal: 16),
     this.prefixIcon,
     this.suffixIcon,
     this.onTap,
     this.textAlign = TextAlign.start,
     this.initialValue,
+    this.errorBorder,
     this.height,
     this.width,
     this.labelColor,
@@ -42,7 +42,7 @@ class TextFieldPrimary extends StatelessWidget {
   final String? errorText;
   final String? helperText;
   final bool isPassword;
-  final BorderSide borderSide;
+  final InputBorder? inputBorder, errorBorder;
   final EdgeInsetsGeometry contentPadding;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
@@ -121,8 +121,9 @@ class TextFieldPrimary extends StatelessWidget {
                         ),
                       ),
                 hintStyle: StyleAsset.paragraph2SemiBold.copyWith(
-                    fontSize: fontSize ?? screenHeight(context) / 62.4,
-                    color: ColorAsset.grey),
+                  fontSize: fontSize ?? screenHeight(context) / 62.4,
+                  color: ColorAsset.grey,
+                ),
                 // errorStyle: AssetStyles.textXLRegular.copyWith(
                 //   fontSize: screenHeight(context) / 78,
                 //   fontWeight: FontWeight.w400,
@@ -137,43 +138,51 @@ class TextFieldPrimary extends StatelessWidget {
                 suffixIconConstraints: const BoxConstraints(maxHeight: 24),
                 prefixIcon: prefixIcon,
                 suffixIcon: isPassword
-                    ? Padding(
-                        padding: const EdgeInsets.only(right: 16),
-                        child: InkWell(
-                          onTap: () {
-                            isShow = !isShow;
-                            innerState(() {});
-                          },
-                          child: Icon(
-                            isShow ? Icons.visibility : Icons.visibility_off,
-                            color: ColorAsset.grey,
-                          ),
+                    ? IconButton(
+                        onPressed: () {
+                          isShow = !isShow;
+                          innerState(() {});
+                        },
+                        icon: Icon(
+                          isShow ? Icons.visibility : Icons.visibility_off,
+                          color: ColorAsset.grey,
                         ),
                       )
                     : suffixIcon,
                 helperText: helperText,
-                border: borderSide == BorderSide.none
-                    ? InputBorder.none
-                    : OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: const BorderSide(),
+                border: inputBorder ??
+                    OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(
+                        color: ColorAsset.grey,
                       ),
-                enabledBorder: borderSide == BorderSide.none
-                    ? InputBorder.none
-                    : OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: borderSide,
+                    ),
+                focusedBorder: inputBorder ??
+                    OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(
+                        color: ColorAsset.neutral60,
                       ),
-                errorBorder: borderSide == BorderSide.none
-                    ? InputBorder.none
-                    : OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: ColorAsset.error30),
+                    ),
+                enabledBorder: inputBorder ??
+                    OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(
+                        color: ColorAsset.grey,
                       ),
+                    ),
+                errorBorder: errorBorder ??
+                    OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(
+                        color: ColorAsset.error30,
+                      ),
+                    ),
               ),
             ),
           );
         }),
+        verticalSpace(10),
       ],
     );
   }

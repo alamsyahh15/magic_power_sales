@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:magic_power_sales/config/color_assets.dart';
-import 'package:magic_power_sales/config/navigation_services.dart';
+import 'package:magic_power_sales/config/config.dart';
 import 'package:magic_power_sales/ui_features/pages/onboarding/onboarding.dart';
 
 class App extends StatelessWidget {
@@ -14,6 +13,10 @@ class App extends StatelessWidget {
         scaffoldBackgroundColor: ColorAsset.white,
         appBarTheme: AppBarTheme(
           color: ColorAsset.white,
+          centerTitle: true,
+          titleTextStyle: StyleAsset.heading4Bold.copyWith(
+            color: ColorAsset.primary,
+          ),
         ),
       ),
       navigatorKey: navigatorKey,

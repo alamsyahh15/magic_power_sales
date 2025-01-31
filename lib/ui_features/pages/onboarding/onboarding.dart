@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' hide TextButton;
 import 'package:flutter/services.dart';
 import 'package:magic_power_sales/config/config.dart';
+import 'package:magic_power_sales/ui_features/pages/auth/login.dart';
 import 'package:magic_power_sales/ui_features/widgets/button/primary_button.dart';
 import 'package:magic_power_sales/ui_features/widgets/button/text_button.dart';
 
@@ -48,13 +49,16 @@ class OnBoardingPage extends StatelessWidget {
                     "PT Etica Sari Pratama",
                     style: StyleAsset.paragraph2.copyWith(
                       color: ColorAsset.neutral70,
+                      letterSpacing: -0.2,
                     ),
                     textAlign: TextAlign.center,
                   ),
                   verticalSpace(40),
                   PrimaryButton(
                     label: "Login",
-                    onTap: () {},
+                    onTap: () {
+                      nextScreen(const LoginPage());
+                    },
                   ),
                   verticalSpace(10),
                   Row(
