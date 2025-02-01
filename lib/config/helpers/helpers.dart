@@ -5,6 +5,26 @@ bool isEmpty(dynamic data) {
   return ['', 'null', '{}', '0', '[]'].contains(dataString);
 }
 
+bool lengthMoreThan(String value, [int length = 8]) {
+  return value.length < length;
+}
+
+bool containLowerCase(String value, [int length = 1]) {
+  return !value.contains(RegExp("(?:[^a-z]*[a-z]){$length}"));
+}
+
+bool containUpperCase(String value, [int length = 1]) {
+  return !value.contains(RegExp("(?:[^A-Z]*[A-Z]){$length}"));
+}
+
+bool containNumber(String value) {
+  return !value.contains(RegExp(r'\d'));
+}
+
+bool containSpecialCharacter(String value) {
+  return !value.contains(RegExp(r'([!@#$%&*]+$){1}'));
+}
+
 String? validateEmail(String? val) {
   if (val == null || val.isEmpty) {
     return 'Required';

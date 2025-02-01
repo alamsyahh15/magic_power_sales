@@ -4,8 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-Timer? _loaderTimer;
-
 Future<T?> nextScreen<T extends Object?>(Widget screen,
     [BuildContext? context]) async {
   return await Navigator.of(context ?? navigatorKey.currentContext!)

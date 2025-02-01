@@ -12,6 +12,7 @@ class TextFieldPrimary extends StatelessWidget {
     this.keyboardType,
     this.validator,
     this.onEditingComplete,
+    this.errorStyle,
     this.onChanged,
     this.errorText,
     this.helperText,
@@ -42,6 +43,7 @@ class TextFieldPrimary extends StatelessWidget {
   final String? errorText;
   final String? helperText;
   final bool isPassword;
+  final TextStyle? errorStyle;
   final InputBorder? inputBorder, errorBorder;
   final EdgeInsetsGeometry contentPadding;
   final Widget? prefixIcon;
@@ -89,7 +91,7 @@ class TextFieldPrimary extends StatelessWidget {
                   ? TextInputAction.newline
                   : TextInputAction.done,
               inputFormatters: inputFormater,
-              textAlignVertical: TextAlignVertical.top,
+              textAlignVertical: TextAlignVertical.center,
               style: StyleAsset.heading1SemiBold.copyWith(
                 color: Colors.black,
                 fontSize: fontSize ?? screenHeight(context) / 62.4,
@@ -107,6 +109,7 @@ class TextFieldPrimary extends StatelessWidget {
                 fillColor: ColorAsset.white,
                 filled: true,
                 hintText: hintText,
+                errorStyle: errorStyle,
                 error: errorText == null
                     ? null
                     : Padding(
@@ -134,8 +137,6 @@ class TextFieldPrimary extends StatelessWidget {
                   fontSize: screenHeight(context) / 78,
                   fontWeight: FontWeight.w400,
                 ),
-                prefixIconConstraints: const BoxConstraints(maxHeight: 24),
-                suffixIconConstraints: const BoxConstraints(maxHeight: 24),
                 prefixIcon: prefixIcon,
                 suffixIcon: isPassword
                     ? IconButton(

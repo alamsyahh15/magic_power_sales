@@ -73,6 +73,8 @@ class ColorAsset {
   static Color grey30 = const Color.fromRGBO(194, 205, 222, 1);
   static Color grey40 = const Color.fromRGBO(170, 185, 209, 1);
 
+  static Color blue = const Color.fromRGBO(0, 102, 255, 1);
+
   static LinearGradient gradientColor = LinearGradient(
     begin: Alignment.bottomLeft,
     colors: [primaryNegative10, primary, primaryNegative10],

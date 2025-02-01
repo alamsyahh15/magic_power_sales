@@ -11,6 +11,9 @@ class App extends StatelessWidget {
       theme: ThemeData(
         fontFamily: "Inter",
         scaffoldBackgroundColor: ColorAsset.white,
+        checkboxTheme: CheckboxThemeData(
+          checkColor: WidgetStatePropertyAll<Color>(ColorAsset.error),
+        ),
         appBarTheme: AppBarTheme(
           color: ColorAsset.white,
           centerTitle: true,
