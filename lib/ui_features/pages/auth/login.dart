@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' hide TextButton;
 import 'package:magic_power_sales/config/config.dart';
+import 'package:magic_power_sales/ui_features/pages/auth/register.dart';
 import 'package:magic_power_sales/ui_features/widgets/button/primary_button.dart';
 import 'package:magic_power_sales/ui_features/widgets/button/text_button.dart';
 import 'package:magic_power_sales/ui_features/widgets/input/textfield_primary.dart';
@@ -177,7 +178,9 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         TextButton(
                           label: "Buat akun",
-                          onTap: () {},
+                          onTap: () {
+                            nextScreen(const RegisterPage());
+                          },
                         )
                       ],
                     ),

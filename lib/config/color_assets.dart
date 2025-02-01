@@ -7,7 +7,7 @@ class ColorAsset {
   static Color neutral90 = const Color.fromRGBO(13, 15, 19, 1);
   static Color neutral80 = const Color.fromRGBO(27, 31, 38, 1);
   static Color neutral70 = const Color.fromRGBO(40, 46, 57, 1);
-  static Color neutral60 = const Color.fromRGBO(53, 62, 76, 1);
+  static Color neutral60 = const Color.fromRGBO(206, 215, 229, 1);
   static Color neutral50 = const Color.fromRGBO(67, 78, 95, 1);
   static Color neutral40 = const Color.fromRGBO(80, 93, 113, 1);
   static Color neutral30 = const Color.fromRGBO(93, 109, 132, 1);

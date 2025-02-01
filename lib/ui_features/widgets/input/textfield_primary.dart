@@ -125,7 +125,7 @@ class TextFieldPrimary extends StatelessWidget {
                       ),
                 hintStyle: StyleAsset.paragraph2SemiBold.copyWith(
                   fontSize: fontSize ?? screenHeight(context) / 62.4,
-                  color: ColorAsset.grey,
+                  color: ColorAsset.neutral60,
                 ),
                 // errorStyle: AssetStyles.textXLRegular.copyWith(
                 //   fontSize: screenHeight(context) / 78,
@@ -146,7 +146,7 @@ class TextFieldPrimary extends StatelessWidget {
                         },
                         icon: Icon(
                           isShow ? Icons.visibility : Icons.visibility_off,
-                          color: ColorAsset.grey,
+                          color: ColorAsset.neutral60,
                         ),
                       )
                     : suffixIcon,
@@ -155,21 +155,21 @@ class TextFieldPrimary extends StatelessWidget {
                     OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                       borderSide: BorderSide(
-                        color: ColorAsset.grey,
+                        color: ColorAsset.neutral60,
                       ),
                     ),
                 focusedBorder: inputBorder ??
                     OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                       borderSide: BorderSide(
-                        color: ColorAsset.neutral60,
+                        color: ColorAsset.grey,
                       ),
                     ),
                 enabledBorder: inputBorder ??
                     OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                       borderSide: BorderSide(
-                        color: ColorAsset.grey,
+                        color: ColorAsset.neutral60,
                       ),
                     ),
                 errorBorder: errorBorder ??
@@ -183,7 +183,7 @@ class TextFieldPrimary extends StatelessWidget {
             ),
           );
         }),
-        verticalSpace(10),
+        verticalSpace(15),
       ],
     );
   }

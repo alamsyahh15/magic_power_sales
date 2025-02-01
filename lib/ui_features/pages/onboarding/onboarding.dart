@@ -2,6 +2,7 @@ import 'package:flutter/material.dart' hide TextButton;
 import 'package:flutter/services.dart';
 import 'package:magic_power_sales/config/config.dart';
 import 'package:magic_power_sales/ui_features/pages/auth/login.dart';
+import 'package:magic_power_sales/ui_features/pages/auth/register.dart';
 import 'package:magic_power_sales/ui_features/widgets/button/primary_button.dart';
 import 'package:magic_power_sales/ui_features/widgets/button/text_button.dart';
 
@@ -73,7 +74,9 @@ class OnBoardingPage extends StatelessWidget {
                       ),
                       TextButton(
                         label: "Buat akun",
-                        onTap: () {},
+                        onTap: () {
+                          nextScreen(const RegisterPage());
+                        },
                       )
                     ],
                   ),
