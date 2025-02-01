@@ -26,8 +26,10 @@ class TextFieldPrimary extends StatelessWidget {
     this.initialValue,
     this.errorBorder,
     this.height,
+    this.isRaw = false,
     this.width,
     this.labelColor,
+    this.radius = 8,
     this.inputFormater,
     this.fontSize,
   });
@@ -35,6 +37,7 @@ class TextFieldPrimary extends StatelessWidget {
   final String? label;
   final TextEditingController? controller;
   final String? hintText;
+  final double radius;
   final bool? expands;
   final TextInputType? keyboardType;
   final String? Function(String?)? validator;
@@ -43,6 +46,7 @@ class TextFieldPrimary extends StatelessWidget {
   final String? errorText;
   final String? helperText;
   final bool isPassword;
+  final bool isRaw;
   final TextStyle? errorStyle;
   final InputBorder? inputBorder, errorBorder;
   final EdgeInsetsGeometry contentPadding;
@@ -64,16 +68,17 @@ class TextFieldPrimary extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (label != null) ...[
-          Text(
-            label!,
-            style: StyleAsset.captionSemiBold.copyWith(
-              fontSize: screenHeight(context) / 62.4,
-              color: labelColor,
+        if (!isRaw)
+          if (label != null) ...[
+            Text(
+              label!,
+              style: StyleAsset.captionSemiBold.copyWith(
+                fontSize: screenHeight(context) / 62.4,
+                color: labelColor,
+              ),
             ),
-          ),
-          verticalSpace(8)
-        ],
+            verticalSpace(8)
+          ],
         StatefulBuilder(builder: (context, innerState) {
           return SizedBox(
             width: width,
@@ -153,28 +158,28 @@ class TextFieldPrimary extends StatelessWidget {
                 helperText: helperText,
                 border: inputBorder ??
                     OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(radius),
                       borderSide: BorderSide(
                         color: ColorAsset.neutral60,
                       ),
                     ),
                 focusedBorder: inputBorder ??
                     OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(radius),
                       borderSide: BorderSide(
                         color: ColorAsset.grey,
                       ),
                     ),
                 enabledBorder: inputBorder ??
                     OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(radius),
                       borderSide: BorderSide(
                         color: ColorAsset.neutral60,
                       ),
                     ),
                 errorBorder: errorBorder ??
                     OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(radius),
                       borderSide: BorderSide(
                         color: ColorAsset.error30,
                       ),
@@ -183,7 +188,7 @@ class TextFieldPrimary extends StatelessWidget {
             ),
           );
         }),
-        verticalSpace(15),
+        if (!isRaw) verticalSpace(15),
       ],
     );
   }

@@ -1,0 +1,1 @@
+enum StatusTransaction { scanned, notScanned }

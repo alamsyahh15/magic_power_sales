@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' hide TextButton;
 import 'package:magic_power_sales/config/config.dart';
 import 'package:magic_power_sales/ui_features/pages/auth/register.dart';
+import 'package:magic_power_sales/ui_features/pages/home/home.dart';
 import 'package:magic_power_sales/ui_features/widgets/button/primary_button.dart';
 import 'package:magic_power_sales/ui_features/widgets/button/text_button.dart';
 import 'package:magic_power_sales/ui_features/widgets/input/textfield_primary.dart';
@@ -162,7 +163,9 @@ class _LoginPageState extends State<LoginPage> {
                       label: "Login",
                       onTap: () {
                         FocusScope.of(context).unfocus();
-                        if (formKey.currentState!.validate()) {}
+                        if (formKey.currentState!.validate()) {
+                          nextRemoveUntil(const HomePage());
+                        }
                       },
                     ),
                     verticalSpace(10),

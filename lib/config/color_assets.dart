@@ -4,8 +4,8 @@ class ColorAsset {
   static Color black = const Color.fromARGB(255, 0, 0, 0);
   static Color white = const Color.fromRGBO(255, 255, 255, 1);
 
-  static Color neutral90 = const Color.fromRGBO(13, 15, 19, 1);
-  static Color neutral80 = const Color.fromRGBO(27, 31, 38, 1);
+  static Color neutral90 = const Color.fromRGBO(243, 245, 248, 1);
+  static Color neutral80 = const Color.fromRGBO(231, 235, 242, 1);
   static Color neutral70 = const Color.fromRGBO(40, 46, 57, 1);
   static Color neutral60 = const Color.fromRGBO(206, 215, 229, 1);
   static Color neutral50 = const Color.fromRGBO(67, 78, 95, 1);
@@ -44,15 +44,18 @@ class ColorAsset {
   static Color primaryNegative80 = const Color.fromRGBO(247, 211, 214, 1);
   static Color primaryNegative90 = const Color.fromRGBO(251, 233, 234, 1);
 
+  static Color success50 = const Color.fromRGBO(36, 118, 71, 1);
   static Color success40 = const Color.fromRGBO(31, 122, 61, 1);
   static Color success30 = const Color.fromRGBO(41, 163, 82, 1);
   static Color success20 = const Color.fromRGBO(51, 204, 102, 1);
+  static Color success10 = const Color.fromRGBO(171, 239, 198, 1);
   static Color success = const Color.fromRGBO(235, 250, 240, 1);
 
   static Color error40 = const Color.fromRGBO(129, 21, 29, 1);
   static Color error30 = const Color.fromRGBO(215, 35, 49, 1);
   static Color error20 = const Color.fromRGBO(223, 79, 90, 1);
   static Color error10 = const Color.fromRGBO(231, 123, 131, 1);
+  static Color error5 = const Color.fromRGBO(255, 126, 29, 1);
   static Color error = const Color.fromRGBO(251, 233, 234, 1);
 
   static Color warning40 = const Color.fromRGBO(153, 104, 31, 1);

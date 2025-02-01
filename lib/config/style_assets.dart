@@ -103,7 +103,7 @@ class StyleAsset {
 
   static TextStyle paragraph3 = const TextStyle(
     fontSize: 12,
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w500,
   );
 
   static TextStyle captionSemiBold = const TextStyle(
