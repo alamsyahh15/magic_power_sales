@@ -21,6 +21,7 @@ class TextFieldPrimary extends StatelessWidget {
     this.contentPadding = const EdgeInsets.symmetric(horizontal: 16),
     this.prefixIcon,
     this.suffixIcon,
+    this.labelStyle,
     this.onTap,
     this.textAlign = TextAlign.start,
     this.initialValue,
@@ -31,6 +32,8 @@ class TextFieldPrimary extends StatelessWidget {
     this.labelColor,
     this.radius = 8,
     this.inputFormater,
+    this.hintStyle,
+    this.gapLabel = 8,
     this.fontSize,
   });
 
@@ -47,7 +50,7 @@ class TextFieldPrimary extends StatelessWidget {
   final String? helperText;
   final bool isPassword;
   final bool isRaw;
-  final TextStyle? errorStyle;
+  final TextStyle? errorStyle, hintStyle, labelStyle;
   final InputBorder? inputBorder, errorBorder;
   final EdgeInsetsGeometry contentPadding;
   final Widget? prefixIcon;
@@ -60,6 +63,7 @@ class TextFieldPrimary extends StatelessWidget {
   final Color? labelColor;
   final List<TextInputFormatter>? inputFormater;
   final double? fontSize;
+  final double gapLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -72,12 +76,13 @@ class TextFieldPrimary extends StatelessWidget {
           if (label != null) ...[
             Text(
               label!,
-              style: StyleAsset.captionSemiBold.copyWith(
-                fontSize: screenHeight(context) / 62.4,
-                color: labelColor,
-              ),
+              style: labelStyle ??
+                  StyleAsset.captionSemiBold.copyWith(
+                    fontSize: screenHeight(context) / 62.4,
+                    color: labelColor,
+                  ),
             ),
-            verticalSpace(8)
+            verticalSpace(gapLabel)
           ],
         StatefulBuilder(builder: (context, innerState) {
           return SizedBox(

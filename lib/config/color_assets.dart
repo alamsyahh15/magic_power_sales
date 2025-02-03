@@ -4,6 +4,8 @@ class ColorAsset {
   static Color black = const Color.fromARGB(255, 0, 0, 0);
   static Color white = const Color.fromRGBO(255, 255, 255, 1);
 
+  static Color secondary = const Color.fromRGBO(245, 245, 245, 1);
+
   static Color neutral90 = const Color.fromRGBO(243, 245, 248, 1);
   static Color neutral80 = const Color.fromRGBO(231, 235, 242, 1);
   static Color neutral70 = const Color.fromRGBO(40, 46, 57, 1);
@@ -77,6 +79,8 @@ class ColorAsset {
   static Color grey40 = const Color.fromRGBO(170, 185, 209, 1);
 
   static Color blue = const Color.fromRGBO(0, 102, 255, 1);
+
+  static Color semantic = const Color.fromRGBO(244, 246, 247, 1);
 
   static LinearGradient gradientColor = LinearGradient(
     begin: Alignment.bottomLeft,

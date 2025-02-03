@@ -74,7 +74,7 @@ class StyleAsset {
 
   static TextStyle paragraph1 = const TextStyle(
     fontSize: 16,
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w500,
   );
 
   static TextStyle paragraph2SemiBold = const TextStyle(

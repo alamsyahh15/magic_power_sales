@@ -31,46 +31,48 @@ class PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        if (!isLoading) onTap();
-      },
-      child: Ink(
-        width: width ?? screenWidth(context),
-        height: height ?? screenHeight(context) / 20.8,
-        padding: padding,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: color ?? ColorAsset.primary,
-        ),
-        child: Row(
-          mainAxisAlignment: mainAxisAlignment,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            if (icon != null)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                child: icon!,
-              ),
-            isLoading
-                ? const SizedBox(
-                    width: 24,
-                    height: 24,
-                    child: CircularProgressIndicator(
-                      color: Colors.white,
-                      strokeWidth: 2,
+    return Material(
+      child: InkWell(
+        onTap: () {
+          if (!isLoading) onTap();
+        },
+        child: Ink(
+          width: width == null ? null : screenWidth(context),
+          height: height ?? screenHeight(context) / 20.8,
+          padding: padding,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: color ?? ColorAsset.primary,
+          ),
+          child: Row(
+            mainAxisAlignment: mainAxisAlignment,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              if (icon != null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  child: icon!,
+                ),
+              isLoading
+                  ? const SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                        strokeWidth: 2,
+                      ),
+                    )
+                  : Text(
+                      label,
+                      style: fontStyle ??
+                          StyleAsset.paragraph2SemiBold.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: textColor ?? ColorAsset.white,
+                            fontSize: screenHeight(context) / 62.4,
+                          ),
                     ),
-                  )
-                : Text(
-                    label,
-                    style: fontStyle ??
-                        StyleAsset.paragraph2SemiBold.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: textColor ?? ColorAsset.white,
-                          fontSize: screenHeight(context) / 62.4,
-                        ),
-                  ),
-          ],
+            ],
+          ),
         ),
       ),
     );

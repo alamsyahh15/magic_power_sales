@@ -14,6 +14,7 @@ class Assets {
   static String shape1 = "$_illustrations/shape1.svg";
   static String transaction = "$_illustrations/transaction.svg";
   static String shape2 = "$_illustrations/shape2.svg";
+  static String noData = "$_illustrations/no_data.svg";
   static String success = "$_illustrations/success.svg";
 
   static String exampleBanner = "$_images/example-banner.png";
