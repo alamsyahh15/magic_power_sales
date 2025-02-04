@@ -6,6 +6,7 @@ class Assets {
 
   static String qrcode = "$_icons/qr_code.svg";
   static String vip = "$_icons/vip.svg";
+  static String chevronDown = "$_icons/chevron_down.svg";
   static String filterList = "$_icons/filter_list.svg";
   static String notificationOutline = "$_icons/notification_outline.svg";
 

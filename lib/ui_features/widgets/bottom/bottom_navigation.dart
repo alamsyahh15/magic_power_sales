@@ -3,10 +3,19 @@ import 'package:magic_power_sales/config/config.dart';
 import 'package:magic_power_sales/ui_features/widgets/button/primary_button.dart';
 
 class BottomNavigation extends StatelessWidget {
-  const BottomNavigation(
-      {super.key, this.total = 0, this.pcs = 0, this.ctn = 0, this.onTap});
+  const BottomNavigation({
+    super.key,
+    this.total = 0,
+    this.backgroundColor,
+    this.pcs = 0,
+    this.ctn = 0,
+    this.onTap,
+    this.label,
+  });
   final int total, pcs, ctn;
   final Function()? onTap;
+  final Color? backgroundColor;
+  final String? label;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +24,14 @@ class BottomNavigation extends StatelessWidget {
         horizontal: 20,
         vertical: 15,
       ),
-      color: ColorAsset.semantic,
+      decoration: BoxDecoration(
+        color: backgroundColor ?? ColorAsset.semantic,
+        border: Border(
+          top: BorderSide(
+            color: ColorAsset.secondary,
+          ),
+        ),
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -48,7 +64,7 @@ class BottomNavigation extends StatelessWidget {
           ),
           verticalSpace(10),
           PrimaryButton(
-            label: "Simpan",
+            label: label ?? "Simpan",
             color: ColorAsset.primary,
             onTap: () {
               if (onTap != null) {

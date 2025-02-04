@@ -2,6 +2,7 @@ import 'package:flutter/material.dart' hide TextButton;
 import 'package:magic_power_sales/config/config.dart';
 import 'package:magic_power_sales/ui_features/widgets/bottom/bottom_navigation.dart';
 import 'package:magic_power_sales/ui_features/widgets/button/primary_button.dart';
+import 'package:magic_power_sales/ui_features/widgets/dialog/add_product.dart';
 import 'package:magic_power_sales/ui_features/widgets/input/textfield_primary.dart';
 import 'package:magic_power_sales/ui_features/widgets/tile/product_tile.dart';
 
@@ -140,7 +141,22 @@ class _FormTransactionPageState extends State<FormTransactionPage> {
                           horizontal: 15,
                           vertical: 10,
                         ),
-                        onTap: () {},
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            useSafeArea: true,
+                            isScrollControlled: true,
+                            backgroundColor: ColorAsset.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            builder: (context) {
+                              return AddProduct(
+                                onTap: () {},
+                              );
+                            },
+                          );
+                        },
                       ),
                     ],
                   ),
