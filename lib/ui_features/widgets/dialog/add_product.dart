@@ -27,7 +27,7 @@ class _AddProductState extends State<AddProduct> {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(
-                vertical: 30,
+                vertical: 20,
                 horizontal: 20,
               ),
               child: Column(

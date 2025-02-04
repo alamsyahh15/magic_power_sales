@@ -3,6 +3,8 @@ import 'package:magic_power_sales/config/config.dart';
 import 'package:magic_power_sales/ui_features/widgets/bottom/bottom_navigation.dart';
 import 'package:magic_power_sales/ui_features/widgets/button/primary_button.dart';
 import 'package:magic_power_sales/ui_features/widgets/dialog/add_product.dart';
+import 'package:magic_power_sales/ui_features/widgets/dialog/confirm.dart';
+import 'package:magic_power_sales/ui_features/widgets/dialog/success.dart';
 import 'package:magic_power_sales/ui_features/widgets/input/textfield_primary.dart';
 import 'package:magic_power_sales/ui_features/widgets/tile/product_tile.dart';
 
@@ -27,7 +29,43 @@ class _FormTransactionPageState extends State<FormTransactionPage> {
           title: const Text("Catat Transaksi"),
         ),
         bottomNavigationBar: BottomNavigation(
-          onTap: () {},
+          onTap: () {
+            showModalBottomSheet(
+              context: context,
+              useSafeArea: true,
+              backgroundColor: ColorAsset.white,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10)),
+              ),
+              builder: (context) {
+                return ConfirmDialog(
+                  title: "Catat transaksi?",
+                  description:
+                      "Periksa kembali transaksi Anda sebelum\nmelanjutkan",
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      useSafeArea: true,
+                      backgroundColor: ColorAsset.white,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10)),
+                      ),
+                      builder: (context) {
+                        return const SuccessDialog(
+                          title: "Transaksi berhasil dicatat",
+                          description: "Silahkan kembali ke aplikasi",
+                        );
+                      },
+                    );
+                  },
+                );
+              },
+            );
+          },
         ),
         body: ListView(
           children: [
@@ -147,8 +185,10 @@ class _FormTransactionPageState extends State<FormTransactionPage> {
                             useSafeArea: true,
                             isScrollControlled: true,
                             backgroundColor: ColorAsset.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  topRight: Radius.circular(10)),
                             ),
                             builder: (context) {
                               return AddProduct(
