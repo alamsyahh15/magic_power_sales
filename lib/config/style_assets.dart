@@ -13,6 +13,7 @@ class StyleAsset {
 
   static TextStyle heading1 = const TextStyle(
     fontSize: 44,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle heading2Bold = const TextStyle(
@@ -32,6 +33,7 @@ class StyleAsset {
 
   static TextStyle heading2 = const TextStyle(
     fontSize: 32,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle heading3Bold = const TextStyle(
@@ -46,6 +48,7 @@ class StyleAsset {
 
   static TextStyle heading3 = const TextStyle(
     fontSize: 24,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle heading4Bold = const TextStyle(
@@ -60,6 +63,7 @@ class StyleAsset {
 
   static TextStyle heading4 = const TextStyle(
     fontSize: 20,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle paragraph1SemiBold = const TextStyle(
@@ -74,7 +78,7 @@ class StyleAsset {
 
   static TextStyle paragraph1 = const TextStyle(
     fontSize: 16,
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle paragraph2SemiBold = const TextStyle(
@@ -89,6 +93,7 @@ class StyleAsset {
 
   static TextStyle paragraph2 = const TextStyle(
     fontSize: 14,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle paragraph3SemiBold = const TextStyle(
@@ -103,7 +108,7 @@ class StyleAsset {
 
   static TextStyle paragraph3 = const TextStyle(
     fontSize: 12,
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle captionSemiBold = const TextStyle(

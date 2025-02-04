@@ -46,9 +46,43 @@ class BottomNavigation extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(
-                    "$ctn CTN • $pcs PCS",
-                    style: StyleAsset.paragraph1.copyWith(
+                  Text.rich(
+                    TextSpan(
+                      text: "$ctn",
+                      children: [
+                        TextSpan(
+                          text: " CTN",
+                          style: StyleAsset.paragraph1.copyWith(
+                            color: ColorAsset.textTertiary,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: " • ",
+                              style: StyleAsset.paragraph1.copyWith(
+                                color: ColorAsset.textTertiary,
+                              ),
+                              children: [
+                                TextSpan(
+                                  text: "$pcs",
+                                  style: StyleAsset.paragraph1SemiBold.copyWith(
+                                    color: ColorAsset.neutral70,
+                                  ),
+                                  children: [
+                                    TextSpan(
+                                      text: " PCS",
+                                      style: StyleAsset.paragraph1.copyWith(
+                                        color: ColorAsset.textTertiary,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    style: StyleAsset.paragraph1SemiBold.copyWith(
                       color: ColorAsset.neutral70,
                     ),
                   ),
