@@ -113,6 +113,7 @@ class _AddProductState extends State<AddProduct> {
             ),
             verticalSpace(10),
             BottomNavigation(
+              label: "Tambah",
               onTap: () {
                 backScreen();
                 if (widget.onTap != null) {
