@@ -72,6 +72,7 @@ class ColorAsset {
   static Color warning = const Color.fromRGBO(255, 239, 214, 1);
 
   static Color accent40 = const Color.fromRGBO(49, 1, 81, 1);
+  static Color accent35 = const Color.fromRGBO(99, 22, 199, 1);
   static Color accent30 = const Color.fromRGBO(180, 64, 255, 1);
   static Color accent20 = const Color.fromRGBO(204, 127, 255, 1);
   static Color accent10 = const Color.fromRGBO(229, 191, 255, 1);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:magic_power_sales/config/config.dart';
 import 'package:magic_power_sales/config/constant.dart';
+import 'package:magic_power_sales/ui_features/widgets/card/qr_card.dart';
 import 'package:magic_power_sales/ui_features/widgets/dialog/show_qr.dart';
 import 'package:magic_power_sales/ui_features/widgets/indicator/status_indicator.dart';
 import 'package:magic_power_sales/ui_features/widgets/tile/product_tile.dart';
@@ -45,7 +46,7 @@ class DetailTransactionPage extends StatelessWidget {
                   status: StatusTransaction.notScanned,
                 ),
                 verticalSpace(20),
-                InkWell(
+                QrCodeCard(
                   onTap: () {
                     showModalBottomSheet(
                       context: context,
@@ -62,15 +63,6 @@ class DetailTransactionPage extends StatelessWidget {
                       },
                     );
                   },
-                  borderRadius: BorderRadius.circular(12),
-                  child: Ink(
-                    height: 120,
-                    width: screenWidth(context),
-                    decoration: BoxDecoration(
-                      color: ColorAsset.blue,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
                 ),
                 verticalSpace(20),
               ],

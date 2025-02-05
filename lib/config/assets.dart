@@ -13,6 +13,7 @@ class Assets {
   static String coins = "$_illustrations/coins.svg";
   static String complete = "$_illustrations/complete.svg";
   static String done = "$_illustrations/done.svg";
+  static String showQr = "$_illustrations/show_qr.svg";
   static String shape1 = "$_illustrations/shape1.svg";
   static String transaction = "$_illustrations/transaction.svg";
   static String shape2 = "$_illustrations/shape2.svg";
