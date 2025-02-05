@@ -3,6 +3,7 @@ import 'package:magic_power_sales/config/config.dart';
 import 'package:magic_power_sales/config/constant.dart';
 import 'package:magic_power_sales/ui_features/widgets/card/qr_card.dart';
 import 'package:magic_power_sales/ui_features/widgets/dialog/show_qr.dart';
+import 'package:magic_power_sales/ui_features/widgets/divider/divider_text.dart';
 import 'package:magic_power_sales/ui_features/widgets/indicator/status_indicator.dart';
 import 'package:magic_power_sales/ui_features/widgets/tile/product_tile.dart';
 
@@ -68,18 +69,8 @@ class DetailTransactionPage extends StatelessWidget {
               ],
             ),
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20,
-              vertical: 20,
-            ),
-            color: ColorAsset.semantic,
-            child: Text(
-              "Produk yang dibeli",
-              style: StyleAsset.paragraph2SemiBold.copyWith(
-                color: ColorAsset.neutral20,
-              ),
-            ),
+          const DividerText(
+            label: "Produk yang dibeli",
           ),
           const ProductTile(
             padding: EdgeInsets.symmetric(horizontal: 20),
@@ -88,18 +79,8 @@ class DetailTransactionPage extends StatelessWidget {
             withDivider: true,
           ),
           verticalSpace(10),
-          Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20,
-              vertical: 20,
-            ),
-            color: ColorAsset.semantic,
-            child: Text(
-              "Total",
-              style: StyleAsset.paragraph2SemiBold.copyWith(
-                color: ColorAsset.neutral20,
-              ),
-            ),
+          const DividerText(
+            label: "Total",
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),

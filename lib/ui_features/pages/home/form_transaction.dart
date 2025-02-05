@@ -5,6 +5,7 @@ import 'package:magic_power_sales/ui_features/widgets/button/primary_button.dart
 import 'package:magic_power_sales/ui_features/widgets/dialog/add_product.dart';
 import 'package:magic_power_sales/ui_features/widgets/dialog/confirm.dart';
 import 'package:magic_power_sales/ui_features/widgets/dialog/success.dart';
+import 'package:magic_power_sales/ui_features/widgets/divider/divider_text.dart';
 import 'package:magic_power_sales/ui_features/widgets/input/textfield_primary.dart';
 import 'package:magic_power_sales/ui_features/widgets/tile/product_tile.dart';
 
@@ -69,18 +70,8 @@ class _FormTransactionPageState extends State<FormTransactionPage> {
         ),
         body: ListView(
           children: [
-            Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 20,
-              ),
-              color: ColorAsset.semantic,
-              child: Text(
-                "Informasi Transaksi",
-                style: StyleAsset.paragraph2SemiBold.copyWith(
-                  color: ColorAsset.neutral20,
-                ),
-              ),
+            const DividerText(
+              label: "Informasi Transaksi",
             ),
             Padding(
               padding: const EdgeInsets.symmetric(
@@ -209,18 +200,8 @@ class _FormTransactionPageState extends State<FormTransactionPage> {
                 ],
               ),
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 20,
-              ),
-              color: ColorAsset.semantic,
-              child: Text(
-                "Ringkasan",
-                style: StyleAsset.paragraph2SemiBold.copyWith(
-                  color: ColorAsset.neutral20,
-                ),
-              ),
+            const DividerText(
+              label: "Ringkasan",
             ),
             const Padding(
               padding: EdgeInsets.symmetric(
