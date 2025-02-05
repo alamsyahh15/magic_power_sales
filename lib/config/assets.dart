@@ -20,4 +20,5 @@ class Assets {
   static String success = "$_illustrations/success.svg";
 
   static String exampleBanner = "$_images/example-banner.png";
+  static String dummyQr = "$_images/qr_dummy.png";
 }

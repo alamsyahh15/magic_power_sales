@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:magic_power_sales/config/config.dart';
 import 'package:magic_power_sales/config/constant.dart';
+import 'package:magic_power_sales/ui_features/widgets/dialog/show_qr.dart';
 import 'package:magic_power_sales/ui_features/widgets/indicator/status_indicator.dart';
 import 'package:magic_power_sales/ui_features/widgets/tile/product_tile.dart';
 
@@ -44,12 +45,31 @@ class DetailTransactionPage extends StatelessWidget {
                   status: StatusTransaction.notScanned,
                 ),
                 verticalSpace(20),
-                Container(
-                  height: 120,
-                  width: screenWidth(context),
-                  decoration: BoxDecoration(
-                    color: ColorAsset.blue,
-                    borderRadius: BorderRadius.circular(12),
+                InkWell(
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      useSafeArea: true,
+                      isScrollControlled: true,
+                      backgroundColor: ColorAsset.white,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10)),
+                      ),
+                      builder: (context) {
+                        return const ShowQrDialog();
+                      },
+                    );
+                  },
+                  borderRadius: BorderRadius.circular(12),
+                  child: Ink(
+                    height: 120,
+                    width: screenWidth(context),
+                    decoration: BoxDecoration(
+                      color: ColorAsset.blue,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                   ),
                 ),
                 verticalSpace(20),
@@ -69,7 +89,7 @@ class DetailTransactionPage extends StatelessWidget {
               ),
             ),
           ),
-          ProductTile(
+          const ProductTile(
             padding: EdgeInsets.symmetric(horizontal: 20),
             title: "Black Parade",
             summary: true,
