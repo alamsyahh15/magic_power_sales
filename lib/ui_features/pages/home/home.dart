@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:magic_power_sales/config/config.dart';
 import 'package:magic_power_sales/config/constant.dart';
+import 'package:magic_power_sales/ui_features/pages/home/detail_transaction.dart';
 import 'package:magic_power_sales/ui_features/pages/home/form_transaction.dart';
 import 'package:magic_power_sales/ui_features/widgets/card/transaction_card.dart';
 import 'package:magic_power_sales/ui_features/widgets/input/textfield_primary.dart';
@@ -94,8 +95,11 @@ class HomePage extends StatelessWidget {
               ),
             ),
           ),
-          const TransactionTile(
+          TransactionTile(
             label: "ABCD1234",
+            onTap: () {
+              nextScreen(const DetailTransactionPage());
+            },
             status: StatusTransaction.notScanned,
           ),
         ],

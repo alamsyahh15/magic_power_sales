@@ -11,55 +11,59 @@ class ProductTile extends StatelessWidget {
     this.ctn = 0,
     this.withDivider = false,
     this.summary = false,
+    this.padding = EdgeInsets.zero,
   });
   final Function()? onDelete;
   final String? title;
   final int ctn, pcs;
   final bool withDivider, summary;
+  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ListTile(
-          contentPadding: EdgeInsets.zero,
-          leading: !summary
-              ? Container(
-                  height: 70,
-                  width: 60,
-                  decoration: BoxDecoration(
-                    color: ColorAsset.secondary,
-                    borderRadius: BorderRadius.circular(8),
+    return Padding(
+      padding: padding,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            leading: !summary
+                ? Container(
+                    height: 70,
+                    width: 60,
+                    decoration: BoxDecoration(
+                      color: ColorAsset.secondary,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  )
+                : null,
+            title: Text(
+              title ?? "-",
+              style: StyleAsset.paragraph1SemiBold,
+            ),
+            subtitle: !summary
+                ? Text(
+                    "$ctn CTN • $pcs PCS",
+                    style: StyleAsset.paragraph2,
+                  )
+                : null,
+            trailing: summary
+                ? Text(
+                    "$ctn CTN • $pcs PCS",
+                    style: StyleAsset.paragraph2,
+                  )
+                : TextButton(
+                    label: "Hapus",
+                    onTap: onDelete,
                   ),
-                )
-              : null,
-          title: Text(
-            title ?? "-",
-            style: StyleAsset.paragraph1SemiBold,
           ),
-          subtitle: !summary
-              ? Text(
-                  "$ctn CTN • $pcs PCS",
-                  style: StyleAsset.paragraph2,
-                )
-              : null,
-          trailing: summary
-              ? Text(
-                  "$ctn CTN • $pcs PCS",
-                  style: StyleAsset.paragraph2,
-                )
-              : TextButton(
-                  label: "Hapus",
-                  onTap: onDelete,
-                ),
-        ),
-        if (withDivider) verticalSpace(10),
-        if (withDivider)
-          Divider(
-            color: ColorAsset.neutralNegative80,
-          ),
-      ],
+          if (withDivider)
+            Divider(
+              color: ColorAsset.neutralNegative80,
+            ),
+        ],
+      ),
     );
   }
 }
