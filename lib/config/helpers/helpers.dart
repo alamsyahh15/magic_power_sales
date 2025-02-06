@@ -22,7 +22,7 @@ bool containNumber(String value) {
 }
 
 bool containSpecialCharacter(String value) {
-  return !value.contains(RegExp(r'([!@#$%&*]+$){1}'));
+  return !value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
 }
 
 String? validateEmail(String? val) {
