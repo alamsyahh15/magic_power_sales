@@ -73,19 +73,19 @@ class _LoginPageState extends State<LoginPage> {
                                 .map((val) => val["value"] = false)
                                 .toList();
                           });
-                          if (lengthMoreThan(e!)) {
+                          if (!lengthMoreThan(e!)) {
                             validator[0]["value"] = true;
                           }
 
-                          if (containLowerCase(e)) {
+                          if (!containLowerCase(e)) {
                             validator[1]["value"] = true;
                           }
 
-                          if (containUpperCase(e)) {
+                          if (!containUpperCase(e)) {
                             validator[2]["value"] = true;
                           }
 
-                          if (containNumber(e)) {
+                          if (!containNumber(e)) {
                             validator[3]["value"] = true;
                           }
 

@@ -5,6 +5,12 @@ class Assets {
   static const String _illustrations = "$_path/illustrations";
 
   static String qrcode = "$_icons/qr_code.svg";
+  static String helpCenter = "$_icons/help_center.svg";
+  static String listOutline = "$_icons/list_outline.svg";
+  static String lockOutline = "$_icons/lock_outline.svg";
+  static String signOut = "$_icons/sign_out.svg";
+  static String user = "$_icons/user.svg";
+  static String users = "$_icons/users.svg";
   static String vip = "$_icons/vip.svg";
   static String chevronDown = "$_icons/chevron_down.svg";
   static String filterList = "$_icons/filter_list.svg";
@@ -21,5 +27,6 @@ class Assets {
   static String success = "$_illustrations/success.svg";
 
   static String exampleBanner = "$_images/example-banner.png";
+  static String backgroundBanner = "$_images/background-banner.jpg";
   static String dummyQr = "$_images/qr_dummy.png";
 }
