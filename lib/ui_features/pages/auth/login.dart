@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart' hide TextButton;
 import 'package:magic_power_sales/config/config.dart';
+import 'package:magic_power_sales/config/constant.dart';
+import 'package:magic_power_sales/config/repositories/auth_repository.dart';
 import 'package:magic_power_sales/ui_features/pages/auth/register.dart';
 import 'package:magic_power_sales/ui_features/pages/home/home.dart';
 import 'package:magic_power_sales/ui_features/widgets/button/primary_button.dart';
@@ -61,6 +63,12 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       TextFieldPrimary(
                         controller: usernameControler,
+                        validator: (e) {
+                          if (e != null && e.isEmpty) {
+                            return "Kolom username/email tidak boleh kosong";
+                          }
+                          return null;
+                        },
                         label: "Username/Email",
                         hintText: "Masukkan username atau email",
                       ),
@@ -159,15 +167,27 @@ class _LoginPageState extends State<LoginPage> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    PrimaryButton(
-                      label: "Login",
-                      onTap: () {
-                        FocusScope.of(context).unfocus();
-                        if (formKey.currentState!.validate()) {
-                          nextRemoveUntil(const HomePage());
-                        }
-                      },
-                    ),
+                    ValueListenableBuilder(
+                        valueListenable: loading,
+                        builder: (context, value, _) {
+                          return PrimaryButton(
+                            label: "Login",
+                            isLoading: loading.value,
+                            onTap: () async {
+                              FocusScope.of(context).unfocus();
+                              if (formKey.currentState!.validate()) {
+                                Map<String, dynamic> request = {
+                                  "identifier": usernameControler.text,
+                                  "password": passwordController.text,
+                                };
+                                var res = await AuthRepository.login(request);
+                                if (res.code == 200) {
+                                  nextRemoveUntil(const HomePage());
+                                }
+                              }
+                            },
+                          );
+                        }),
                     verticalSpace(10),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,

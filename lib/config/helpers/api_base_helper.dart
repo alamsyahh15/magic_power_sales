@@ -1,10 +1,10 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:magic_power_sales/config/config.dart';
 import 'package:magic_power_sales/config/constant.dart';
 import 'package:magic_power_sales/config/custom_snackbar.dart';
 import 'package:magic_power_sales/config/data/local_db.dart';
-import 'package:magic_power_sales/config/helpers/helpers.dart';
 import 'package:magic_power_sales/config/helpers/log_helper.dart';
 import 'package:magic_power_sales/config/models/response_data.dart';
 
@@ -74,7 +74,7 @@ class ApiBaseHelper {
     Response response;
     try {
       if (!url.startsWith('/')) url = '/$url';
-      response = await dio.post(url, data: data);
+      response = await dio.post("${Strings.baseUrl}$url", data: data);
       responseData = ResponseData(
         code: response.statusCode,
         data: response.data,
@@ -82,11 +82,13 @@ class ApiBaseHelper {
       );
       Log.success(response);
     } on DioException catch (error) {
+      loading.value = false;
       log("Url Endpoint => ${error.response?.realUri.toString()}",
           error: "Request => $data\nError => ${error.response?.data}");
       responseData = ResponseData.fromJson(error.response?.data);
       await sendLog(error: error, url: url, data: data);
     } catch (error) {
+      loading.value = false;
       loge(
         error: error,
         endpoint: url,

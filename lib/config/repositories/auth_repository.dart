@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:magic_power_sales/config/constant.dart';
 import 'package:magic_power_sales/config/data/local_db.dart';
 import 'package:magic_power_sales/config/helpers/api_base_helper.dart';
 import 'package:magic_power_sales/config/helpers/log_helper.dart';
@@ -37,8 +38,8 @@ class AuthRepository {
     const String endpoint = '/auth/login';
     final Map<String, dynamic> params = data;
     ResponseData? responseData;
-
     try {
+      loading.value = true;
       responseData = await _helper.post(url: endpoint, data: params);
       if (responseData.code == 200) {
         LocalDB.user = User.fromJson(responseData.data);
