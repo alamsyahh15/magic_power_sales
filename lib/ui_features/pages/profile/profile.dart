@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:magic_power_sales/config/config.dart';
+import 'package:magic_power_sales/ui_features/pages/profile/employee_account.dart';
 import 'package:magic_power_sales/ui_features/pages/profile/personal_account.dart';
 import 'package:magic_power_sales/ui_features/widgets/tile/menu_tile.dart';
 
@@ -30,6 +31,9 @@ class _ProfilePageState extends State<ProfilePage> {
       {
         "title": "Info Pegawai",
         "icon": Assets.users,
+        "onTap": () {
+          nextScreen(const EmployeeAccountPage());
+        }
       },
       {
         "title": "Notifikasi",
@@ -85,6 +89,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   iconTheme: IconThemeData(
                     color: ColorAsset.white,
                   ),
+                  shadowColor: Colors.transparent,
                   title: Text(
                     "Profile saya",
                     style: StyleAsset.heading4Bold.copyWith(
