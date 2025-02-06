@@ -6,19 +6,19 @@ bool isEmpty(dynamic data) {
 }
 
 bool lengthMoreThan(String value, [int length = 8]) {
-  return value.length < length;
+  return value.length >= length;
 }
 
 bool containLowerCase(String value, [int length = 1]) {
-  return !value.contains(RegExp("(?:[^a-z]*[a-z]){$length}"));
+  return value.contains(RegExp("(?:[^a-z]*[a-z]){$length}"));
 }
 
 bool containUpperCase(String value, [int length = 1]) {
-  return !value.contains(RegExp("(?:[^A-Z]*[A-Z]){$length}"));
+  return value.contains(RegExp("(?:[^A-Z]*[A-Z]){$length}"));
 }
 
 bool containNumber(String value) {
-  return !value.contains(RegExp(r'\d'));
+  return value.contains(RegExp(r'\d'));
 }
 
 bool containSpecialCharacter(String value) {
