@@ -6,6 +6,7 @@ class ColorAsset {
 
   static Color secondary = const Color.fromRGBO(245, 245, 245, 1);
   static Color borderPrimary = const Color.fromRGBO(208, 213, 221, 1);
+  static Color borderSecondary = const Color.fromRGBO(228, 231, 236, 1);
   static Color fgBorderPrimary = const Color.fromRGBO(21, 112, 239, 1);
   static Color fgQuinary = const Color.fromRGBO(152, 162, 179, 1);
   static Color textTertiary = const Color.fromRGBO(71, 84, 103, 1);
