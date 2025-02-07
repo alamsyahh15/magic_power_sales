@@ -12,87 +12,103 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  TextEditingController usernameController = TextEditingController();
+  TextEditingController usernameController = TextEditingController(),
+      emailController = TextEditingController(),
+      phoneController = TextEditingController(),
+      passwordController = TextEditingController(),
+      confirmPasswordController = TextEditingController();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView(
-                children: [
-                  Text(
-                    "Buat Akun",
-                    style: StyleAsset.heading2Bold.copyWith(
-                      color: ColorAsset.primary,
-                    ),
-                  ),
-                  verticalSpace(15),
-                  TextFieldPrimary(
-                    controller: usernameController,
-                    label: "Username",
-                    hintText: "Masukkan username",
-                  ),
-                  TextFieldPrimary(
-                    controller: usernameController,
-                    label: "Email",
-                    hintText: "Masukkan email",
-                  ),
-                  TextFieldPrimary(
-                    controller: usernameController,
-                    label: "No. Telepon",
-                    hintText: "Masukkan nomor telepon",
-                  ),
-                  TextFieldPrimary(
-                    controller: usernameController,
-                    label: "Password",
-                    hintText: "Masukkan password",
-                    isPassword: true,
-                  ),
-                  TextFieldPrimary(
-                    controller: usernameController,
-                    label: "Ulangi password",
-                    hintText: "Masukkan ulang password",
-                    isPassword: true,
-                  ),
-                ],
-              ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                PrimaryButton(
-                  label: "Buat Akun",
-                  onTap: () {
-                    FocusScope.of(context).unfocus();
-                  },
-                ),
-                verticalSpace(10),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
+    return Form(
+      key: formKey,
+      child: Scaffold(
+        appBar: AppBar(),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            children: [
+              Expanded(
+                child: ListView(
                   children: [
                     Text(
-                      "Sudah punya akun? ",
-                      style: StyleAsset.paragraph2.copyWith(
-                        color: ColorAsset.neutral10,
+                      "Buat Akun",
+                      style: StyleAsset.heading2Bold.copyWith(
+                        color: ColorAsset.primary,
                       ),
                     ),
-                    TextButton(
-                      label: "Login",
-                      onTap: () {
-                        backScreen();
-                      },
-                    )
+                    verticalSpace(15),
+                    TextFieldPrimary(
+                      controller: usernameController,
+                      label: "Username",
+                      hintText: "Masukkan username",
+                    ),
+                    TextFieldPrimary(
+                      controller: emailController,
+                      label: "Email",
+                      hintText: "Masukkan email",
+                    ),
+                    TextFieldPrimary(
+                      controller: phoneController,
+                      label: "No. Telepon",
+                      hintText: "Masukkan nomor telepon",
+                    ),
+                    TextFieldPrimary(
+                      controller: passwordController,
+                      label: "Password",
+                      hintText: "Masukkan password",
+                      isPassword: true,
+                    ),
+                    TextFieldPrimary(
+                      controller: confirmPasswordController,
+                      label: "Ulangi password",
+                      hintText: "Masukkan ulang password",
+                      isPassword: true,
+                    ),
                   ],
                 ),
-                verticalSpace(20),
-              ],
-            ),
-          ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  PrimaryButton(
+                    label: "Buat Akun",
+                    onTap: () {
+                      FocusScope.of(context).unfocus();
+                      if (formKey.currentState!.validate()) {
+                        Map<String, dynamic> request = {
+                          "username": usernameController.text,
+                          "email": emailController.text,
+                          "phone_number": phoneController.text,
+                          "password": passwordController.text,
+                        };
+                      }
+                    },
+                  ),
+                  verticalSpace(10),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Sudah punya akun? ",
+                        style: StyleAsset.paragraph2.copyWith(
+                          color: ColorAsset.neutral10,
+                        ),
+                      ),
+                      TextButton(
+                        label: "Login",
+                        onTap: () {
+                          backScreen();
+                        },
+                      )
+                    ],
+                  ),
+                  verticalSpace(20),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

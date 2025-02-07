@@ -81,6 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                                 .map((val) => val["value"] = false)
                                 .toList();
                           });
+
                           if (!lengthMoreThan(e!)) {
                             validator[0]["value"] = true;
                           }

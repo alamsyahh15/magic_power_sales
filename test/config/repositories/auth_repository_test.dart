@@ -57,7 +57,7 @@ void main() async {
         },
       ),
     );
-    log("Response sales-banners: ${response.data}");
+    prints("Response sales-banners: ${response.data}");
     expect(response.statusCode, 200);
   });
 
