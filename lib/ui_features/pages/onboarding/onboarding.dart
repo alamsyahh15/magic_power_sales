@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' hide TextButton;
 import 'package:flutter/services.dart';
 import 'package:magic_power_sales/config/config.dart';
+import 'package:magic_power_sales/config/data/local_db.dart';
 import 'package:magic_power_sales/config/providers/banner/banner.dart';
 import 'package:magic_power_sales/ui_features/pages/auth/login.dart';
 import 'package:magic_power_sales/ui_features/pages/auth/register.dart';
@@ -8,12 +9,27 @@ import 'package:magic_power_sales/ui_features/widgets/button/primary_button.dart
 import 'package:magic_power_sales/ui_features/widgets/button/text_button.dart';
 import 'package:provider/provider.dart';
 
-class OnBoardingPage extends StatelessWidget {
+class OnBoardingPage extends StatefulWidget {
   const OnBoardingPage({super.key});
+
+  @override
+  State<OnBoardingPage> createState() => _OnBoardingPageState();
+}
+
+class _OnBoardingPageState extends State<OnBoardingPage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Future.delayed(const Duration(milliseconds: 500)).whenComplete(
+      () => LocalDB.checkActive(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     var prov = context.watch<BannerProvider>();
+
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,

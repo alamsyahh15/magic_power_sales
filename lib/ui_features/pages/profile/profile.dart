@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:magic_power_sales/config/config.dart';
+import 'package:magic_power_sales/config/data/local_db.dart';
 import 'package:magic_power_sales/ui_features/pages/profile/employee_account.dart';
 import 'package:magic_power_sales/ui_features/pages/profile/personal_account.dart';
 import 'package:magic_power_sales/ui_features/widgets/tile/menu_tile.dart';
@@ -56,6 +57,9 @@ class _ProfilePageState extends State<ProfilePage> {
         "style": StyleAsset.paragraph1SemiBold.copyWith(
           color: ColorAsset.primary,
         ),
+        "onTap": () async {
+          LocalDB.authGuard(false);
+        },
         "icon": Assets.signOut,
         "trailing": const SizedBox(),
       },
