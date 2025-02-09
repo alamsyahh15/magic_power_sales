@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 // import 'package:flutter';
 import 'package:magic_power_sales/config/config.dart';
 import 'package:magic_power_sales/config/providers/banner/banner.dart';
+import 'package:magic_power_sales/config/providers/transaction/transaction.dart';
 import 'package:magic_power_sales/ui_features/pages/onboarding/onboarding.dart';
 import 'package:provider/provider.dart';
 
@@ -14,6 +15,9 @@ class App extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (_) => BannerProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => TransactionProvider(),
         ),
       ],
       child: MaterialApp(

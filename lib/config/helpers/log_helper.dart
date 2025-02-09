@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:magic_power_sales/config/constant.dart';
 import 'package:magic_power_sales/config/custom_snackbar.dart';
 import 'package:magic_power_sales/config/helpers/api_base_helper.dart';
 import 'package:magic_power_sales/config/models/response_data.dart';
@@ -34,6 +35,8 @@ Exception loge({
   log("Method -> $method");
   String methodString = "";
   String data = "";
+
+  loading.value = false;
 
   switch (method) {
     case Method.get:

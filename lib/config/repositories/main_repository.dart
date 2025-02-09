@@ -2,6 +2,7 @@ import 'package:magic_power_sales/config/helpers/api_base_helper.dart';
 import 'package:magic_power_sales/config/helpers/log_helper.dart';
 import 'package:magic_power_sales/config/models/response_data.dart';
 import 'package:magic_power_sales/config/models/slide_banner.dart';
+import 'package:magic_power_sales/config/models/transaction.dart';
 
 class MainRepository {
   static final ApiBaseHelper _helper = ApiBaseHelper();
@@ -50,13 +51,19 @@ class MainRepository {
     }
   }
 
-  static Future<ResponseData> getDraftTransaction() async {
+  static Future<List<Transaction>> getDraftTransaction() async {
     const String endpoint = '/draft-transactions';
     final Map<String, dynamic> params = {};
     ResponseData? responseData;
     try {
       responseData = await _helper.get(url: endpoint);
-      return responseData;
+      if (responseData.code == 200) {
+        return List<Transaction>.from(
+          responseData.data["data"]["results"].map(
+            (e) => Transaction.fromJson(e),
+          ),
+        );
+      }
     } catch (error) {
       throw loge(
         error: error,
@@ -66,5 +73,6 @@ class MainRepository {
         params: params,
       );
     }
+    return [];
   }
 }
