@@ -33,6 +33,12 @@ class HomePage extends StatelessWidget {
               height: 40,
               width: 40,
               decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(
+                    "${formatPhotoUrl(Strings.devUrl)}${LocalDB.user.user!.profilePic!.url!}",
+                  ),
+                  fit: BoxFit.cover,
+                ),
                 color: ColorAsset.accent,
                 shape: BoxShape.circle,
               ),

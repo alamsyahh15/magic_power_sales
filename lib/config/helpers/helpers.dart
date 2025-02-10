@@ -1,5 +1,3 @@
-import 'package:magic_power_sales/config/string.dart';
-
 bool isEmpty(dynamic data) {
   String? dataString = '$data';
   return ['', 'null', '{}', '0', '[]'].contains(dataString);
@@ -57,11 +55,11 @@ String? validateRequired(dynamic val) {
   return null;
 }
 
-String formatPhotoUrl(String? pathUrl) {
-  pathUrl ??= Strings.samplePhoto;
-  if (!['http', 'https'].any((e) => pathUrl!.contains(e))) {
-    String baseUrl = Strings.baseUrl.replaceAll("/api", "");
-    return baseUrl + pathUrl;
-  }
-  return pathUrl;
+String formatPhotoUrl(String pathUrl) {
+  // pathUrl ??= Strings.samplePhoto;
+  // if (!['http', 'https'].any((e) => pathUrl!.contains(e))) {
+  //   String baseUrl = Strings.baseUrl.replaceAll("/api", "");
+  //   return baseUrl + pathUrl;
+  // }
+  return pathUrl.replaceAll("/api", "");
 }

@@ -119,6 +119,13 @@ class _ProfilePageState extends State<ProfilePage> {
                           children: [
                             Container(
                               decoration: BoxDecoration(
+                                image: LocalDB.user.user?.profilePic != null
+                                    ? DecorationImage(
+                                        image: NetworkImage(
+                                            "${formatPhotoUrl(Strings.devUrl)}${LocalDB.user.user!.profilePic!.url!}"),
+                                        fit: BoxFit.cover,
+                                      )
+                                    : null,
                                 shape: BoxShape.circle,
                                 color: ColorAsset.accent,
                               ),
@@ -146,15 +153,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                   child: Ink(
                                     padding: const EdgeInsets.all(5),
                                     decoration: BoxDecoration(
-                                      image:
-                                          LocalDB.user.user?.profilePic != null
-                                              ? DecorationImage(
-                                                  image: NetworkImage(LocalDB
-                                                      .user
-                                                      .user!
-                                                      .profilePic!
-                                                      .url!))
-                                              : null,
                                       shape: BoxShape.circle,
                                       color: ColorAsset.white,
                                     ),

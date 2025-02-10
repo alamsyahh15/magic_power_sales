@@ -1,5 +1,3 @@
-import 'package:magic_power_sales/config/string.dart';
-
 class User {
   String? jwt;
   UserData? user;
@@ -277,7 +275,7 @@ class ProfilePic {
         ext: json["ext"],
         mime: json["mime"],
         size: json["size"]?.toDouble(),
-        url: "${Strings.baseUrl}/${json["url"]}",
+        url: json["url"],
         previewUrl: json["previewUrl"],
         provider: json["provider"],
         providerMetadata: json["provider_metadata"],
