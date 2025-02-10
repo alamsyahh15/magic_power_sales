@@ -10,6 +10,10 @@ extension StringExtensions on String {
     }
   }
 
+  String firstName() {
+    return split(" ")[0];
+  }
+
   String formatDate({bool plainDate = false, bool withTime = false}) {
     if (isEmpty(this)) return "";
     try {

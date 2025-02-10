@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:magic_power_sales/config/config.dart';
+import 'package:magic_power_sales/config/data/local_db.dart';
 import 'package:magic_power_sales/config/providers/transaction/transaction.dart';
+import 'package:magic_power_sales/extension/string_extensions.dart';
 import 'package:magic_power_sales/ui_features/pages/home/detail_transaction.dart';
 import 'package:magic_power_sales/ui_features/pages/home/form_transaction.dart';
 import 'package:magic_power_sales/ui_features/pages/profile/profile.dart';
@@ -63,7 +65,7 @@ class HomePage extends StatelessWidget {
                 style: StyleAsset.heading3SemiBold,
                 children: [
                   TextSpan(
-                    text: "Erik",
+                    text: (LocalDB.user.user?.fullName ?? "").firstName(),
                     style: StyleAsset.heading3SemiBold.copyWith(
                       color: ColorAsset.primary,
                     ),

@@ -1,7 +1,11 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:magic_power_sales/config/config.dart';
+import 'package:magic_power_sales/config/custom_snackbar.dart';
 import 'package:magic_power_sales/config/data/local_db.dart';
+import 'package:magic_power_sales/config/file_picker.dart';
+import 'package:magic_power_sales/config/repositories/auth_repository.dart';
 import 'package:magic_power_sales/ui_features/pages/profile/employee_account.dart';
 import 'package:magic_power_sales/ui_features/pages/profile/personal_account.dart';
 import 'package:magic_power_sales/ui_features/widgets/tile/menu_tile.dart';
@@ -125,10 +129,32 @@ class _ProfilePageState extends State<ProfilePage> {
                                 color: Colors.transparent,
                                 child: InkWell(
                                   borderRadius: BorderRadius.circular(100),
-                                  onTap: () {},
+                                  onTap: () async {
+                                    var pick = await FilePickerHelper.pickFile(
+                                        fileType: FileType.image);
+                                    if (pick.isNotEmpty) {
+                                      var res =
+                                          await AuthRepository.avatarUpload(
+                                              pick.first);
+                                      if (res.code == 200) {
+                                        showInSnackBar(
+                                            "Foto profil berhasil diubah");
+                                        setState(() {});
+                                      }
+                                    }
+                                  },
                                   child: Ink(
                                     padding: const EdgeInsets.all(5),
                                     decoration: BoxDecoration(
+                                      image:
+                                          LocalDB.user.user?.profilePic != null
+                                              ? DecorationImage(
+                                                  image: NetworkImage(LocalDB
+                                                      .user
+                                                      .user!
+                                                      .profilePic!
+                                                      .url!))
+                                              : null,
                                       shape: BoxShape.circle,
                                       color: ColorAsset.white,
                                     ),
@@ -145,7 +171,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       verticalSpace(15),
                       Text(
-                        "Erik Andreas",
+                        LocalDB.user.user?.fullName ?? "",
                         style: StyleAsset.heading3SemiBold.copyWith(
                           color: ColorAsset.white,
                         ),

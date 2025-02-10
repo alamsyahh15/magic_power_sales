@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:magic_power_sales/config/config.dart';
 import 'package:magic_power_sales/config/models/user.dart';
+import 'package:magic_power_sales/config/repositories/auth_repository.dart';
 import 'package:magic_power_sales/ui_features/pages/auth/login.dart';
 import 'package:magic_power_sales/ui_features/pages/home/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,7 +20,11 @@ class LocalDB {
 
   static Future<void> checkActive() async {
     if (isLoggedIn) {
-      nextRemoveUntil(const HomePage());
+      var res = await AuthRepository.currentProfile();
+      if (res != null) {
+        user = res;
+        nextRemoveUntil(const HomePage());
+      }
     } else {
       logout();
     }
