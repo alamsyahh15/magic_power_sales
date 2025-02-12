@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:magic_power_sales/config/config.dart';
+import 'package:magic_power_sales/config/data/local_db.dart';
 import 'package:magic_power_sales/config/models/transaction.dart';
 import 'package:magic_power_sales/extension/string_extensions.dart';
 import 'package:magic_power_sales/ui_features/widgets/card/qr_card.dart';
@@ -75,7 +76,11 @@ class DetailTransactionPage extends StatelessWidget {
                             topRight: Radius.circular(10)),
                       ),
                       builder: (context) {
-                        return const ShowQrDialog();
+                        return ShowQrDialog(
+                          path: formatPhotoUrl(
+                              LocalDB.user.user?.profilePic?.url),
+                          value: "${transaction.noInvoice}#${transaction.id}",
+                        );
                       },
                     );
                   },
