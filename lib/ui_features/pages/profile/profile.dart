@@ -77,7 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
         padding: EdgeInsets.zero,
         children: [
           Container(
-            height: 344,
+            height: screenHeight(context) * 0.4,
             width: screenWidth(context),
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.only(

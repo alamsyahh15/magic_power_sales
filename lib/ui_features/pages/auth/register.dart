@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart' hide TextButton;
 import 'package:magic_power_sales/config/config.dart';
 import 'package:magic_power_sales/config/constant.dart';
@@ -15,12 +17,43 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  TextEditingController usernameController = TextEditingController(),
+  TextEditingController fullnameController = TextEditingController(),
       emailController = TextEditingController(),
       phoneController = TextEditingController(),
       passwordController = TextEditingController(),
       confirmPasswordController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  int generateId() {
+    int min = 0;
+    int max = 100000000;
+    return min + Random().nextInt(max - min);
+  }
+
+  void register() async {
+    String fullname = fullnameController.text;
+    String username =
+        "${fullname.split(" ").take(2).join().replaceAll(" ", "")}${generateId()}"
+            .toLowerCase();
+    FocusScope.of(context).unfocus();
+    if (formKey.currentState!.validate()) {
+      Map<String, dynamic> request = {
+        "full_name": fullname,
+        "username": username,
+        "email": emailController.text,
+        "phone_number": phoneController.text,
+        "password": passwordController.text,
+      };
+      var res = await AuthRepository.register(request);
+      if (res.code == 200) {
+        backScreen();
+        showInSnackBar(
+          "Registrasi berhasil, akun anda akan segera diaktifkan",
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -52,9 +85,9 @@ class _RegisterPageState extends State<RegisterPage> {
                           }
                           return null;
                         },
-                        controller: usernameController,
-                        label: "Username",
-                        hintText: "Masukkan username",
+                        controller: fullnameController,
+                        label: "Full Name",
+                        hintText: "Masukkan Full Name",
                       ),
                       TextFieldPrimary(
                         validator: (e) {
@@ -118,24 +151,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         return PrimaryButton(
                           isLoading: loading.value,
                           label: "Buat Akun",
-                          onTap: () async {
-                            FocusScope.of(context).unfocus();
-                            if (formKey.currentState!.validate()) {
-                              Map<String, dynamic> request = {
-                                "username": usernameController.text,
-                                "email": emailController.text,
-                                "phone_number": phoneController.text,
-                                "password": passwordController.text,
-                              };
-                              var res = await AuthRepository.register(request);
-                              if (res.code == 200) {
-                                backScreen();
-                                showInSnackBar(
-                                  "Registrasi berhasil, akun anda akan segera diaktifkan",
-                                );
-                              }
-                            }
-                          },
+                          onTap: register,
                         );
                       },
                     ),
