@@ -113,7 +113,7 @@ Future<void> sendLog({
   String errorData = "";
   errorData += "Object: ${error.error}";
   errorData += "\nMessage: ${error.message}";
-  errorData += "\nUrl: ${error.requestOptions.baseUrl}/$url";
+  errorData += "\nUrl: ${error.requestOptions.baseUrl}$url";
   errorData += "\nData: ${error.response?.data}";
   errorData += "\nType: ${error.type}";
   errorData += "\nRequest: ${error.requestOptions.data}";

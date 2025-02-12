@@ -30,3 +30,7 @@ class Assets {
   static String backgroundBanner = "$_images/background-banner.jpg";
   static String dummyQr = "$_images/qr_dummy.png";
 }
+
+const String assetImage = 'assets/images';
+const String assetIcon = 'assets/icons';
+const String assetAnimation = 'assets/animation';

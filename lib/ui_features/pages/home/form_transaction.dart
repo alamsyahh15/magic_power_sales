@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart' hide TextButton;
+import 'package:intl/intl.dart';
 import 'package:magic_power_sales/config/config.dart';
+import 'package:magic_power_sales/config/custom_snackbar.dart';
+import 'package:magic_power_sales/extension/string_extensions.dart';
 import 'package:magic_power_sales/ui_features/widgets/bottom/bottom_navigation.dart';
 import 'package:magic_power_sales/ui_features/widgets/button/primary_button.dart';
 import 'package:magic_power_sales/ui_features/widgets/dialog/add_product.dart';
@@ -9,6 +12,8 @@ import 'package:magic_power_sales/ui_features/widgets/divider/divider_text.dart'
 import 'package:magic_power_sales/ui_features/widgets/input/textfield_primary.dart';
 import 'package:magic_power_sales/ui_features/widgets/tile/product_tile.dart';
 
+import 'models/product_model.dart';
+
 class FormTransactionPage extends StatefulWidget {
   const FormTransactionPage({super.key});
 
@@ -17,8 +22,15 @@ class FormTransactionPage extends StatefulWidget {
 }
 
 class _FormTransactionPageState extends State<FormTransactionPage> {
-  TextEditingController idDistributionController = TextEditingController(),
-      factureController = TextEditingController();
+  TextEditingController factureController = TextEditingController();
+  TextEditingController idDistributionController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
+  TextEditingController dueDateController = TextEditingController();
+  TextEditingController cityController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
+  String? distributorErrorText;
+  List<ProductModel> listProduct = [];
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -115,9 +127,21 @@ class _FormTransactionPageState extends State<FormTransactionPage> {
                     label: "Tanggal",
                     gapLabel: 2,
                     labelStyle: StyleAsset.paragraph2,
-                    controller: idDistributionController,
+                    controller: dateController,
                     hintText: "dd/mm/yy",
                     fontSize: 20,
+                    onTap: () async {
+                      final date = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(1900),
+                        lastDate: DateTime.now(),
+                      );
+                      if (date != null) {
+                        dateController.text =
+                            date.toString().formatDate(plainDate: true);
+                      }
+                    },
                     inputBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
                         color: ColorAsset.neutralNegative80,
@@ -130,7 +154,7 @@ class _FormTransactionPageState extends State<FormTransactionPage> {
                     label: "Jatuh tempo",
                     gapLabel: 2,
                     labelStyle: StyleAsset.paragraph2,
-                    controller: idDistributionController,
+                    controller: dueDateController,
                     hintText: "dd/mm/yy",
                     fontSize: 20,
                     inputBorder: UnderlineInputBorder(
@@ -140,12 +164,30 @@ class _FormTransactionPageState extends State<FormTransactionPage> {
                     ),
                     contentPadding: const EdgeInsets.symmetric(vertical: 10),
                     hintStyle: StyleAsset.heading4SemiBold,
+                    onTap: () async {
+                      if (dateController.text.isEmpty) {
+                        showInSnackBar("Silahkan masukan tanggal anda!");
+                        return;
+                      }
+                      final firstDate =
+                          DateFormat('dd MMM yyyy').parse(dateController.text);
+                      final date = await showDatePicker(
+                        context: context,
+                        initialDate: firstDate,
+                        firstDate: DateTime(1900),
+                        lastDate: firstDate.add(const Duration(days: 60)),
+                      );
+                      if (date != null) {
+                        dueDateController.text =
+                            date.toString().formatDate(plainDate: true);
+                      }
+                    },
                   ),
                   TextFieldPrimary(
                     label: "Kota",
                     gapLabel: 2,
                     labelStyle: StyleAsset.paragraph2,
-                    controller: idDistributionController,
+                    controller: cityController,
                     hintText: "Cth: Jakarta Selatan",
                     fontSize: 20,
                     inputBorder: UnderlineInputBorder(
@@ -170,8 +212,8 @@ class _FormTransactionPageState extends State<FormTransactionPage> {
                           horizontal: 15,
                           vertical: 10,
                         ),
-                        onTap: () {
-                          showModalBottomSheet(
+                        onTap: () async {
+                          await showModalBottomSheet(
                             context: context,
                             useSafeArea: true,
                             isScrollControlled: true,
@@ -182,9 +224,7 @@ class _FormTransactionPageState extends State<FormTransactionPage> {
                                   topRight: Radius.circular(10)),
                             ),
                             builder: (context) {
-                              return AddProduct(
-                                onTap: () {},
-                              );
+                              return const AddProductSheet();
                             },
                           );
                         },
