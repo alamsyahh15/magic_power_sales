@@ -122,7 +122,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                 image: LocalDB.user.user?.profilePic != null
                                     ? DecorationImage(
                                         image: NetworkImage(
-                                            "${formatPhotoUrl(Strings.devUrl)}${LocalDB.user.user!.profilePic!.url!}"),
+                                          formatPhotoUrl(LocalDB
+                                              .user.user?.profilePic?.url),
+                                        ),
                                         fit: BoxFit.cover,
                                       )
                                     : null,
@@ -196,7 +198,7 @@ class _ProfilePageState extends State<ProfilePage> {
               style: row["style"],
               trailing: row["title"] == "Notifikasi"
                   ? CupertinoSwitch(
-                      trackColor: ColorAsset.neutralNegative40,
+                      inactiveTrackColor: ColorAsset.neutralNegative40,
                       value: active,
                       onChanged: (e) {
                         setState(() {

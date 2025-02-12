@@ -35,7 +35,7 @@ class HomePage extends StatelessWidget {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: NetworkImage(
-                    "${formatPhotoUrl(Strings.devUrl)}${LocalDB.user.user!.profilePic!.url!}",
+                    formatPhotoUrl(LocalDB.user.user?.profilePic?.url),
                   ),
                   fit: BoxFit.cover,
                 ),

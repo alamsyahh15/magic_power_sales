@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' hide TextButton;
 import 'package:magic_power_sales/config/config.dart';
 import 'package:magic_power_sales/config/constant.dart';
+import 'package:magic_power_sales/config/data/local_db.dart';
 import 'package:magic_power_sales/config/repositories/auth_repository.dart';
 import 'package:magic_power_sales/ui_features/pages/auth/register.dart';
 import 'package:magic_power_sales/ui_features/pages/home/home.dart';
@@ -183,7 +184,10 @@ class _LoginPageState extends State<LoginPage> {
                                 };
                                 var res = await AuthRepository.login(request);
                                 if (res.code == 200) {
-                                  nextRemoveUntil(const HomePage());
+                                  AuthRepository.currentProfile().then((user) {
+                                    if (user != null) LocalDB.user = user;
+                                    nextRemoveUntil(const HomePage());
+                                  });
                                 }
                               }
                             },
