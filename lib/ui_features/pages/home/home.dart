@@ -12,9 +12,14 @@ import 'package:magic_power_sales/ui_features/widgets/input/textfield_primary.da
 import 'package:magic_power_sales/ui_features/widgets/tile/transaction_tile.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     var prov = context.watch<TransactionProvider>();
@@ -26,19 +31,23 @@ class HomePage extends StatelessWidget {
         appBar: AppBar(
           title: InkWell(
             onTap: () {
-              nextScreen(const ProfilePage());
+              nextScreen(const ProfilePage()).then((val) {
+                setState(() {});
+              });
             },
             borderRadius: BorderRadius.circular(100),
             child: Ink(
               height: 40,
               width: 40,
               decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(
-                    formatPhotoUrl(LocalDB.user.user?.profilePic?.url),
-                  ),
-                  fit: BoxFit.cover,
-                ),
+                image: LocalDB.user.user?.profilePic?.url != null
+                    ? DecorationImage(
+                        image: NetworkImage(
+                          formatPhotoUrl(LocalDB.user.user?.profilePic?.url),
+                        ),
+                        fit: BoxFit.cover,
+                      )
+                    : null,
                 color: ColorAsset.accent,
                 shape: BoxShape.circle,
               ),

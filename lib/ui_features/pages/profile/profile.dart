@@ -20,6 +20,19 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   bool active = false;
   List<Map<String, dynamic>> menus = [];
+  void updatePhotoProfile() async {
+    var pick = await FilePickerHelper.pickFile(fileType: FileType.image);
+    if (pick.isNotEmpty) {
+      var res = await AuthRepository.avatarUpload(pick.first);
+      if (res.code == 200) {
+        await AuthRepository.currentProfile().then((user) {
+          if (user != null) LocalDB.user = user;
+        });
+        showInSnackBar("Foto profil berhasil diubah");
+        setState(() {});
+      }
+    }
+  }
 
   @override
   void initState() {
@@ -139,18 +152,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 child: InkWell(
                                   borderRadius: BorderRadius.circular(100),
                                   onTap: () async {
-                                    var pick = await FilePickerHelper.pickFile(
-                                        fileType: FileType.image);
-                                    if (pick.isNotEmpty) {
-                                      var res =
-                                          await AuthRepository.avatarUpload(
-                                              pick.first);
-                                      if (res.code == 200) {
-                                        showInSnackBar(
-                                            "Foto profil berhasil diubah");
-                                        setState(() {});
-                                      }
-                                    }
+                                    updatePhotoProfile();
                                   },
                                   child: Ink(
                                     padding: const EdgeInsets.all(5),

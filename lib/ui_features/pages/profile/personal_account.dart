@@ -27,8 +27,13 @@ class _PersonalAccountPageState extends State<PersonalAccountPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    nameController.text = LocalDB.user.user?.fullName ?? "";
+    loading.value = false;
     usernameController.text = LocalDB.user.user?.username ?? "";
+    if (usernameController.text.contains(
+        "${LocalDB.user.user?.fullName?.replaceAll(" ", "").toLowerCase()}")) {
+      usernameController.text = "";
+    }
+    nameController.text = LocalDB.user.user?.fullName ?? "";
     emailController.text = LocalDB.user.user?.email ?? "";
     phoneController.text = LocalDB.user.user?.phoneNumber ?? "";
     addressController.text = LocalDB.user.user?.address ?? "";
@@ -67,6 +72,9 @@ class _PersonalAccountPageState extends State<PersonalAccountPage> {
                   };
                   var res = await AuthRepository.editProfile(request);
                   if (res.code == 200) {
+                    await AuthRepository.currentProfile().then((user) {
+                      if (user != null) LocalDB.user = user;
+                    });
                     showInSnackBar("Ubah data berhasil");
                   }
                 },
@@ -98,30 +106,30 @@ class _PersonalAccountPageState extends State<PersonalAccountPage> {
                   contentPadding: const EdgeInsets.symmetric(vertical: 10),
                   hintStyle: StyleAsset.heading4SemiBold,
                 ),
+                // verticalSpace(10),
+                // TextFieldPrimary(
+                //   label: "Username",
+                //   labelStyle: StyleAsset.paragraph2,
+                //   controller: usernameController,
+                //   keyboardType: TextInputType.number,
+                //   hintText: "Masukan Username",
+                //   gapLabel: 2,
+                //   fontSize: 20,
+                //   inputBorder: UnderlineInputBorder(
+                //     borderSide: BorderSide(
+                //       color: ColorAsset.neutralNegative80,
+                //     ),
+                //   ),
+                //   contentPadding: const EdgeInsets.symmetric(vertical: 10),
+                //   hintStyle: StyleAsset.heading4SemiBold,
+                // ),
                 verticalSpace(10),
                 TextFieldPrimary(
-                  label: "Username",
+                  label: "NIK (NPWP 16 digit)",
                   labelStyle: StyleAsset.paragraph2,
                   controller: usernameController,
                   keyboardType: TextInputType.number,
-                  hintText: "Masukan Username",
-                  gapLabel: 2,
-                  fontSize: 20,
-                  inputBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: ColorAsset.neutralNegative80,
-                    ),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(vertical: 10),
-                  hintStyle: StyleAsset.heading4SemiBold,
-                ),
-                verticalSpace(10),
-                TextFieldPrimary(
-                  label: "Nama toko",
-                  labelStyle: StyleAsset.paragraph2,
-                  controller: shopNmeController,
-                  keyboardType: TextInputType.number,
-                  hintText: "Masukan Nama Toko",
+                  hintText: "Masukan NIK/NPWP",
                   gapLabel: 2,
                   fontSize: 20,
                   inputBorder: UnderlineInputBorder(
@@ -176,22 +184,22 @@ class _PersonalAccountPageState extends State<PersonalAccountPage> {
                   hintStyle: StyleAsset.heading4SemiBold,
                 ),
                 verticalSpace(10),
-                TextFieldPrimary(
-                  label: "Alamat",
-                  labelStyle: StyleAsset.paragraph2,
-                  controller: addressController,
-                  hintText: "Masukan alamat anda",
-                  gapLabel: 2,
-                  fontSize: 20,
-                  inputBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: ColorAsset.neutralNegative80,
-                    ),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(vertical: 10),
-                  hintStyle: StyleAsset.heading4SemiBold,
-                ),
-                verticalSpace(10),
+                // TextFieldPrimary(
+                //   label: "Alamat",
+                //   labelStyle: StyleAsset.paragraph2,
+                //   controller: addressController,
+                //   hintText: "Masukan alamat anda",
+                //   gapLabel: 2,
+                //   fontSize: 20,
+                //   inputBorder: UnderlineInputBorder(
+                //     borderSide: BorderSide(
+                //       color: ColorAsset.neutralNegative80,
+                //     ),
+                //   ),
+                //   contentPadding: const EdgeInsets.symmetric(vertical: 10),
+                //   hintStyle: StyleAsset.heading4SemiBold,
+                // ),
+                // verticalSpace(10),
               ],
             ),
           ),

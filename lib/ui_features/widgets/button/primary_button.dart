@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:magic_power_sales/config/color_assets.dart';
 import 'package:magic_power_sales/config/config.dart';
 
 class PrimaryButton extends StatelessWidget {
