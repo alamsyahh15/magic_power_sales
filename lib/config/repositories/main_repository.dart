@@ -55,10 +55,10 @@ class MainRepository {
 
   static Future<List<Transaction>> getDraftTransaction() async {
     const String endpoint = '/draft-transactions';
-    final Map<String, dynamic> params = {};
+    final Map<String, dynamic> params = {"populate": "products.product"};
     ResponseData? responseData;
     try {
-      responseData = await _helper.get(url: endpoint);
+      responseData = await _helper.get(url: endpoint, data: params);
       if (responseData.code == 200) {
         return List<Transaction>.from(
           responseData.data["data"]["results"].map(

@@ -20,6 +20,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int perKarton = 420;
+  int anyPerKarton = 240;
+
   @override
   Widget build(BuildContext context) {
     var prov = context.watch<TransactionProvider>();
@@ -125,14 +128,30 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            for (var row in prov.transactions)
-              TransactionTile(
-                label: row.noInvoice,
+            ...prov.transactions.map((data) {
+              int calculationCarton = 0;
+              int calculationPcs = 0;
+              for (int i = 0; i < data.products.length; i++) {
+                final product = data.products[i].product;
+                if (product?.id != 3) {
+                  calculationCarton += data.products[i].count! ~/ perKarton;
+                  calculationPcs += data.products[i].count! % perKarton;
+                } else {
+                  calculationCarton += data.products[i].count! ~/ anyPerKarton;
+                  calculationPcs += data.products[i].count! % anyPerKarton;
+                }
+              }
+              return TransactionTile(
+                label: data.noInvoice,
+                date: data.fakturDate?.toIso8601String(),
+                status: data.status,
+                ctn: calculationCarton,
+                pcs: calculationPcs,
                 onTap: () {
-                  nextScreen(const DetailTransactionPage());
+                  nextScreen(DetailTransactionPage(transaction: data));
                 },
-                status: row.status,
-              ),
+              );
+            }),
           ],
         ),
       ),

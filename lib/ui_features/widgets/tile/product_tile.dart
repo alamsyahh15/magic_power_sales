@@ -45,7 +45,7 @@ class ProductTile extends StatelessWidget {
                 : null,
             title: Text(
               title ?? "-",
-              style: StyleAsset.paragraph1SemiBold,
+              style: StyleAsset.paragraph2SemiBold,
             ),
             subtitle: !summary
                 ? Text(

@@ -5,6 +5,7 @@
 import 'dart:convert';
 
 import 'package:magic_power_sales/config/constant.dart';
+import 'package:magic_power_sales/config/models/product.dart';
 
 Transaction transactionFromJson(String str) =>
     Transaction.fromJson(json.decode(str));
@@ -27,6 +28,7 @@ class Transaction {
   DateTime? createdAt;
   DateTime? updatedAt;
   DateTime? publishedAt;
+  List<ProductHistory> products;
 
   Transaction({
     this.id,
@@ -44,6 +46,7 @@ class Transaction {
     this.createdAt,
     this.updatedAt,
     this.publishedAt,
+    this.products = const [],
   });
 
   factory Transaction.fromJson(Map<String, dynamic> json) => Transaction(
@@ -75,6 +78,11 @@ class Transaction {
         publishedAt: json["publishedAt"] == null
             ? null
             : DateTime.parse(json["publishedAt"]),
+        products: json["products"] == null
+            ? []
+            : List<ProductHistory>.from(
+                json["products"].map((x) => ProductHistory.fromJson(x)),
+              ),
       );
 
   Map<String, dynamic> toJson() => {
@@ -96,5 +104,31 @@ class Transaction {
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
         "publishedAt": publishedAt?.toIso8601String(),
+        "products": List<dynamic>.from(products.map((x) => x.toJson())),
+      };
+}
+
+class ProductHistory {
+  int? id;
+  int? count;
+  Product? product;
+
+  ProductHistory({
+    this.id,
+    this.count,
+    this.product,
+  });
+
+  factory ProductHistory.fromJson(Map<String, dynamic> json) => ProductHistory(
+        id: json["id"],
+        count: json["count"],
+        product:
+            json["product"] == null ? null : Product.fromJson(json["product"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "count": count,
+        "product": product?.toJson(),
       };
 }

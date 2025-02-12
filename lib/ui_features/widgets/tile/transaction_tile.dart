@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:magic_power_sales/config/config.dart';
 import 'package:magic_power_sales/config/constant.dart';
+import 'package:magic_power_sales/extension/string_extensions.dart';
 import 'package:magic_power_sales/ui_features/widgets/chip/status_chip.dart';
 
 class TransactionTile extends StatelessWidget {
   const TransactionTile({
     super.key,
     this.label,
-    this.ctn = 1,
-    this.pcs = 1,
+    this.ctn = 0,
+    this.pcs = 0,
     this.status = StatusTransaction.scanned,
     this.onTap,
+    this.date,
+    this.merchantName,
   });
   final Function()? onTap;
-  final String? label;
+  final String? label, date, merchantName;
   final StatusTransaction status;
   final int ctn, pcs;
 
@@ -49,13 +52,13 @@ class TransactionTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "ABCAD",
+                merchantName ?? "Merchant Name (when data is scanned)",
                 style: StyleAsset.paragraph2.copyWith(
                   color: ColorAsset.neutral70,
                 ),
               ),
               Text(
-                "Hari ini",
+                "$date".formatDate(),
                 style: StyleAsset.paragraph2.copyWith(
                   color: ColorAsset.neutral,
                 ),
