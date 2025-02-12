@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:magic_power_sales/config/config.dart';
+import 'package:magic_power_sales/extension/string_extensions.dart';
 import 'package:magic_power_sales/ui_features/widgets/button/primary_button.dart';
 
 class BottomNavigation extends StatelessWidget {
@@ -35,67 +36,53 @@ class BottomNavigation extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Total",
-                style: StyleAsset.paragraph1SemiBold,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text.rich(
-                    TextSpan(
-                      text: "$ctn",
-                      children: [
-                        TextSpan(
-                          text: " CTN",
-                          style: StyleAsset.paragraph1.copyWith(
-                            color: ColorAsset.textTertiary,
+          Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text('Total', style: StyleAsset.heading4Bold),
+            const Spacer(),
+            Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+              RichText(
+                text: TextSpan(
+                  style: StyleAsset.paragraph1SemiBold
+                      .copyWith(color: ColorAsset.black),
+                  children: [
+                    if (ctn != 0)
+                      TextSpan(
+                        style: StyleAsset.paragraph1SemiBold,
+                        text: "$ctn",
+                        children: [
+                          TextSpan(
+                            style: StyleAsset.paragraph1,
+                            text: " CTN",
                           ),
-                          children: [
-                            TextSpan(
-                              text: " • ",
-                              style: StyleAsset.paragraph1.copyWith(
-                                color: ColorAsset.textTertiary,
-                              ),
-                              children: [
-                                TextSpan(
-                                  text: "$pcs",
-                                  style: StyleAsset.paragraph1SemiBold.copyWith(
-                                    color: ColorAsset.neutral70,
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text: " PCS",
-                                      style: StyleAsset.paragraph1.copyWith(
-                                        color: ColorAsset.textTertiary,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    style: StyleAsset.paragraph1SemiBold.copyWith(
-                      color: ColorAsset.neutral70,
-                    ),
-                  ),
-                  Text(
-                    "($pcs) PCS",
-                    style: StyleAsset.paragraph2.copyWith(
-                      color: ColorAsset.neutral70,
-                    ),
-                  ),
-                ],
+                        ],
+                      ),
+                    if (ctn != 0 && pcs != 0)
+                      TextSpan(
+                        style: StyleAsset.paragraph1SemiBold,
+                        text: " ● ",
+                        children: const [],
+                      ),
+                    if (pcs != 0)
+                      TextSpan(
+                        style: StyleAsset.paragraph1SemiBold,
+                        text: "$pcs",
+                        children: [
+                          TextSpan(
+                            style: StyleAsset.paragraph1,
+                            text: " PCS",
+                            children: const [],
+                          ),
+                        ],
+                      ),
+                  ],
+                ),
               ),
-            ],
-          ),
+              Text(
+                '(${'$total'.thousandFormater()}) PCS',
+                style: StyleAsset.paragraph3,
+              ),
+            ]),
+          ]),
           verticalSpace(10),
           PrimaryButton(
             label: label ?? "Simpan",

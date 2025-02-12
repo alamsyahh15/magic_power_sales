@@ -12,9 +12,11 @@ class ProductTile extends StatelessWidget {
     this.withDivider = false,
     this.summary = false,
     this.padding = EdgeInsets.zero,
+    this.imageUrl,
   });
   final Function()? onDelete;
   final String? title;
+  final String? imageUrl;
   final int ctn, pcs;
   final bool withDivider, summary;
   final EdgeInsetsGeometry padding;
@@ -28,13 +30,16 @@ class ProductTile extends StatelessWidget {
         children: [
           ListTile(
             contentPadding: EdgeInsets.zero,
-            leading: !summary
+            leading: imageUrl != null
                 ? Container(
                     height: 70,
                     width: 60,
                     decoration: BoxDecoration(
                       color: ColorAsset.secondary,
                       borderRadius: BorderRadius.circular(8),
+                      image: DecorationImage(
+                        image: NetworkImage(imageUrl!),
+                      ),
                     ),
                   )
                 : null,

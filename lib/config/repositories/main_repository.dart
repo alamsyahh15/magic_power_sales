@@ -1,5 +1,6 @@
 import 'package:magic_power_sales/config/helpers/api_base_helper.dart';
 import 'package:magic_power_sales/config/helpers/log_helper.dart';
+import 'package:magic_power_sales/config/models/distributor.dart';
 import 'package:magic_power_sales/config/models/product.dart';
 import 'package:magic_power_sales/config/models/response_data.dart';
 import 'package:magic_power_sales/config/models/slide_banner.dart';
@@ -94,6 +95,29 @@ class MainRepository {
             responseData.data['data'].map((e) => Product.fromJson(e)));
       }
       return products;
+    } catch (error) {
+      throw loge(
+        error: error,
+        endpoint: endpoint,
+        method: Method.post,
+        responseData: responseData,
+        params: params,
+      );
+    }
+  }
+
+  static Future<List<Distributor>> getDistributor() async {
+    const String endpoint = '/distributions';
+    final Map<String, dynamic> params = {};
+    ResponseData? responseData;
+    List<Distributor> distributor = [];
+    try {
+      responseData = await _helper.get(url: endpoint, data: params);
+      if (responseData.code == 200) {
+        distributor = List<Distributor>.from(
+            responseData.data['data'].map((e) => Distributor.fromJson(e)));
+      }
+      return distributor;
     } catch (error) {
       throw loge(
         error: error,

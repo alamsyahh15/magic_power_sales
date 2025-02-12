@@ -1,16 +1,24 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'dart:developer';
+
 import 'package:flutter/material.dart' hide TextButton;
 import 'package:intl/intl.dart';
 import 'package:magic_power_sales/config/config.dart';
 import 'package:magic_power_sales/config/custom_snackbar.dart';
+import 'package:magic_power_sales/config/models/distributor.dart';
+import 'package:magic_power_sales/config/models/product.dart';
+import 'package:magic_power_sales/config/repositories/main_repository.dart';
+import 'package:magic_power_sales/extension/list_extension.dart';
 import 'package:magic_power_sales/extension/string_extensions.dart';
+import 'package:magic_power_sales/ui_features/pages/home/widgets/product_list_widget.dart';
+import 'package:magic_power_sales/ui_features/pages/home/widgets/summary_widget.dart';
 import 'package:magic_power_sales/ui_features/widgets/bottom/bottom_navigation.dart';
-import 'package:magic_power_sales/ui_features/widgets/button/primary_button.dart';
 import 'package:magic_power_sales/ui_features/widgets/dialog/add_product.dart';
 import 'package:magic_power_sales/ui_features/widgets/dialog/confirm.dart';
 import 'package:magic_power_sales/ui_features/widgets/dialog/success.dart';
 import 'package:magic_power_sales/ui_features/widgets/divider/divider_text.dart';
 import 'package:magic_power_sales/ui_features/widgets/input/textfield_primary.dart';
-import 'package:magic_power_sales/ui_features/widgets/tile/product_tile.dart';
 
 import 'models/product_model.dart';
 
@@ -22,6 +30,8 @@ class FormTransactionPage extends StatefulWidget {
 }
 
 class _FormTransactionPageState extends State<FormTransactionPage> {
+  int perKarton = 420;
+  int anyPerKarton = 240;
   TextEditingController factureController = TextEditingController();
   TextEditingController idDistributionController = TextEditingController();
   TextEditingController dateController = TextEditingController();
@@ -30,9 +40,199 @@ class _FormTransactionPageState extends State<FormTransactionPage> {
   TextEditingController priceController = TextEditingController();
   String? distributorErrorText;
   List<ProductModel> listProduct = [];
+  List<Product> mainProducts = [];
+  List<Distributor> distributors = [];
+
+  void storeTransaction(Map<String, int> calculation) async {
+    // final mainProv = context.read<MainProvider>();
+    final dueDate = DateFormat("yyyy-MM-dd")
+        .format(DateFormat('dd MMM yyyy').parse(dueDateController.text));
+    final fakturDate = DateFormat("yyyy-MM-dd")
+        .format(DateFormat('dd MMM yyyy').parse(dateController.text));
+
+    if (listProduct.where((e) => e.typeId != null).isEmpty) {
+      showInSnackBar("Silahkan masukan produk transaksi anda !");
+      return;
+    }
+
+    Map<String, dynamic> params = {
+      "distribution_id": idDistributionController.text.toUpperCase(),
+      "no_invoice": factureController.text,
+      "due_date": dueDate,
+      "faktur_date": fakturDate,
+      "total_price": int.tryParse(priceController.text),
+      "city": cityController.text,
+      "products": listProduct.map((e) {
+        return {"product": e.typeId, "count": e.qty};
+      }).toList()
+        ..removeWhere((e) => isEmpty(e['count'])),
+    };
+
+    final result = await MainRepository.createDraftTransaction(params);
+
+    if (result.code == 200) {
+      showInSnackBar("Transaksi berhasil dicatat");
+      showModalBottomSheet(
+        context: context,
+        useSafeArea: true,
+        backgroundColor: ColorAsset.white,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+        ),
+        builder: (context) {
+          return const SuccessDialog(
+            title: "Transaksi berhasil dicatat",
+            description: "Silahkan kembali ke aplikasi",
+          );
+        },
+      );
+    } else {
+      showInSnackBar("Transaksi gagal dicatat");
+    }
+  }
+
+  bool valid() {
+    // final mainProv = context.read<MainProvider>();
+    if (distributors.isEmpty) {
+      distributors.add(Distributor(distributionId: "SA1"));
+    }
+    distributorErrorText = null;
+    bool isFound = distributors.any((distributor) =>
+        "${distributor.distributionId}".toLowerCase() ==
+        idDistributionController.text.toLowerCase());
+    log("Distributor -> ${distributors.map((e) => e.toJson())}");
+    if (!isFound) {
+      distributorErrorText = "ID Distributor tidak valid";
+      setState(() {});
+    }
+    String price = priceController.text;
+    if (idDistributionController.text.isEmpty) return false;
+    if (factureController.text.isEmpty) return false;
+    if (dateController.text.isEmpty) return false;
+    if (dueDateController.text.isEmpty) return false;
+    if (cityController.text.isEmpty) return false;
+    if (price.isEmpty && price == "0") return false;
+    if (listProduct.isEmpty || listProduct.first.qty == null) return false;
+
+    return true && isFound;
+  }
+
+  Map<String, int> calculationKarton(List<Map<String, dynamic>> products) {
+    String result = "";
+    int totalQtyCart = products
+        .where((e) => e['type_id'] != 3)
+        .fold(0, (sum, product) => sum + ((product['qty'] as int?) ?? 0));
+    int totalQtyAnyCart = products
+        .where((e) => e['type_id'] == 3)
+        .fold(0, (sum, product) => sum + ((product['qty'] as int?) ?? 0));
+
+    int karton = 0;
+    int pieces = 0;
+    int pieceSpray = 0;
+    int pieceTissue = 0;
+
+    // Calculation karton
+    if (totalQtyCart >= 420) {
+      int res = (totalQtyCart ~/ perKarton);
+      karton += res;
+      pieceTissue = totalQtyCart - (res * perKarton);
+      pieces += pieceTissue;
+    } else {
+      pieces += totalQtyCart;
+      pieceTissue = totalQtyCart;
+    }
+
+    if (totalQtyAnyCart >= 240) {
+      int res = (totalQtyAnyCart ~/ anyPerKarton);
+      karton += res;
+      pieceSpray = totalQtyAnyCart - (res * anyPerKarton);
+      pieces += totalQtyAnyCart - (res * anyPerKarton);
+    } else {
+      pieces += totalQtyAnyCart;
+      pieceSpray = totalQtyAnyCart;
+    }
+    result = "CTN $karton PCS $pieces";
+    log("Result calculation $result");
+    return {
+      "karton": karton,
+      "pieces": pieces,
+      "piece_spray": pieceSpray,
+      "piece_tissue": pieceTissue
+    };
+  }
+
+  void initialized() async {
+    final result = await MainRepository.getProducts();
+    mainProducts = result;
+    setState(() {});
+    final response = await MainRepository.getDistributor();
+    distributors = response;
+    if (response.isEmpty) distributors.add(Distributor(distributionId: "SA1"));
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    initialized();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final qty = listProduct.fold(0, (sum, product) => sum + (product.qty ?? 0));
+    List<Map<String, dynamic>> products = listProduct
+        .removeDuplicates((p0) => p0.typeId)
+        .map((e) => {
+              "type_id": e.typeId,
+              "qty": 0,
+              "product_name": "",
+              "cal_karton": 0,
+              "cal_pieces": 0,
+            })
+        .toList();
+    for (int i = 0; i < listProduct.length; i++) {
+      final mainProduct =
+          mainProducts.where((e) => e.id == listProduct[i].typeId);
+      final indexProduct =
+          products.indexWhere((e) => e['type_id'] == listProduct[i].typeId);
+      if (indexProduct >= 0 && mainProduct.isNotEmpty) {
+        products[indexProduct]['product_name'] = mainProduct.first.name;
+        products[indexProduct]['qty'] += (listProduct[i].qty ?? 0);
+        products[indexProduct]['cal_karton'] += (listProduct[i].calKarton ?? 0);
+        products[indexProduct]['cal_pieces'] += (listProduct[i].calPieces ?? 0);
+      }
+      if (products[indexProduct]['type_id'] != 3) {
+        int calPieces = products[indexProduct]['cal_pieces'];
+        if (products[indexProduct]['cal_pieces'] >= perKarton) {
+          int res = calPieces ~/ perKarton;
+          int remaining = calPieces - (res * perKarton);
+          products[indexProduct]['cal_karton'] += res;
+          products[indexProduct]['cal_pieces'] = remaining;
+        }
+      } else {
+        if (products[indexProduct]['cal_pieces'] >= anyPerKarton) {
+          int calPieces = products[indexProduct]['cal_pieces'];
+          if (products[indexProduct]['cal_pieces'] >= perKarton) {
+            int res = calPieces ~/ anyPerKarton;
+            int remaining = calPieces - (res * anyPerKarton);
+            products[indexProduct]['cal_karton'] += res;
+            products[indexProduct]['cal_pieces'] = remaining;
+          }
+        }
+      }
+    }
+
+    int currenTotal = 0;
+    for (var product in listProduct) {
+      final typeProduct = mainProducts.where((e) => e.id == product.typeId);
+      if (typeProduct.isNotEmpty) {
+        int qty = product.qty ?? 0;
+        int price = int.tryParse(typeProduct.first.price ?? "") ?? 0;
+        currenTotal += (qty * price);
+      }
+    }
+    priceController.text = currenTotal.toString();
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -42,6 +242,9 @@ class _FormTransactionPageState extends State<FormTransactionPage> {
           title: const Text("Catat Transaksi"),
         ),
         bottomNavigationBar: BottomNavigation(
+          ctn: calculationKarton(products)['karton'] as int,
+          pcs: calculationKarton(products)['pieces'] as int,
+          total: qty,
           onTap: () {
             showModalBottomSheet(
               context: context,
@@ -58,22 +261,11 @@ class _FormTransactionPageState extends State<FormTransactionPage> {
                   description:
                       "Periksa kembali transaksi Anda sebelum\nmelanjutkan",
                   onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      useSafeArea: true,
-                      backgroundColor: ColorAsset.white,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            topRight: Radius.circular(10)),
-                      ),
-                      builder: (context) {
-                        return const SuccessDialog(
-                          title: "Transaksi berhasil dicatat",
-                          description: "Silahkan kembali ke aplikasi",
-                        );
-                      },
-                    );
+                    if (valid()) {
+                      storeTransaction(calculationKarton(products));
+                    } else {
+                      showInSnackBar("Pastikan anda melengkapi semua form");
+                    }
                   },
                 );
               },
@@ -97,9 +289,11 @@ class _FormTransactionPageState extends State<FormTransactionPage> {
                     label: "ID Distributor",
                     labelStyle: StyleAsset.paragraph2,
                     controller: idDistributionController,
+                    errorText: distributorErrorText,
                     hintText: "Cth: 01",
                     gapLabel: 2,
                     fontSize: 20,
+                    errorBorder: InputBorder.none,
                     inputBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
                         color: ColorAsset.neutralNegative80,
@@ -199,64 +393,41 @@ class _FormTransactionPageState extends State<FormTransactionPage> {
                     hintStyle: StyleAsset.heading4SemiBold,
                   ),
                   verticalSpace(20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Pembelian Produk",
-                        style: StyleAsset.heading4SemiBold,
-                      ),
-                      PrimaryButton(
-                        label: "Tambah",
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 15,
-                          vertical: 10,
+                  ProductListWidget(
+                    listProduct: listProduct,
+                    onDelete: (e) {
+                      setState(() => listProduct.remove(e));
+                    },
+                    onAdd: () async {
+                      final res = await showModalBottomSheet(
+                        context: context,
+                        useSafeArea: true,
+                        isScrollControlled: true,
+                        backgroundColor: ColorAsset.white,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(10),
+                              topRight: Radius.circular(10)),
                         ),
-                        onTap: () async {
-                          await showModalBottomSheet(
-                            context: context,
-                            useSafeArea: true,
-                            isScrollControlled: true,
-                            backgroundColor: ColorAsset.white,
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  topRight: Radius.circular(10)),
-                            ),
-                            builder: (context) {
-                              return const AddProductSheet();
-                            },
-                          );
+                        builder: (context) {
+                          return const AddProductSheet();
                         },
-                      ),
-                    ],
-                  ),
-                  verticalSpace(20),
-                  // const Empty(),
-                  ProductTile(
-                    title: "ada",
-                    onDelete: () {},
+                      );
+                      if (res != null) {
+                        listProduct.add(res);
+                        setState(() {});
+                      }
+                    },
                   ),
                 ],
               ),
             ),
-            const DividerText(
-              label: "Ringkasan",
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 10,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ProductTile(
-                    title: "ada",
-                    summary: true,
-                  ),
-                ],
-              ),
+            const DividerText(label: "Ringkasan"),
+            SummaryWidget(
+              products: products,
+              qty: qty,
+              calculationKarton: calculationKarton(products),
+              remainLabel: "",
             ),
           ],
         ),

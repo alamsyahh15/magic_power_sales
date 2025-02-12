@@ -42,7 +42,10 @@ class SuccessDialog extends StatelessWidget {
           verticalSpace(30),
           PrimaryButton(
             label: "Kembali",
-            onTap: () {},
+            onTap: () {
+              backScreen();
+              backScreen();
+            },
           ),
         ],
       ),

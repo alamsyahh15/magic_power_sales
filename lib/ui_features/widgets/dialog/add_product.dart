@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:magic_power_sales/config/config.dart';
 import 'package:magic_power_sales/config/models/product.dart';
+import 'package:magic_power_sales/config/repositories/main_repository.dart';
 import 'package:magic_power_sales/ui_features/pages/home/models/product_model.dart';
 import 'package:magic_power_sales/ui_features/widgets/button/primary_button.dart';
 import 'package:magic_power_sales/ui_features/widgets/image/asset_image.dart';
@@ -26,6 +27,12 @@ class _AddProductSheetState extends State<AddProductSheet> {
   int? qty;
   String? errorText;
 
+  void initialized() async {
+    final result = await MainRepository.getProducts();
+    products = result;
+    setState(() {});
+  }
+
   void calculateCartonToQty() {
     qty = 0;
     errorText = null;
@@ -37,6 +44,7 @@ class _AddProductSheetState extends State<AddProductSheet> {
       } else {
         qty = (qty ?? 0) + qtyCarton * anyPerKarton;
       }
+
       // Counting qty piece
       int qtyPieces = int.tryParse(qtyP.text) ?? 0;
       if (typeId != 3) {
@@ -53,15 +61,19 @@ class _AddProductSheetState extends State<AddProductSheet> {
         }
       }
     }
+    log("Qty -> $qty");
     setState(() {});
   }
 
   @override
+  void initState() {
+    initialized();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // final mainProv = context.watch<MainProvider>();
-
     bool valid = typeId != null && qty != null && (qty ?? 0) > 0;
-
     return Container(
       width: screenWidth(context),
       margin: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
@@ -204,7 +216,9 @@ class _AddProductSheetState extends State<AddProductSheet> {
                     children: [
                       RichText(
                         text: TextSpan(
-                          style: StyleAsset.paragraph2SemiBold,
+                          style: StyleAsset.paragraph2SemiBold.copyWith(
+                            color: ColorAsset.black,
+                          ),
                           text: qtyC.text,
                           children: [
                             TextSpan(

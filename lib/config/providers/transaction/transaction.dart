@@ -17,9 +17,7 @@ class TransactionProvider extends ChangeNotifier {
 
   Future<void> getTransaction() async {
     var res = await MainRepository.getDraftTransaction();
-
     transactions = res;
-
     notifyListeners();
   }
 }

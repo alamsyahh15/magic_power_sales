@@ -1,34 +1,100 @@
+// To parse this JSON data, do
+//
+//     final transaction = transactionFromJson(jsonString);
+
+import 'dart:convert';
+
 import 'package:magic_power_sales/config/constant.dart';
 
+Transaction transactionFromJson(String str) =>
+    Transaction.fromJson(json.decode(str));
+
+String transactionToJson(Transaction data) => json.encode(data.toJson());
+
 class Transaction {
-  int? id, distributionId, totalPrice;
+  int? id;
+  String? distributionId;
   DateTime? transactionDate;
-  String? noInvoice, phoneNumber;
-  bool paid;
+  String? noInvoice;
+  String? totalPrice;
   StatusTransaction status;
+  DateTime? dueDate;
+  String? city;
+  DateTime? fakturDate;
+  bool? paid;
+  String? phoneNumber;
+  dynamic comment;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  DateTime? publishedAt;
 
   Transaction({
     this.id,
-    this.status = StatusTransaction.notScanned,
     this.distributionId,
-    this.noInvoice,
-    this.paid = false,
-    this.totalPrice,
     this.transactionDate,
+    this.noInvoice,
+    this.totalPrice,
+    required this.status,
+    this.dueDate,
+    this.city,
+    this.fakturDate,
+    this.paid,
     this.phoneNumber,
+    this.comment,
+    this.createdAt,
+    this.updatedAt,
+    this.publishedAt,
   });
 
   factory Transaction.fromJson(Map<String, dynamic> json) => Transaction(
         id: json["id"],
-        distributionId: int.parse(json["distribution_id"].toString()),
-        paid: json["paid"],
-        status: json["status"] == "not-scanned"
-            ? StatusTransaction.notScanned
-            : StatusTransaction.scanned,
-        totalPrice: int.parse(json["total_price"].toString()),
-        transactionDate: json["transaction_date"] != null
-            ? DateTime.parse(json["transaction_date"])
-            : null,
+        distributionId: json["distribution_id"],
+        transactionDate: json["transaction_date"] == null
+            ? null
+            : DateTime.parse(json["transaction_date"]),
         noInvoice: json["no_invoice"],
+        totalPrice: json["total_price"],
+        status: json["status"] == "scanned"
+            ? StatusTransaction.scanned
+            : StatusTransaction.notScanned,
+        dueDate:
+            json["due_date"] == null ? null : DateTime.parse(json["due_date"]),
+        city: json["city"],
+        fakturDate: json["faktur_date"] == null
+            ? null
+            : DateTime.parse(json["faktur_date"]),
+        paid: json["paid"],
+        phoneNumber: json["phone_number"],
+        comment: json["comment"],
+        createdAt: json["createdAt"] == null
+            ? null
+            : DateTime.parse(json["createdAt"]),
+        updatedAt: json["updatedAt"] == null
+            ? null
+            : DateTime.parse(json["updatedAt"]),
+        publishedAt: json["publishedAt"] == null
+            ? null
+            : DateTime.parse(json["publishedAt"]),
       );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "distribution_id": distributionId,
+        "transaction_date": transactionDate?.toIso8601String(),
+        "no_invoice": noInvoice,
+        "total_price": totalPrice,
+        "status":
+            status == StatusTransaction.scanned ? "scanned" : "not scanned",
+        "due_date":
+            "${dueDate!.year.toString().padLeft(4, '0')}-${dueDate!.month.toString().padLeft(2, '0')}-${dueDate!.day.toString().padLeft(2, '0')}",
+        "city": city,
+        "faktur_date":
+            "${fakturDate!.year.toString().padLeft(4, '0')}-${fakturDate!.month.toString().padLeft(2, '0')}-${fakturDate!.day.toString().padLeft(2, '0')}",
+        "paid": paid,
+        "phone_number": phoneNumber,
+        "comment": comment,
+        "createdAt": createdAt?.toIso8601String(),
+        "updatedAt": updatedAt?.toIso8601String(),
+        "publishedAt": publishedAt?.toIso8601String(),
+      };
 }

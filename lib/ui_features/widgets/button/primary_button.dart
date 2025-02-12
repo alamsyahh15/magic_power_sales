@@ -36,7 +36,7 @@ class PrimaryButton extends StatelessWidget {
           if (!isLoading) onTap();
         },
         child: Ink(
-          width: width == null ? null : screenWidth(context),
+          width: width ?? screenWidth(context),
           height: height ?? screenHeight(context) / 20.8,
           padding: padding,
           decoration: BoxDecoration(
