@@ -7,8 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:magic_power_sales/config/config.dart';
 import 'package:magic_power_sales/config/custom_snackbar.dart';
 import 'package:magic_power_sales/config/models/distributor.dart';
-import 'package:magic_power_sales/config/models/product.dart';
-import 'package:magic_power_sales/config/repositories/main_repository.dart';
+import 'package:magic_power_sales/config/providers/transaction/transaction.dart';
 import 'package:magic_power_sales/extension/list_extension.dart';
 import 'package:magic_power_sales/extension/string_extensions.dart';
 import 'package:magic_power_sales/ui_features/pages/home/widgets/product_list_widget.dart';
@@ -16,9 +15,9 @@ import 'package:magic_power_sales/ui_features/pages/home/widgets/summary_widget.
 import 'package:magic_power_sales/ui_features/widgets/bottom/bottom_navigation.dart';
 import 'package:magic_power_sales/ui_features/widgets/dialog/add_product.dart';
 import 'package:magic_power_sales/ui_features/widgets/dialog/confirm.dart';
-import 'package:magic_power_sales/ui_features/widgets/dialog/success.dart';
 import 'package:magic_power_sales/ui_features/widgets/divider/divider_text.dart';
 import 'package:magic_power_sales/ui_features/widgets/input/textfield_primary.dart';
+import 'package:provider/provider.dart';
 
 import 'models/product_model.dart';
 
@@ -40,8 +39,6 @@ class _FormTransactionPageState extends State<FormTransactionPage> {
   TextEditingController priceController = TextEditingController();
   String? distributorErrorText;
   List<ProductModel> listProduct = [];
-  List<Product> mainProducts = [];
-  List<Distributor> distributors = [];
 
   void storeTransaction(Map<String, int> calculation) async {
     // final mainProv = context.read<MainProvider>();
@@ -67,41 +64,19 @@ class _FormTransactionPageState extends State<FormTransactionPage> {
       }).toList()
         ..removeWhere((e) => isEmpty(e['count'])),
     };
-
-    final result = await MainRepository.createDraftTransaction(params);
-
-    if (result.code == 200) {
-      showInSnackBar("Transaksi berhasil dicatat");
-      showModalBottomSheet(
-        context: context,
-        useSafeArea: true,
-        backgroundColor: ColorAsset.white,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-        ),
-        builder: (context) {
-          return const SuccessDialog(
-            title: "Transaksi berhasil dicatat",
-            description: "Silahkan kembali ke aplikasi",
-          );
-        },
-      );
-    } else {
-      showInSnackBar("Transaksi gagal dicatat");
-    }
+    context.read<TransactionProvider>().createDraftTransaction(params);
   }
 
   bool valid() {
-    // final mainProv = context.read<MainProvider>();
-    if (distributors.isEmpty) {
-      distributors.add(Distributor(distributionId: "SA1"));
+    final mainProv = context.read<TransactionProvider>();
+    if (mainProv.distributors.isEmpty) {
+      mainProv.distributors.add(Distributor(distributionId: "SA1"));
     }
     distributorErrorText = null;
-    bool isFound = distributors.any((distributor) =>
+    bool isFound = mainProv.distributors.any((distributor) =>
         "${distributor.distributionId}".toLowerCase() ==
         idDistributionController.text.toLowerCase());
-    log("Distributor -> ${distributors.map((e) => e.toJson())}");
+    log("Distributor -> ${mainProv.distributors.map((e) => e.toJson())}");
     if (!isFound) {
       distributorErrorText = "ID Distributor tidak valid";
       setState(() {});
@@ -162,24 +137,9 @@ class _FormTransactionPageState extends State<FormTransactionPage> {
     };
   }
 
-  void initialized() async {
-    final result = await MainRepository.getProducts();
-    mainProducts = result;
-    setState(() {});
-    final response = await MainRepository.getDistributor();
-    distributors = response;
-    if (response.isEmpty) distributors.add(Distributor(distributionId: "SA1"));
-    setState(() {});
-  }
-
-  @override
-  void initState() {
-    initialized();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
+    final mainProv = context.read<TransactionProvider>();
     final qty = listProduct.fold(0, (sum, product) => sum + (product.qty ?? 0));
     List<Map<String, dynamic>> products = listProduct
         .removeDuplicates((p0) => p0.typeId)
@@ -193,7 +153,7 @@ class _FormTransactionPageState extends State<FormTransactionPage> {
         .toList();
     for (int i = 0; i < listProduct.length; i++) {
       final mainProduct =
-          mainProducts.where((e) => e.id == listProduct[i].typeId);
+          mainProv.mainProducts.where((e) => e.id == listProduct[i].typeId);
       final indexProduct =
           products.indexWhere((e) => e['type_id'] == listProduct[i].typeId);
       if (indexProduct >= 0 && mainProduct.isNotEmpty) {
@@ -225,7 +185,8 @@ class _FormTransactionPageState extends State<FormTransactionPage> {
 
     int currenTotal = 0;
     for (var product in listProduct) {
-      final typeProduct = mainProducts.where((e) => e.id == product.typeId);
+      final typeProduct =
+          mainProv.mainProducts.where((e) => e.id == product.typeId);
       if (typeProduct.isNotEmpty) {
         int qty = product.qty ?? 0;
         int price = int.tryParse(typeProduct.first.price ?? "") ?? 0;
@@ -246,30 +207,30 @@ class _FormTransactionPageState extends State<FormTransactionPage> {
           pcs: calculationKarton(products)['pieces'] as int,
           total: qty,
           onTap: () {
-            showModalBottomSheet(
-              context: context,
-              useSafeArea: true,
-              backgroundColor: ColorAsset.white,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10)),
-              ),
-              builder: (context) {
-                return ConfirmDialog(
-                  title: "Catat transaksi?",
-                  description:
-                      "Periksa kembali transaksi Anda sebelum\nmelanjutkan",
-                  onTap: () {
-                    if (valid()) {
+            if (valid()) {
+              showModalBottomSheet(
+                context: context,
+                useSafeArea: true,
+                backgroundColor: ColorAsset.white,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10)),
+                ),
+                builder: (context) {
+                  return ConfirmDialog(
+                    title: "Catat transaksi?",
+                    description:
+                        "Periksa kembali transaksi Anda sebelum\nmelanjutkan",
+                    onTap: () {
                       storeTransaction(calculationKarton(products));
-                    } else {
-                      showInSnackBar("Pastikan anda melengkapi semua form");
-                    }
-                  },
-                );
-              },
-            );
+                    },
+                  );
+                },
+              );
+            } else {
+              showInSnackBar("Pastikan anda melengkapi semua form");
+            }
           },
         ),
         body: ListView(
