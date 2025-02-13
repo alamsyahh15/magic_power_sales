@@ -2,9 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:magic_power_sales/config/config.dart';
 import 'package:magic_power_sales/ui_features/widgets/button/primary_button.dart';
 import 'package:magic_power_sales/ui_features/widgets/dialog/layout.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class ShowQrDialog extends StatelessWidget {
-  const ShowQrDialog({super.key});
+  const ShowQrDialog({
+    super.key,
+    required this.value,
+    this.path,
+  });
+  final String value;
+  final String? path;
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +35,24 @@ class ShowQrDialog extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(
-                  Assets.dummyQr,
-                  height: 240,
-                  width: 240,
-                  fit: BoxFit.fitWidth,
+                Container(
+                  height: 60,
+                  width: 60,
+                  decoration: BoxDecoration(
+                    color: ColorAsset.accent,
+                    shape: BoxShape.circle,
+                    image: path != null
+                        ? DecorationImage(
+                            image: NetworkImage(path!),
+                            fit: BoxFit.cover,
+                          )
+                        : null,
+                  ),
+                ),
+                verticalSpace(10),
+                QrImageView(
+                  data: value,
+                  size: 240,
                 ),
                 verticalSpace(10),
                 Text(
