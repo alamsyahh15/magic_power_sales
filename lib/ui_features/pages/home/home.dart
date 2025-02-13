@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:magic_power_sales/config/config.dart';
 import 'package:magic_power_sales/config/data/local_db.dart';
 import 'package:magic_power_sales/config/providers/transaction/transaction.dart';
@@ -92,7 +93,8 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Text(
-              "Kamis, 26 Desember 2024",
+              // "Kamis, 26 Desember 2024",
+              DateFormat("EEEE, d MMMM y", "id_ID").format(DateTime.now()),
               style: StyleAsset.paragraph3.copyWith(
                 color: ColorAsset.neutral,
               ),
