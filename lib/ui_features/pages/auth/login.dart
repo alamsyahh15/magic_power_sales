@@ -22,28 +22,7 @@ class _LoginPageState extends State<LoginPage> {
       passwordController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool rememberMe = false;
-  List<Map<String, dynamic>> validator = [
-    {
-      "name": "Minimal 8 karakter",
-      "value": false,
-    },
-    {
-      "name": "Mengandung 1 huruf kecil",
-      "value": false,
-    },
-    {
-      "name": "Mengandung 1 huruf besar",
-      "value": false,
-    },
-    {
-      "name": "Mengandung 1 angka",
-      "value": false,
-    },
-    {
-      "name": "Mengandung 1 karakter spesial",
-      "value": false,
-    },
-  ];
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -76,65 +55,11 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       TextFieldPrimary(
                         expands: null,
-                        errorStyle: const TextStyle(height: -5),
-                        validator: (e) {
-                          setState(() {
-                            validator
-                                .map((val) => val["value"] = false)
-                                .toList();
-                          });
-
-                          if (!lengthMoreThan(e!)) {
-                            validator[0]["value"] = true;
-                          }
-
-                          if (!containLowerCase(e)) {
-                            validator[1]["value"] = true;
-                          }
-
-                          if (!containUpperCase(e)) {
-                            validator[2]["value"] = true;
-                          }
-
-                          if (!containNumber(e)) {
-                            validator[3]["value"] = true;
-                          }
-
-                          if (containSpecialCharacter(e)) {
-                            validator[4]["value"] = true;
-                          }
-                          if (validator.where((e) => e["value"]).isNotEmpty) {
-                            return "";
-                          }
-                          return null;
-                        },
                         label: "Password",
                         isPassword: true,
                         controller: passwordController,
                         hintText: "Masukkan password",
                       ),
-                      if (validator.where((e) => e["value"]).isNotEmpty)
-                        for (var row in validator)
-                          Row(
-                            children: [
-                              Icon(
-                                !row["value"]
-                                    ? Icons.check_rounded
-                                    : Icons.close_rounded,
-                                color: !row["value"]
-                                    ? ColorAsset.success30
-                                    : ColorAsset.error30,
-                              ),
-                              Text(
-                                row["name"],
-                                style: StyleAsset.paragraph2.copyWith(
-                                  color: !row["value"]
-                                      ? ColorAsset.success30
-                                      : ColorAsset.error30,
-                                ),
-                              ),
-                            ],
-                          ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

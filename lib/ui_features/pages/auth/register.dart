@@ -79,45 +79,21 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       verticalSpace(15),
                       TextFieldPrimary(
-                        validator: (e) {
-                          if (isEmpty(e)) {
-                            return "Kolom masih kosong";
-                          }
-                          return null;
-                        },
                         controller: fullnameController,
                         label: "Full Name",
                         hintText: "Masukkan Full Name",
                       ),
                       TextFieldPrimary(
-                        validator: (e) {
-                          if (isEmpty(e)) {
-                            return "Kolom masih kosong";
-                          }
-                          return null;
-                        },
                         controller: emailController,
                         label: "Email",
                         hintText: "Masukkan email",
                       ),
                       TextFieldPrimary(
-                        validator: (e) {
-                          if (isEmpty(e)) {
-                            return "Kolom masih kosong";
-                          }
-                          return null;
-                        },
                         controller: phoneController,
                         label: "No. Telepon",
                         hintText: "Masukkan nomor telepon",
                       ),
                       TextFieldPrimary(
-                        validator: (e) {
-                          if (isEmpty(e)) {
-                            return "Kolom masih kosong";
-                          }
-                          return null;
-                        },
                         controller: passwordController,
                         label: "Password",
                         hintText: "Masukkan password",
@@ -125,9 +101,6 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       TextFieldPrimary(
                         validator: (e) {
-                          if (isEmpty(e)) {
-                            return "Kolom masih kosong";
-                          }
                           if (confirmPasswordController.text !=
                               passwordController.text) {
                             return "Konfirmasi password tidak sama";

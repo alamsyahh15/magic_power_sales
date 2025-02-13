@@ -7,6 +7,7 @@ import 'package:magic_power_sales/config/data/local_db.dart';
 import 'package:magic_power_sales/config/file_picker.dart';
 import 'package:magic_power_sales/config/repositories/auth_repository.dart';
 import 'package:magic_power_sales/ui_features/pages/others/tnc_page.dart';
+import 'package:magic_power_sales/ui_features/pages/profile/change_password.dart';
 import 'package:magic_power_sales/ui_features/pages/profile/employee_account.dart';
 import 'package:magic_power_sales/ui_features/pages/profile/personal_account.dart';
 import 'package:magic_power_sales/ui_features/widgets/tile/menu_tile.dart';
@@ -66,6 +67,9 @@ class _ProfilePageState extends State<ProfilePage> {
       {
         "title": "Keamanan",
         "icon": Assets.lockOutline,
+        "onTap": () {
+          nextScreen(const ChangePasswordPage());
+        }
       },
       {
         "title": "Pusat Bantuan",

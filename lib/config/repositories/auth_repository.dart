@@ -150,7 +150,9 @@ class AuthRepository {
     final Map<String, dynamic> params = data;
     ResponseData? responseData;
     try {
+      loading.value = true;
       responseData = await _helper.post(url: endpoint, data: params);
+      loading.value = false;
       if (responseData.code == 200) {
         LocalDB.user = User.fromJson(responseData.data);
       }
