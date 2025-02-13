@@ -3,6 +3,7 @@ import 'package:magic_power_sales/config/config.dart';
 import 'package:magic_power_sales/config/constant.dart';
 import 'package:magic_power_sales/config/data/local_db.dart';
 import 'package:magic_power_sales/config/repositories/auth_repository.dart';
+import 'package:magic_power_sales/ui_features/pages/auth/forgot_password.dart';
 import 'package:magic_power_sales/ui_features/pages/auth/register.dart';
 import 'package:magic_power_sales/ui_features/pages/home/home.dart';
 import 'package:magic_power_sales/ui_features/widgets/button/primary_button.dart';
@@ -157,7 +158,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                           TextButton(
-                            onTap: () {},
+                            onTap: () => nextScreen(const ForgotPassword()),
                             label: "Lupa Password",
                             textDecoration: TextDecoration.underline,
                           ),

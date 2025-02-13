@@ -29,6 +29,7 @@ class Assets {
   static String exampleBanner = "$_images/example-banner.png";
   static String backgroundBanner = "$_images/background-banner.jpg";
   static String dummyQr = "$_images/qr_dummy.png";
+  static String dragonStand = "$_images/dragon_stand.png";
 }
 
 const String assetImage = 'assets/images';
