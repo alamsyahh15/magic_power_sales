@@ -1,4 +1,4 @@
-package com.example.magic_power_sales
+package co.magicpower.sales
 
 import io.flutter.embedding.android.FlutterActivity
 
