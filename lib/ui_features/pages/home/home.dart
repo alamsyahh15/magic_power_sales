@@ -25,6 +25,14 @@ class _HomePageState extends State<HomePage> {
   int anyPerKarton = 240;
 
   @override
+  initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<TransactionProvider>().getTransaction();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     var prov = context.watch<TransactionProvider>();
     return RefreshIndicator(
