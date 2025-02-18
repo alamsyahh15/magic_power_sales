@@ -9,7 +9,7 @@ class Strings {
   static const String prodUrl = "http://159.65.130.83:1337/api";
   static const String devUrl = "http://152.42.179.244:1337/api";
 
-  static const String baseUrl = kDebugMode ? devUrl : prodUrl;
+  static const String baseUrl = kDebugMode ? devUrl : devUrl;
 
   static const String pendingStatus = "Pending";
   static const String approvedStatus = "Approved";
