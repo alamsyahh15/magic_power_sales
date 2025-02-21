@@ -72,10 +72,10 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           actions: [
-            IconButton(
-              onPressed: () {},
-              icon: SvgPicture.asset(Assets.notificationOutline),
-            ),
+            // IconButton(
+            //   onPressed: () {},
+            //   icon: SvgPicture.asset(Assets.notificationOutline),
+            // ),
             horizontalSpace(10),
           ],
           centerTitle: false,

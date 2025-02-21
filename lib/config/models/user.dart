@@ -50,6 +50,7 @@ class UserData {
   int? sprayPcs;
   int? tissuePcs;
   int? pointZenny;
+  SalesInformation? salesInformation;
 
   UserData({
     this.id,
@@ -74,6 +75,7 @@ class UserData {
     this.sprayPcs,
     this.tissuePcs,
     this.pointZenny,
+    this.salesInformation,
   });
 
   UserData copyWith(
@@ -98,7 +100,8 @@ class UserData {
           ProfilePic? profilePic,
           int? sprayPcs,
           int? tissuePcs,
-          int? pointZenny}) =>
+          int? pointZenny,
+          SalesInformation? salesInformation}) =>
       UserData(
         id: id ?? this.id,
         username: username ?? this.username,
@@ -123,6 +126,7 @@ class UserData {
         sprayPcs: sprayPcs ?? this.sprayPcs,
         tissuePcs: tissuePcs ?? this.tissuePcs,
         pointZenny: pointZenny ?? this.pointZenny,
+        salesInformation: salesInformation ?? this.salesInformation,
       );
 
   factory UserData.fromJson(Map<String, dynamic> json) => UserData(
@@ -156,6 +160,9 @@ class UserData {
         sprayPcs: int.parse("${json['spray_pcs'] ?? 0}"),
         tissuePcs: int.parse("${json['tissue_pcs'] ?? 0}"),
         pointZenny: int.parse("${json['point_zenny'] ?? 0}"),
+        salesInformation: json["sales_information"] == null
+            ? null
+            : SalesInformation.fromJson(json["sales_information"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -181,6 +188,16 @@ class UserData {
         "spray_pcs": sprayPcs,
         "tissue_pcs": tissuePcs,
         "point_zenny": pointZenny,
+        "sales_information": salesInformation?.toJson(),
+      };
+
+  Map<String, dynamic> requestEmployee() => {
+        "username": username,
+        "email": email,
+        "full_name": fullName,
+        "address": address,
+        "phone_number": phoneNumber,
+        "sales_information": salesInformation?.toJson(),
       };
 }
 
@@ -419,5 +436,46 @@ class Large {
         "size": size,
         "width": width,
         "height": height,
+      };
+}
+
+class SalesInformation {
+  String? employeeId;
+  String? branch;
+  String? division;
+  String? position;
+  String? grade;
+  String? statusEmployee;
+  String? manager;
+
+  SalesInformation({
+    this.employeeId,
+    this.branch,
+    this.division,
+    this.position,
+    this.grade,
+    this.statusEmployee,
+    this.manager,
+  });
+
+  factory SalesInformation.fromJson(Map<String, dynamic> json) =>
+      SalesInformation(
+        employeeId: json["employee_id"],
+        branch: json["branch"],
+        division: json["division"],
+        position: json["position"],
+        grade: json["grade"],
+        statusEmployee: json["status_employee"],
+        manager: json["manager"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "employee_id": employeeId,
+        "branch": branch,
+        "division": division,
+        "position": position,
+        "grade": grade,
+        "status_employee": statusEmployee,
+        "manager": manager,
       };
 }
