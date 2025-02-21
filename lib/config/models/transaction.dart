@@ -6,6 +6,7 @@ import 'dart:convert';
 
 import 'package:magic_power_sales/config/constant.dart';
 import 'package:magic_power_sales/config/models/product.dart';
+import 'package:magic_power_sales/config/models/user.dart';
 
 Transaction transactionFromJson(String str) =>
     Transaction.fromJson(json.decode(str));
@@ -28,6 +29,7 @@ class Transaction {
   DateTime? createdAt;
   DateTime? updatedAt;
   DateTime? publishedAt;
+  UserData? merchant;
   List<ProductHistory> products;
 
   Transaction({
@@ -46,6 +48,7 @@ class Transaction {
     this.createdAt,
     this.updatedAt,
     this.publishedAt,
+    this.merchant,
     this.products = const [],
   });
 
@@ -78,6 +81,9 @@ class Transaction {
         publishedAt: json["publishedAt"] == null
             ? null
             : DateTime.parse(json["publishedAt"]),
+        merchant: json["merchant"] == null
+            ? null
+            : UserData.fromJson(json["merchant"]),
         products: json["products"] == null
             ? []
             : List<ProductHistory>.from(
@@ -104,6 +110,7 @@ class Transaction {
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
         "publishedAt": publishedAt?.toIso8601String(),
+        "merchant": merchant?.toJson(),
         "products": List<dynamic>.from(products.map((x) => x.toJson())),
       };
 }

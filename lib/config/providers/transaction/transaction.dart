@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:magic_power_sales/config/color_assets.dart';
+import 'package:magic_power_sales/config/constant.dart';
 import 'package:magic_power_sales/config/custom_snackbar.dart';
 import 'package:magic_power_sales/config/models/distributor.dart';
 import 'package:magic_power_sales/config/models/product.dart';
@@ -9,7 +12,7 @@ import 'package:magic_power_sales/config/repositories/main_repository.dart';
 import 'package:magic_power_sales/ui_features/widgets/dialog/success.dart';
 
 class TransactionProvider extends ChangeNotifier {
-  List<Transaction> transactions = [];
+  List<Transaction> transactions = [], backupTransactions = [];
   List<Product> mainProducts = [];
   List<Distributor> distributors = [];
 
@@ -29,9 +32,44 @@ class TransactionProvider extends ChangeNotifier {
 
   Future<void> getTransaction() async {
     transactions.clear();
+    backupTransactions.clear();
     notifyListeners();
     var res = await MainRepository.getDraftTransaction();
     transactions = res;
+    backupTransactions = res;
+    notifyListeners();
+  }
+
+  Future<void> searchOrFilter({String? q, String? sortBy}) async {
+    transactions = backupTransactions;
+    if (q != null && q.isNotEmpty) {
+      String query = q.toLowerCase();
+      transactions = transactions
+          .where((e) =>
+              "${e.noInvoice}".toLowerCase().contains(query) ||
+              "${e.merchant?.fullName}".toLowerCase().contains(query))
+          .toList();
+    }
+    if (sortBy != null) {
+      if (sortBy == "scanned") {
+        transactions = transactions
+            .where((e) => e.status == StatusTransaction.scanned)
+            .toList();
+      }
+      if (sortBy == "not-scanned") {
+        transactions = transactions
+            .where((e) => e.status == StatusTransaction.notScanned)
+            .toList();
+      }
+      transactions.sort((a, b) {
+        if (sortBy == "asc") {
+          return a.createdAt!.compareTo(b.createdAt!);
+        } else {
+          return b.createdAt!.compareTo(a.createdAt!);
+        }
+      });
+    }
+    log("Length -> ${backupTransactions.length}");
     notifyListeners();
   }
 

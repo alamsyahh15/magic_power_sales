@@ -120,14 +120,42 @@ class _HomePageState extends State<HomePage> {
                 Icons.search_rounded,
                 color: ColorAsset.neutral,
               ),
-              suffixIcon: IconButton(
-                onPressed: () {},
+              suffixIcon: PopupMenuButton(
+                itemBuilder: (context) {
+                  return [
+                    const PopupMenuItem(
+                      value: "all",
+                      child: Text("Semua"),
+                    ),
+                    PopupMenuItem(
+                      value: "not-scanned",
+                      child: Text(
+                        "Not Scanned",
+                        style: TextStyle(color: ColorAsset.primary),
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: "scanned",
+                      child: Text(
+                        "Scanned",
+                        style: TextStyle(color: ColorAsset.success50),
+                      ),
+                    ),
+                  ];
+                },
+                onSelected: (val) {
+                  prov.searchOrFilter(sortBy: val);
+                },
                 icon: SvgPicture.asset(
                   Assets.filterList,
                 ),
+                color: ColorAsset.white,
               ),
               radius: 12,
               hintText: "Cari transaksi",
+              onChanged: (val) {
+                if (val != null) prov.searchOrFilter(q: val);
+              },
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20),
@@ -156,6 +184,7 @@ class _HomePageState extends State<HomePage> {
                 date: data.fakturDate?.toIso8601String(),
                 status: data.status,
                 ctn: calculationCarton,
+                merchantName: data.merchant?.fullName,
                 pcs: calculationPcs,
                 onTap: () {
                   nextScreen(DetailTransactionPage(transaction: data));

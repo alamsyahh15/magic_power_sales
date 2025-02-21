@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:magic_power_sales/config/config.dart';
+import 'package:magic_power_sales/config/data/local_db.dart';
 import 'package:magic_power_sales/ui_features/widgets/button/primary_button.dart';
 import 'package:magic_power_sales/ui_features/widgets/dialog/layout.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -47,6 +48,13 @@ class ShowQrDialog extends StatelessWidget {
                             fit: BoxFit.cover,
                           )
                         : null,
+                  ),
+                ),
+                Text(
+                  "${LocalDB.user.user?.fullName}",
+                  textAlign: TextAlign.center,
+                  style: StyleAsset.heading3SemiBold.copyWith(
+                    color: ColorAsset.neutral70,
                   ),
                 ),
                 verticalSpace(10),
