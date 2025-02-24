@@ -1,2 +1,0 @@
-/Users/alamsyah/Documents/Apps/Studioalva/magic_power_sales/android/app/.cxx/Debug/6p4k3b6q/x86_64/CMakeFiles/edit_cache.dir
-/Users/alamsyah/Documents/Apps/Studioalva/magic_power_sales/android/app/.cxx/Debug/6p4k3b6q/x86_64/CMakeFiles/rebuild_cache.dir
