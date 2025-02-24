@@ -38,7 +38,7 @@ class _ShowQrDialogState extends State<ShowQrDialog> {
   void initiateCountdown() {
     timer = Timer.periodic(const Duration(seconds: 1), (tick) {
       DateTime now = DateTime.now();
-      DateTime endTime = widget.endCountdown;
+      DateTime endTime = widget.endCountdown.toLocal();
       Duration remainingTime = endTime.difference(now);
       if (remainingTime.isNegative) {
         countdown = "Telah Berakhir";
