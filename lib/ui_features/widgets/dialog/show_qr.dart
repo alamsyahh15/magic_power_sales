@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:magic_power_sales/config/config.dart';
 import 'package:magic_power_sales/config/data/local_db.dart';
@@ -5,14 +7,61 @@ import 'package:magic_power_sales/ui_features/widgets/button/primary_button.dart
 import 'package:magic_power_sales/ui_features/widgets/dialog/layout.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-class ShowQrDialog extends StatelessWidget {
+class ShowQrDialog extends StatefulWidget {
   const ShowQrDialog({
     super.key,
     required this.value,
     this.path,
+    required this.endCountdown,
   });
   final String value;
   final String? path;
+  final DateTime endCountdown;
+
+  @override
+  State<ShowQrDialog> createState() => _ShowQrDialogState();
+}
+
+class _ShowQrDialogState extends State<ShowQrDialog> {
+  Timer? timer;
+  String countdown = "";
+
+  String _formatDuration(Duration duration) {
+    // int days = duration.inDays;
+    // int hours = duration.inHours % 24;
+    int minutes = duration.inMinutes % 60;
+    int seconds = duration.inSeconds % 60;
+
+    return "$minutes Menit :  $seconds Detik";
+  }
+
+  void initiateCountdown() {
+    timer = Timer.periodic(const Duration(seconds: 1), (tick) {
+      DateTime now = DateTime.now();
+      DateTime endTime = widget.endCountdown;
+      Duration remainingTime = endTime.difference(now);
+      if (remainingTime.isNegative) {
+        timer?.cancel();
+      } else {
+        countdown = _formatDuration(remainingTime);
+      }
+      setState(() {});
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initiateCountdown();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    timer?.cancel();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +91,9 @@ class ShowQrDialog extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: ColorAsset.accent,
                     shape: BoxShape.circle,
-                    image: path != null
+                    image: widget.path != null
                         ? DecorationImage(
-                            image: NetworkImage(path!),
+                            image: NetworkImage(widget.path!),
                             fit: BoxFit.cover,
                           )
                         : null,
@@ -59,7 +108,7 @@ class ShowQrDialog extends StatelessWidget {
                 ),
                 verticalSpace(10),
                 QrImageView(
-                  data: value,
+                  data: widget.value,
                   size: 240,
                 ),
                 verticalSpace(10),
@@ -70,6 +119,8 @@ class ShowQrDialog extends StatelessWidget {
                   ),
                   textAlign: TextAlign.center,
                 ),
+                const SizedBox(height: 16),
+                Text(countdown),
               ],
             ),
           ),

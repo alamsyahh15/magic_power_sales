@@ -76,10 +76,13 @@ class DetailTransactionPage extends StatelessWidget {
                             topRight: Radius.circular(10)),
                       ),
                       builder: (context) {
+                        DateTime endTime = transaction.createdAt!
+                            .add(const Duration(minutes: 30));
                         return ShowQrDialog(
                           path: formatPhotoUrl(
                               LocalDB.user.user?.profilePic?.url),
-                          value: "${transaction.noInvoice}#${transaction.id}",
+                          value: "$endTime#${transaction.id}",
+                          endCountdown: endTime,
                         );
                       },
                     );

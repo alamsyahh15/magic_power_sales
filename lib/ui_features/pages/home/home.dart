@@ -166,7 +166,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            ...prov.transactions.map((data) {
+            ...prov.transactions.reversed.map((data) {
               int calculationCarton = 0;
               int calculationPcs = 0;
               for (int i = 0; i < data.products.length; i++) {
