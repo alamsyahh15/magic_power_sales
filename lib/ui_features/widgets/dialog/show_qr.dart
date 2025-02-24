@@ -41,6 +41,7 @@ class _ShowQrDialogState extends State<ShowQrDialog> {
       DateTime endTime = widget.endCountdown;
       Duration remainingTime = endTime.difference(now);
       if (remainingTime.isNegative) {
+        countdown = "Telah Berakhir";
         timer?.cancel();
       } else {
         countdown = _formatDuration(remainingTime);
@@ -120,7 +121,18 @@ class _ShowQrDialogState extends State<ShowQrDialog> {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 16),
-                Text(countdown),
+                Text(
+                  "Waktu scan tinggal tersisa :",
+                  style: StyleAsset.paragraph1.copyWith(
+                    color: ColorAsset.neutral40,
+                  ),
+                ),
+                Text(
+                  countdown,
+                  style: StyleAsset.paragraph1.copyWith(
+                    color: ColorAsset.error30,
+                  ),
+                ),
               ],
             ),
           ),
