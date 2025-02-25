@@ -11,6 +11,7 @@ import 'package:magic_power_sales/ui_features/pages/profile/change_password.dart
 import 'package:magic_power_sales/ui_features/pages/profile/employee_account.dart';
 import 'package:magic_power_sales/ui_features/pages/profile/personal_account.dart';
 import 'package:magic_power_sales/ui_features/widgets/tile/menu_tile.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -22,6 +23,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   bool active = false;
   List<Map<String, dynamic>> menus = [];
+  SharedPreferences? prefs;
   void updatePhotoProfile() async {
     var pick = await FilePickerHelper.pickFile(fileType: FileType.image);
     if (pick.isNotEmpty) {
@@ -36,10 +38,7 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
+  void initialized() async {
     menus = [
       {
         "title": "Info Personal",
@@ -90,6 +89,17 @@ class _ProfilePageState extends State<ProfilePage> {
         "trailing": const SizedBox(),
       },
     ];
+    prefs = await SharedPreferences.getInstance();
+    active = prefs?.getBool("notification") ?? false;
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    initialized();
   }
 
   @override
@@ -214,6 +224,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       onChanged: (e) {
                         setState(() {
                           active = !active;
+                          prefs?.setBool("notification", active);
                         });
                       },
                     )
