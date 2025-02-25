@@ -1,9 +1,11 @@
 import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:magic_power_sales/config/constant.dart';
 import 'package:magic_power_sales/config/data/local_db.dart';
 import 'package:magic_power_sales/config/helpers/api_base_helper.dart';
+import 'package:magic_power_sales/config/helpers/helpers.dart';
 import 'package:magic_power_sales/config/helpers/log_helper.dart';
 import 'package:magic_power_sales/config/models/response_data.dart';
 import 'package:magic_power_sales/config/models/user.dart';
@@ -125,6 +127,7 @@ class AuthRepository {
     const String endpoint = '/auth/profile-edit';
     final Map<String, dynamic> params = data;
     ResponseData? responseData;
+    params.removeWhere((key, val) => isEmpty(val));
     try {
       loading.value = true;
       responseData = await _helper.put(url: endpoint, data: params);

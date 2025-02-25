@@ -72,13 +72,15 @@ class _EmployeeAccountPageState extends State<EmployeeAccountPage> {
       Map<String, dynamic>? request = {};
       if (LocalDB.user.user != null) {
         UserData user = LocalDB.user.user!;
-        user.salesInformation?.employeeId = idController.text;
-        user.salesInformation?.branch = branchController.text;
-        user.salesInformation?.division = divisionController.text;
-        user.salesInformation?.position = positionController.text;
-        user.salesInformation?.grade = gradeController.text;
-        user.salesInformation?.statusEmployee = statusEmployeeController.text;
-        user.salesInformation?.manager = managerController.text;
+        user.salesInformation = SalesInformation(
+          employeeId: idController.text,
+          branch: branchController.text,
+          division: divisionController.text,
+          position: positionController.text,
+          grade: gradeController.text,
+          statusEmployee: statusEmployeeController.text,
+          manager: managerController.text,
+        );
         request = user.requestEmployee();
       }
       var res = await AuthRepository.editProfile(request);
