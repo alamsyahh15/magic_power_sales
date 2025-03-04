@@ -43,6 +43,12 @@
 	</array>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>This app requires access to your device's camera to enable you to capture photos and videos within the app. We use the camera for various features such as scanning documents, taking profile pictures, or recording videos for in-app content. Your privacy and security are paramount, and we do not access or store your media without your explicit consent.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>To provide you with a seamless experience, this app requests access to your device's microphone. We utilize the microphone for functionalities such as voice messaging, voice recording, or enabling voice commands. Rest assured, your privacy is of utmost importance to us, and we do not listen to or store audio data unless explicitly authorized by you.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>In order to enhance your experience, this app requires access to your photo library. We may request to view, select, or upload photos from your library for various purposes such as setting profile pictures, attaching images to messages, or creating content within the app. Your photos remain private, and we do not share or access them without your consent.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 </dict>
