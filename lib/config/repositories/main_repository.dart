@@ -1,5 +1,6 @@
 import 'package:magic_power_sales/config/helpers/api_base_helper.dart';
 import 'package:magic_power_sales/config/helpers/log_helper.dart';
+import 'package:magic_power_sales/config/models/customer.dart';
 import 'package:magic_power_sales/config/models/distributor.dart';
 import 'package:magic_power_sales/config/models/product.dart';
 import 'package:magic_power_sales/config/models/response_data.dart';
@@ -127,5 +128,37 @@ class MainRepository {
         params: params,
       );
     }
+  }
+
+  static Future<List<Customer>> getCustomers({
+    String? distributorId,
+    String? areaCode,
+    int? page = 1,
+  }) async {
+    const String endpoint = '/customers';
+    Map<String, dynamic> params = {
+      "distribution_id": distributorId ?? "",
+      "area_code": areaCode ?? "",
+      "page": page,
+      "limit": 10,
+    };
+    ResponseData? responseData;
+    List<Customer> customers = [];
+    // try {
+    responseData = await _helper.get(url: endpoint, data: params);
+    if (responseData.code == 200) {
+      customers = List<Customer>.from(
+          responseData.data['data'].map((e) => Customer.fromJson(e)));
+    }
+    return customers;
+    // } catch (error) {
+    //   throw loge(
+    //     error: error,
+    //     endpoint: endpoint,
+    //     method: Method.get,
+    //     responseData: responseData,
+    //     params: params,
+    //   );
+    // }
   }
 }
