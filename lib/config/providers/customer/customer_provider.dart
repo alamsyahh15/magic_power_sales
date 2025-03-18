@@ -13,7 +13,7 @@ class CustomerProvider extends ChangeNotifier {
     currenPage = 1;
     _customerList.clear();
     _customerList.addAll(await MainRepository.getCustomers(
-        areaCode: distributorId, distributorId: areaCode));
+        areaCode: areaCode, distributorId: distributorId));
     notifyListeners();
   }
 

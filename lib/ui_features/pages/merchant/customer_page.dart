@@ -54,7 +54,18 @@ class _CustomersPageState extends State<CustomersPage> {
   @override
   Widget build(BuildContext context) {
     if (!formIsFilled) {
-      return const _DistributorForm();
+      return _DistributorForm(
+        onSubmit: (distributorId, codeArea) {
+          SharedPreferences.getInstance().then(
+            (prefs) {
+              prefs.setString("distributor_id", distributorId);
+              prefs.setString("area_code", codeArea);
+            },
+          );
+          formIsFilled = true;
+          setState(() {});
+        },
+      );
     }
 
     return RefreshIndicator(
@@ -153,9 +164,10 @@ class _CustomersPageState extends State<CustomersPage> {
 }
 
 class _DistributorForm extends StatelessWidget {
-  const _DistributorForm();
+  const _DistributorForm({required this.onSubmit});
   static TextEditingController distributorIdController =
       TextEditingController();
+  final Function(String distributorId, String codeArea) onSubmit;
   static TextEditingController areaCodeController = TextEditingController();
 
   @override
@@ -183,6 +195,14 @@ class _DistributorForm extends StatelessWidget {
             label: "Submit",
             onTap: () {
               final provider = context.read<CustomerProvider>();
+              if (distributorIdController.text.isEmpty ||
+                  areaCodeController.text.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text("Silahkan isi semua form"),
+                ));
+                return;
+              }
+              onSubmit(distributorIdController.text, areaCodeController.text);
               provider.getCustomerList(
                 distributorId: distributorIdController.text,
                 areaCode: areaCodeController.text,
