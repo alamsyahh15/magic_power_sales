@@ -136,13 +136,15 @@ class _ShowQrDialogState extends State<ShowQrDialog> {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: PrimaryButton(
-              label: "Tutup",
-              onTap: () {
-                backScreen();
-              },
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: PrimaryButton(
+                label: "Tutup",
+                onTap: () {
+                  backScreen();
+                },
+              ),
             ),
           ),
         ],

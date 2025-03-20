@@ -24,6 +24,13 @@ class _LoginPageState extends State<LoginPage> {
   bool rememberMe = false;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loading.value = false;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
