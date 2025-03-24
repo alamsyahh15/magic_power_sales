@@ -143,15 +143,15 @@ class _CustomersPageState extends State<CustomersPage> {
                       Row(
                         children: [
                           TextColumn(
-                            title: "Progress Level",
+                            title: "Progress\nLevel",
                             subtitle: "${data.totalCartons ?? 0} / 32",
                           ),
                           TextColumn(
-                            title: "Progress Spray",
+                            title: "Progress\nSpray",
                             subtitle: "${data.sprayPcs ?? 0} / 240",
                           ),
                           TextColumn(
-                            title: "Progress Tissue",
+                            title: "Progress\nTissue",
                             subtitle: "${data.tissuePcs ?? 0} / 420",
                           ),
                         ],

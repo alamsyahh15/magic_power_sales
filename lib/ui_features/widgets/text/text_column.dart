@@ -7,6 +7,7 @@ class TextColumn extends StatelessWidget {
   final TextStyle? titleStyle, subtitleStyle;
   final int? maxLines;
   final bool useExpanded;
+  final double? spacing;
   const TextColumn({
     super.key,
     required this.title,
@@ -15,6 +16,7 @@ class TextColumn extends StatelessWidget {
     this.subtitleStyle,
     this.maxLines,
     this.useExpanded = true,
+    this.spacing,
   });
 
   @override
@@ -23,6 +25,7 @@ class TextColumn extends StatelessWidget {
       return Expanded(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: spacing ?? 2,
           children: [
             Text(
               title,
@@ -41,6 +44,7 @@ class TextColumn extends StatelessWidget {
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: 2,
       children: [
         Text(
           title,
