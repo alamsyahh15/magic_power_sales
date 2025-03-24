@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:magic_power_sales/config/config.dart';
+import 'package:magic_power_sales/config/constant.dart';
 import 'package:magic_power_sales/config/models/area_code.dart';
 import 'package:magic_power_sales/config/providers/customer/customer_provider.dart';
 import 'package:magic_power_sales/config/repositories/main_repository.dart';
@@ -108,6 +109,14 @@ class _CustomersPageState extends State<CustomersPage> {
               itemCount: value.customerList.length,
               itemBuilder: (context, index) {
                 final data = value.customerList[index];
+                int level = data.level ?? 1;
+                targetLevel(int level) => listTargetLevel
+                    .where((e) => e.level == (level == 0 ? 1 : level))
+                    .first;
+                int totalkarton = ((data.totalCartons ?? 0) +
+                    (data.totalCartonsPending ?? 0));
+                totalkarton -= (targetLevel(level).totalTarget as int);
+                if (totalkarton < 0) totalkarton = 0;
                 return Container(
                   margin: const EdgeInsets.only(top: 16),
                   padding: const EdgeInsets.all(16),
@@ -139,17 +148,24 @@ class _CustomersPageState extends State<CustomersPage> {
                       verticalSpace(10),
                       Row(
                         children: [
-                          TextColumn(
+                          TextColumn.progress(
                             title: "Progress\nLevel",
-                            subtitle: "${data.totalCartons ?? 0} / 32",
+                            subtitle: "",
+                            progres: totalkarton,
+                            total: (targetLevel(level == 7 ? 7 : level + 1)
+                                .target),
                           ),
                           TextColumn(
                             title: "Progress\nSpray",
-                            subtitle: "${data.sprayPcs ?? 0} / 240",
+                            subtitle: "",
+                            progres: data.sprayPcs ?? 0,
+                            total: 240,
                           ),
                           TextColumn(
                             title: "Progress\nTissue",
-                            subtitle: "${data.tissuePcs ?? 0} / 420",
+                            subtitle: "",
+                            progres: data.tissuePcs ?? 0,
+                            total: 420,
                           ),
                         ],
                       ),

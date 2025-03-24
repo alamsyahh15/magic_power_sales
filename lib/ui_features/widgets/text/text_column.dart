@@ -8,6 +8,8 @@ class TextColumn extends StatelessWidget {
   final int? maxLines;
   final bool useExpanded;
   final double? spacing;
+  final int? progres;
+  final int? total;
   const TextColumn({
     super.key,
     required this.title,
@@ -17,6 +19,21 @@ class TextColumn extends StatelessWidget {
     this.maxLines,
     this.useExpanded = true,
     this.spacing,
+    this.progres,
+    this.total,
+  });
+
+  const TextColumn.progress({
+    super.key,
+    required this.title,
+    required this.subtitle,
+    this.titleStyle,
+    this.subtitleStyle,
+    this.maxLines,
+    this.useExpanded = true,
+    this.spacing,
+    this.progres,
+    this.total,
   });
 
   @override
@@ -32,11 +49,27 @@ class TextColumn extends StatelessWidget {
               maxLines: maxLines,
               style: titleStyle ?? StyleAsset.paragraph2,
             ),
-            Text(
-              subtitle,
-              maxLines: maxLines,
-              style: titleStyle ?? StyleAsset.paragraph1Bold,
-            ),
+            if (total == null && progres == null)
+              Text(
+                subtitle,
+                maxLines: maxLines,
+                style: titleStyle ?? StyleAsset.paragraph1Bold,
+              ),
+            if (total != null && progres != null)
+              RichText(
+                text: TextSpan(
+                  text: "$progres / ",
+                  style: StyleAsset.paragraph1.copyWith(color: Colors.black),
+                  children: [
+                    TextSpan(
+                      text: "$total",
+                      style: StyleAsset.paragraph1Bold
+                          .copyWith(color: Colors.black),
+                    ),
+                  ],
+                ),
+                maxLines: maxLines,
+              ),
           ],
         ),
       );
@@ -51,11 +84,28 @@ class TextColumn extends StatelessWidget {
           maxLines: maxLines,
           style: titleStyle ?? StyleAsset.paragraph2,
         ),
-        Text(
-          subtitle,
-          maxLines: maxLines,
-          style: titleStyle ?? StyleAsset.paragraph1Bold,
-        ),
+        if (total == null && progres == null)
+          Text(
+            subtitle,
+            maxLines: maxLines,
+            style: titleStyle ?? StyleAsset.paragraph1Bold,
+          ),
+        if (total != null && progres != null)
+          RichText(
+            text: TextSpan(
+              text: "$progres / ",
+              style: StyleAsset.paragraph1.copyWith(color: Colors.black),
+              children: [
+                TextSpan(
+                  text: "$total",
+                  style: StyleAsset.paragraph1Bold.copyWith(
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
+            maxLines: maxLines,
+          ),
       ],
     );
   }

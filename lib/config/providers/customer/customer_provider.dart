@@ -9,8 +9,10 @@ class CustomerProvider extends ChangeNotifier {
   bool loadMore = false;
   String distributorId = "";
   String areaCode = "";
+  bool canLoadMore = true;
 
   void initialized({String? distributor, String? code}) async {
+    canLoadMore = true;
     distributorId = distributor ?? "";
     areaCode = code ?? "";
     currenPage = 1;
@@ -28,15 +30,19 @@ class CustomerProvider extends ChangeNotifier {
   }
 
   Future<void> pagginateCustomer() async {
-    loadMore = true;
-    notifyListeners();
-    _customerList.addAll(await MainRepository.getCustomers(
-      page: currenPage + 1,
-      areaCode: areaCode,
-      distributorId: distributorId,
-    ));
-    currenPage++;
-    loadMore = false;
-    notifyListeners();
+    if (canLoadMore) {
+      loadMore = true;
+      notifyListeners();
+      final result = await MainRepository.getCustomers(
+        page: currenPage + 1,
+        areaCode: areaCode,
+        distributorId: distributorId,
+      );
+      canLoadMore = result.isNotEmpty;
+      _customerList.addAll(result);
+      currenPage++;
+      loadMore = false;
+      notifyListeners();
+    }
   }
 }
