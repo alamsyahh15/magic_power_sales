@@ -7,9 +7,19 @@ class CustomerProvider extends ChangeNotifier {
   List<Customer> get customerList => _customerList;
   int currenPage = 1;
   bool loadMore = false;
+  String distributorId = "";
+  String areaCode = "";
 
-  Future<void> getCustomerList(
-      {String? distributorId, String? areaCode}) async {
+  void initialized({String? distributor, String? code}) async {
+    distributorId = distributor ?? "";
+    areaCode = code ?? "";
+    currenPage = 1;
+    _customerList.clear();
+    await getCustomerList();
+    notifyListeners();
+  }
+
+  Future<void> getCustomerList() async {
     currenPage = 1;
     _customerList.clear();
     _customerList.addAll(await MainRepository.getCustomers(
@@ -22,6 +32,8 @@ class CustomerProvider extends ChangeNotifier {
     notifyListeners();
     _customerList.addAll(await MainRepository.getCustomers(
       page: currenPage + 1,
+      areaCode: areaCode,
+      distributorId: distributorId,
     ));
     currenPage++;
     loadMore = false;

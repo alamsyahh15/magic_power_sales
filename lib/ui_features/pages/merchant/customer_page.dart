@@ -36,10 +36,7 @@ class _CustomersPageState extends State<CustomersPage> {
     // formIsFilled = true; // uncomment this line to force enable form
     // setState(() {}); // uncomment this line to force enable form
     if (formIsFilled) {
-      provider.getCustomerList(
-        distributorId: distributorId,
-        areaCode: areaCodeId,
-      );
+      provider.initialized(distributor: distributorId, code: areaCodeId);
     }
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
@@ -221,7 +218,7 @@ class _DistributorFormState extends State<_DistributorForm> {
           prefs.setString("area_code", area);
         },
       );
-      provider.getCustomerList(distributorId: distributor, areaCode: area);
+      provider.initialized(distributor: distributor, code: area);
     }
   }
 
