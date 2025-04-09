@@ -22,22 +22,21 @@ class CustomersPage extends StatefulWidget {
 class _CustomersPageState extends State<CustomersPage> {
   bool formIsFilled = false;
   ScrollController scrollController = ScrollController();
-  String? distributorId, areaCodeId;
+  String? areaCodeId, areaName;
   late CustomerProvider provider;
 
   void initialized() async {
     provider = context.read<CustomerProvider>();
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    distributorId = prefs.getString("distributor_id");
+    areaName = prefs.getString("area_name");
     areaCodeId = prefs.getString("area_code");
-    if (distributorId != null && areaCodeId != null) {
+    if (areaCodeId != null) {
       formIsFilled = true;
       setState(() {});
     }
-    // formIsFilled = true; // uncomment this line to force enable form
-    // setState(() {}); // uncomment this line to force enable form
+
     if (formIsFilled) {
-      provider.initialized(distributor: distributorId, code: areaCodeId);
+      provider.initialized(code: areaCodeId);
     }
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
@@ -57,8 +56,8 @@ class _CustomersPageState extends State<CustomersPage> {
   Widget build(BuildContext context) {
     if (!formIsFilled) {
       return _DistributorForm(
-        onSubmit: (distributor, area) {
-          distributorId = distributor;
+        onSubmit: (nameArea, area) {
+          areaName = nameArea;
           areaCodeId = area;
           formIsFilled = true;
           setState(() {});
@@ -78,17 +77,13 @@ class _CustomersPageState extends State<CustomersPage> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  !isEmpty(distributorId)
-                      ? (distributorId ?? "")
-                      : !isEmpty(areaCodeId)
-                          ? (areaCodeId ?? "")
-                          : "",
+                  !isEmpty(areaCodeId) ? (areaCodeId ?? "") : "",
                   style: StyleAsset.heading4SemiBold.copyWith(
                     color: ColorAsset.primary,
                   ),
                 ),
-                if (!isEmpty(areaCodeId) && !isEmpty(distributorId))
-                  Text(areaCodeId ?? "", style: StyleAsset.paragraph2),
+                if (!isEmpty(areaCodeId))
+                  Text(areaName ?? "", style: StyleAsset.paragraph2),
                 Consumer<CustomerProvider>(
                   builder: (BuildContext context, value, Widget? child) {
                     return Text(
@@ -183,20 +178,18 @@ class _CustomersPageState extends State<CustomersPage> {
 
 class _DistributorForm extends StatefulWidget {
   const _DistributorForm({required this.onSubmit});
-  final Function(String distributorId, String codeArea) onSubmit;
+  final Function(String areaName, String codeArea) onSubmit;
 
   @override
   State<_DistributorForm> createState() => _DistributorFormState();
 }
 
 class _DistributorFormState extends State<_DistributorForm> {
-  TextEditingController distributorIdController = TextEditingController();
   TextEditingController areaCodeController = TextEditingController();
   List<AreaCode> areaCodeList = [];
   void submit() {
-    String distributor = distributorIdController.text;
     String area = areaCodeController.text;
-    if (distributor.isEmpty & area.isEmpty) {
+    if (area.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("Silahkan isi salah satu form"),
       ));
@@ -204,22 +197,9 @@ class _DistributorFormState extends State<_DistributorForm> {
     } else {
       log("Area Code List: ${areaCodeList.length}");
       AreaCode? areaCode;
-      if (distributor.isNotEmpty && area.isNotEmpty) {
-        final result = areaCodeList.where((e) =>
-            e.idArea.toLowerCase() == area.toLowerCase() &&
-            e.distributionId.toLowerCase() == distributor.toLowerCase());
-        if (result.isNotEmpty) areaCode = result.first;
-      }
-      if (distributor.isEmpty) {
-        final result = areaCodeList
-            .where((e) => e.idArea.toLowerCase() == area.toLowerCase());
-        if (result.isNotEmpty) areaCode = result.first;
-      }
-      if (area.isEmpty) {
-        final result = areaCodeList.where(
-            (e) => e.distributionId.toLowerCase() == distributor.toLowerCase());
-        if (result.isNotEmpty) areaCode = result.first;
-      }
+      final result = areaCodeList
+          .where((e) => e.idArea.toLowerCase() == area.toLowerCase());
+      if (result.isNotEmpty) areaCode = result.first;
       if (areaCode == null) {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text("Data tidak ditemukan atau tidak match"),
@@ -227,14 +207,14 @@ class _DistributorFormState extends State<_DistributorForm> {
         return;
       }
       final provider = context.read<CustomerProvider>();
-      widget.onSubmit(distributor, area);
+      widget.onSubmit(areaCode.name, area);
       SharedPreferences.getInstance().then(
         (prefs) {
-          prefs.setString("distributor_id", distributor);
           prefs.setString("area_code", area);
+          prefs.setString("area_name", "${areaCode?.name}");
         },
       );
-      provider.initialized(distributor: distributor, code: area);
+      provider.initialized(code: area);
     }
   }
 
@@ -264,10 +244,10 @@ class _DistributorFormState extends State<_DistributorForm> {
             style: StyleAsset.heading3Bold.copyWith(color: ColorAsset.primary),
           ),
           const SizedBox(height: 16),
-          TextFieldPrimary(
-            controller: distributorIdController,
-            label: "ID Distributor",
-          ),
+          // TextFieldPrimary(
+          //   controller: distributorIdController,
+          //   label: "ID Distributor",
+          // ),
           TextFieldPrimary(
             controller: areaCodeController,
             label: "Kode Area",

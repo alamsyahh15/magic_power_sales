@@ -53,7 +53,7 @@ class LocalDB {
   static Future<void> logout() async {
     await _prefs.remove('user');
     _prefs.remove('area_code');
-    _prefs.remove('distributor_id');
+    _prefs.remove('area_name');
     isLoggedIn = false;
   }
 
