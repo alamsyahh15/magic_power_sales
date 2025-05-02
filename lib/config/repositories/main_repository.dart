@@ -57,17 +57,29 @@ class MainRepository {
 
   static Future<List<Transaction>> getDraftTransaction() async {
     const String endpoint = '/draft-transactions';
-    final Map<String, dynamic> params = {
+    Map<String, dynamic> params = {
       "populate[0]": "merchant",
-      "populate[1]": "products.product"
+      "populate[1]": "products.product",
+      "pagination[pageSize]": 25
     };
     ResponseData? responseData;
+    int page = 1;
+    int pageCount = 1;
+    List<Transaction> transactions = [];
+
     try {
-      responseData = await _helper.get(url: endpoint, data: params);
-      if (responseData.code == 200) {
-        return List<Transaction>.from(responseData.data["data"]["results"]
-            .map((e) => Transaction.fromJson(e)));
-      }
+      do {
+        params['pagination[page]'] = page;
+        responseData = await _helper.get(url: endpoint, data: params);
+        if (responseData.code == 200) {
+          final temp = List<Transaction>.from(responseData.data["data"]
+                  ["results"]
+              .map((e) => Transaction.fromJson(e)));
+          transactions.addAll(temp);
+          pageCount = responseData.data['data']['pagination']['pageCount'];
+          page++;
+        }
+      } while (page <= pageCount);
     } catch (error) {
       throw loge(
         error: error,
@@ -77,7 +89,7 @@ class MainRepository {
         params: params,
       );
     }
-    return [];
+    return transactions;
   }
 
   static Future<List<Product>> getProducts() async {
@@ -169,16 +181,25 @@ class MainRepository {
     int? page = 1,
   }) async {
     const String endpoint = '/area-codes';
-    Map<String, dynamic> params = {};
+    final Map<String, dynamic> params = {"pagination[pageSize]": 100};
     ResponseData? responseData;
-    List<AreaCode> customers = [];
+    List<AreaCode> areaCodes = [];
+    int page = 1;
+    int pageCount = 1;
     try {
-      responseData = await _helper.get(url: endpoint, data: params);
-      if (responseData.code == 200) {
-        customers = List<AreaCode>.from(
-            responseData.data['data'].map((e) => AreaCode.fromJson(e)));
-      }
-      return customers;
+      do {
+        params['pagination[page]'] = page;
+        responseData = await _helper.get(url: endpoint, data: params);
+        if (responseData.code == 200) {
+          final temp = List<AreaCode>.from(
+              responseData.data['data'].map((e) => AreaCode.fromJson(e)));
+          areaCodes.addAll(temp);
+          pageCount = responseData.data['meta']['pagination']['pageCount'];
+          page++;
+        }
+      } while (page <= pageCount);
+      areaCodes.sort((a, b) => a.name.compareTo(b.name));
+      return areaCodes;
     } catch (error) {
       throw loge(
         error: error,

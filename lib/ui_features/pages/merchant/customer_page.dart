@@ -104,7 +104,7 @@ class _CustomersPageState extends State<CustomersPage> {
               itemCount: value.customerList.length,
               itemBuilder: (context, index) {
                 final data = value.customerList[index];
-                int level = data.level ?? 1;
+                int level = (data.level ?? 1) >= 5 ? 5 : (data.level ?? 1);
                 targetLevel(int level) => listTargetLevel
                     .where((e) => e.level == (level == 0 ? 1 : level))
                     .first;
@@ -147,7 +147,7 @@ class _CustomersPageState extends State<CustomersPage> {
                             title: "Progress\nLevel",
                             subtitle: "",
                             progres: totalkarton,
-                            total: (targetLevel(level == 7 ? 7 : level + 1)
+                            total: (targetLevel(level == 5 ? 5 : level + 1)
                                 .target),
                           ),
                           TextColumn(
