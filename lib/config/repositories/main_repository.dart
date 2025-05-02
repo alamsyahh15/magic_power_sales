@@ -60,7 +60,7 @@ class MainRepository {
     Map<String, dynamic> params = {
       "populate[0]": "merchant",
       "populate[1]": "products.product",
-      "pagination[pageSize]": 25
+      "pagination[pageSize]": 100
     };
     ResponseData? responseData;
     int page = 1;
