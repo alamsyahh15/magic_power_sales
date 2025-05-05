@@ -51,12 +51,6 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       TextFieldPrimary(
                         controller: usernameControler,
-                        validator: (e) {
-                          if (e != null && e.isEmpty) {
-                            return "Kolom username/email tidak boleh kosong";
-                          }
-                          return null;
-                        },
                         label: "Username/Email",
                         hintText: "Masukkan username atau email",
                       ),
