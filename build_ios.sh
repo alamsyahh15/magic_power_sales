@@ -1,4 +1,4 @@
-flutter build ipa
+# flutter build ipa
 
 IPA_PATH="build/ios/ipa/Magic Power Sales.ipa"
 
