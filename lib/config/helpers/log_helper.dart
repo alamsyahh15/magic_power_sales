@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:magic_power_sales/config/constant.dart';
 import 'package:magic_power_sales/config/custom_snackbar.dart';
 import 'package:magic_power_sales/config/helpers/api_base_helper.dart';
@@ -120,11 +121,11 @@ Future<void> sendLog({
   errorData += "\nParams: ${error.requestOptions.queryParameters}";
   errorData += "\nResponse: ${error.response}";
   log("Send Error Log: ", error: errorData);
-  // await FirebaseCrashlytics.instance.recordError(
-  //   errorData,
-  //   error.stackTrace,
-  //   reason: 'Http/DioError [Send Log]',
-  //   information: [],
-  //   printDetails: true,
-  // );
+  await FirebaseCrashlytics.instance.recordError(
+    errorData,
+    error.stackTrace,
+    reason: 'Http/DioError [Send Log]',
+    information: [],
+    printDetails: true,
+  );
 }

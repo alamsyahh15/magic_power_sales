@@ -2,10 +2,12 @@ import 'package:flutter/material.dart' hide TextButton;
 import 'package:flutter/services.dart';
 import 'package:magic_power_sales/config/config.dart';
 import 'package:magic_power_sales/config/data/local_db.dart';
+import 'package:magic_power_sales/config/providers/setting/setting_provider.dart';
 import 'package:magic_power_sales/ui_features/pages/auth/login.dart';
 import 'package:magic_power_sales/ui_features/pages/auth/register.dart';
 import 'package:magic_power_sales/ui_features/widgets/button/primary_button.dart';
 import 'package:magic_power_sales/ui_features/widgets/button/text_button.dart';
+import 'package:provider/provider.dart';
 
 class OnBoardingPage extends StatefulWidget {
   const OnBoardingPage({super.key});
@@ -19,6 +21,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    context.read<SettingProvider>().initialized();
     Future.delayed(const Duration(milliseconds: 500)).whenComplete(
       () => LocalDB.checkActive(),
     );

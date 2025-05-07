@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:magic_power_sales/config/config.dart';
 import 'package:magic_power_sales/config/constant.dart';
 import 'package:magic_power_sales/config/custom_snackbar.dart';
@@ -50,13 +51,13 @@ class ApiBaseHelper {
         }
 
         ///? ======= Implement send to crashlytics ==========
-        // await FirebaseCrashlytics.instance.recordError(
-        //   e.response?.statusMessage,
-        //   StackTrace.current,
-        //   reason: 'Http/DioError',
-        //   information: [],
-        //   printDetails: true,
-        // );
+        await FirebaseCrashlytics.instance.recordError(
+          e.response?.statusMessage,
+          StackTrace.current,
+          reason: 'Http/DioError',
+          information: [],
+          printDetails: true,
+        );
 
         return handler.next(e);
       }

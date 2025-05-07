@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "97590623064",
+    "project_id": "debugging-project-452bc",
+    "storage_bucket": "debugging-project-452bc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:97590623064:android:be9084227bbeb8590b832d",
+        "android_client_info": {
+          "package_name": "co.magicpower.sales"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCA2DkDvrFqUZKXoDuqZoXdn1yKvKuIHgU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:97590623064:android:2fbd09ed17b823b40b832d",
+        "android_client_info": {
+          "package_name": "com.magicpower.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCA2DkDvrFqUZKXoDuqZoXdn1yKvKuIHgU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:magic_power_sales/config/config.dart';
 import 'package:magic_power_sales/config/providers/banner/banner.dart';
 import 'package:magic_power_sales/config/providers/customer/customer_provider.dart';
+import 'package:magic_power_sales/config/providers/setting/setting_provider.dart';
 import 'package:magic_power_sales/config/providers/transaction/transaction.dart';
 import 'package:magic_power_sales/ui_features/pages/onboarding/onboarding.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +18,7 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => BannerProvider()),
         ChangeNotifierProvider(create: (_) => TransactionProvider()),
         ChangeNotifierProvider(create: (_) => CustomerProvider()),
+        ChangeNotifierProvider(create: (_) => SettingProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
