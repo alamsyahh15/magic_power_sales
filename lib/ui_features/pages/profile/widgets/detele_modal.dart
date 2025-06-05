@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:magic_power_sales/config/color_assets.dart';
+import 'package:magic_power_sales/config/custom_snackbar.dart';
 import 'package:magic_power_sales/config/data/local_db.dart';
 import 'package:magic_power_sales/config/navigation_services.dart';
 import 'package:magic_power_sales/config/repositories/auth_repository.dart';
@@ -42,6 +43,7 @@ class _DeleteAccountModalViewState extends State<DeleteAccountModalView> {
     FocusScope.of(context).unfocus();
     final user = LocalDB.user.user;
     setState(() => isLoading = true);
+
     await AuthRepository.editProfile({
       "username": "${user?.username}",
       "email": "deleted-${user?.email}",
@@ -53,6 +55,7 @@ class _DeleteAccountModalViewState extends State<DeleteAccountModalView> {
     setState(() => isLoading = false);
     backScreen();
     LocalDB.logout();
+    showInSnackBar("Success Delete Account!");
   }
 
   @override
