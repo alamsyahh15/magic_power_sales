@@ -12,7 +12,8 @@ class MenuTile extends StatelessWidget {
     this.divider = true,
     this.onTap,
   });
-  final String title, icon;
+  final String title;
+  final dynamic icon;
   final TextStyle? style;
   final Widget? trailing;
   final bool divider;
@@ -41,7 +42,7 @@ class MenuTile extends StatelessWidget {
         ),
         child: ListTile(
           contentPadding: const EdgeInsets.symmetric(horizontal: 0),
-          leading: SvgPicture.asset(icon),
+          leading: icon is String ? SvgPicture.asset(icon) : icon,
           title: Text(
             title,
             style: style ??

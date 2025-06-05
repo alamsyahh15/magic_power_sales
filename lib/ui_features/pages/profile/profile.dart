@@ -10,6 +10,7 @@ import 'package:magic_power_sales/ui_features/pages/others/tnc_page.dart';
 import 'package:magic_power_sales/ui_features/pages/profile/change_password.dart';
 import 'package:magic_power_sales/ui_features/pages/profile/employee_account.dart';
 import 'package:magic_power_sales/ui_features/pages/profile/personal_account.dart';
+import 'package:magic_power_sales/ui_features/pages/profile/widgets/detele_modal.dart';
 import 'package:magic_power_sales/ui_features/widgets/tile/menu_tile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -78,6 +79,15 @@ class _ProfilePageState extends State<ProfilePage> {
         }
       },
       {
+        "title": "Delete Account",
+        "style": StyleAsset.paragraph1SemiBold.copyWith(
+          color: ColorAsset.primary,
+        ),
+        "onTap": () => DeleteAccountModal.show(context),
+        "icon": const Icon(Icons.delete_outline_rounded, color: Colors.red),
+        "trailing": const SizedBox(),
+      },
+      {
         "title": "Keluar",
         "style": StyleAsset.paragraph1SemiBold.copyWith(
           color: ColorAsset.primary,
@@ -98,7 +108,6 @@ class _ProfilePageState extends State<ProfilePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
     initialized();
   }
 

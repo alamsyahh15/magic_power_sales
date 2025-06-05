@@ -6,7 +6,7 @@
 	<integer>11</integer>
 	<key>logs</key>
 	<dict>
-		<key>498C2C60-BE62-4865-9176-F36AA7929BF3</key>
+		<key>542165DC-ECA8-4CDF-90B7-475DE77F6ACB</key>
 		<dict>
 			<key>className</key>
 			<string>IDECommandLineBuildLog</string>
@@ -15,7 +15,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
 			<key>fileName</key>
-			<string>498C2C60-BE62-4865-9176-F36AA7929BF3.xcactivitylog</string>
+			<string>542165DC-ECA8-4CDF-90B7-475DE77F6ACB.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
@@ -40,13 +40,55 @@
 			<key>signature</key>
 			<string>Cleaning workspace Runner with scheme Runner</string>
 			<key>timeStartedRecording</key>
-			<real>766501833.620386</real>
+			<real>770614980.87936604</real>
 			<key>timeStoppedRecording</key>
-			<real>766501834.123896</real>
+			<real>770614982.171229</real>
 			<key>title</key>
 			<string>Cleaning workspace Runner with scheme Runner</string>
 			<key>uniqueIdentifier</key>
-			<string>498C2C60-BE62-4865-9176-F36AA7929BF3</string>
+			<string>542165DC-ECA8-4CDF-90B7-475DE77F6ACB</string>
+		</dict>
+		<key>AD4A2226-4EDA-4E80-B0F4-053CB99E6467</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>AD4A2226-4EDA-4E80-B0F4-053CB99E6467.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+				<key>totalNumberOfAnalyzerIssues</key>
+				<integer>0</integer>
+				<key>totalNumberOfErrors</key>
+				<integer>0</integer>
+				<key>totalNumberOfTestFailures</key>
+				<integer>0</integer>
+				<key>totalNumberOfWarnings</key>
+				<integer>0</integer>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Runner project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Runner</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Cleaning workspace Runner with scheme Runner</string>
+			<key>timeStartedRecording</key>
+			<real>770654746.09720397</real>
+			<key>timeStoppedRecording</key>
+			<real>770654746.36455095</real>
+			<key>title</key>
+			<string>Cleaning workspace Runner with scheme Runner</string>
+			<key>uniqueIdentifier</key>
+			<string>AD4A2226-4EDA-4E80-B0F4-053CB99E6467</string>
 		</dict>
 	</dict>
 </dict>
