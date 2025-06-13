@@ -43,19 +43,13 @@ class _DeleteAccountModalViewState extends State<DeleteAccountModalView> {
     FocusScope.of(context).unfocus();
     final user = LocalDB.user.user;
     setState(() => isLoading = true);
-
-    await AuthRepository.editProfile({
-      "username": "${user?.username}",
-      "email": "deleted-${user?.email}",
-      "phone": "${user?.phoneNumber}",
-      "address": "${user?.address}",
-      "fullname": "${user?.fullName}",
-      "shop_name": user?.shopName ?? "-",
-    });
+    final response = await AuthRepository.deleteAccount("${user?.email}");
     setState(() => isLoading = false);
-    backScreen();
-    LocalDB.logout();
-    showInSnackBar("Success Delete Account!");
+    if (response.code == 200) {
+      backScreen();
+      LocalDB.authGuard(false);
+      showInSnackBar("Success Delete Account!");
+    }
   }
 
   @override

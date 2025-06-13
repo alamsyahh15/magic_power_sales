@@ -148,6 +148,26 @@ class AuthRepository {
     }
   }
 
+  static Future<ResponseData> deleteAccount(String email) async {
+    const String endpoint = '/user/soft-delete';
+    final Map<String, dynamic> params = {"email": email};
+    ResponseData? responseData;
+    try {
+      loading.value = true;
+      responseData = await _helper.delete(url: endpoint, data: params);
+      loading.value = false;
+      return responseData;
+    } catch (error) {
+      throw loge(
+        error: error,
+        endpoint: endpoint,
+        method: Method.put,
+        responseData: responseData,
+        params: params,
+      );
+    }
+  }
+
   static Future<ResponseData> changePassword(Map<String, dynamic> data) async {
     const String endpoint = '/auth/me/change-password';
     final Map<String, dynamic> params = data;

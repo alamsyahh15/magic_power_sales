@@ -172,5 +172,36 @@ class ApiBaseHelper {
     return responseData;
   }
 
+  Future<ResponseData> delete({required String url, dynamic data}) async {
+    ResponseData responseData = const ResponseData();
+    Dio dio = init(method: Method.put);
+    Response response;
+    try {
+      if (!url.startsWith('/')) url = '/$url';
+      response = await dio.delete(url, data: data);
+      responseData = ResponseData(
+        code: response.statusCode,
+        data: response.data,
+        message: response.statusMessage,
+      );
+      Log.success(response);
+    } on DioException catch (error) {
+      // log("Url Endpoint => ${error.response?.realUri.toString()}",
+      //     error: "Request => $data\nError => ${error.response?.data}");
+      responseData = ResponseData.fromJson(error.response?.data);
+      await sendLog(error: error, url: url, data: data);
+    } catch (error) {
+      loge(
+        error: error,
+        endpoint: url,
+        method: Method.delete,
+        params: data,
+        responseData: responseData,
+      );
+    }
+    await validateToken(responseData);
+    return responseData;
+  }
+
   validateToken(ResponseData responseData) async {}
 }
