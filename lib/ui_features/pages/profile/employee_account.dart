@@ -48,20 +48,20 @@ class _EmployeeAccountPageState extends State<EmployeeAccountPage> {
       return false;
     }
 
-    if (gradeController.text.isEmpty) {
-      showInSnackBar("Grade tidak boleh kosong");
-      return false;
-    }
+    // if (gradeController.text.isEmpty) {
+    //   showInSnackBar("Grade tidak boleh kosong");
+    //   return false;
+    // }
 
-    if (statusEmployeeController.text.isEmpty) {
-      showInSnackBar("Status Kepegawaian tidak boleh kosong");
-      return false;
-    }
+    // if (statusEmployeeController.text.isEmpty) {
+    //   showInSnackBar("Status Kepegawaian tidak boleh kosong");
+    //   return false;
+    // }
 
-    if (managerController.text.isEmpty) {
-      showInSnackBar("Manager tidak boleh kosong");
-      return false;
-    }
+    // if (managerController.text.isEmpty) {
+    //   showInSnackBar("Manager tidak boleh kosong");
+    //   return false;
+    // }
 
     return true;
   }
@@ -192,54 +192,54 @@ class _EmployeeAccountPageState extends State<EmployeeAccountPage> {
                   hintStyle: StyleAsset.heading4SemiBold,
                 ),
                 verticalSpace(10),
-                TextFieldPrimary(
-                  label: "Grade",
-                  labelStyle: StyleAsset.paragraph2,
-                  controller: gradeController,
-                  hintText: "Masukan grade",
-                  gapLabel: 2,
-                  fontSize: 20,
-                  inputBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: ColorAsset.neutralNegative80,
-                    ),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(vertical: 10),
-                  hintStyle: StyleAsset.heading4SemiBold,
-                ),
-                verticalSpace(10),
-                TextFieldPrimary(
-                  label: "Status Kepegawaian",
-                  labelStyle: StyleAsset.paragraph2,
-                  controller: statusEmployeeController,
-                  hintText: "Masukan status kepegawaian",
-                  gapLabel: 2,
-                  fontSize: 20,
-                  inputBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: ColorAsset.neutralNegative80,
-                    ),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(vertical: 10),
-                  hintStyle: StyleAsset.heading4SemiBold,
-                ),
-                verticalSpace(10),
-                TextFieldPrimary(
-                  label: "Manager",
-                  labelStyle: StyleAsset.paragraph2,
-                  controller: managerController,
-                  hintText: "Masukan manager",
-                  gapLabel: 2,
-                  fontSize: 20,
-                  inputBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: ColorAsset.neutralNegative80,
-                    ),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(vertical: 10),
-                  hintStyle: StyleAsset.heading4SemiBold,
-                ),
-                verticalSpace(10),
+                // TextFieldPrimary(
+                //   label: "Grade",
+                //   labelStyle: StyleAsset.paragraph2,
+                //   controller: gradeController,
+                //   hintText: "Masukan grade",
+                //   gapLabel: 2,
+                //   fontSize: 20,
+                //   inputBorder: UnderlineInputBorder(
+                //     borderSide: BorderSide(
+                //       color: ColorAsset.neutralNegative80,
+                //     ),
+                //   ),
+                //   contentPadding: const EdgeInsets.symmetric(vertical: 10),
+                //   hintStyle: StyleAsset.heading4SemiBold,
+                // ),
+                // verticalSpace(10),
+                // TextFieldPrimary(
+                //   label: "Status Kepegawaian",
+                //   labelStyle: StyleAsset.paragraph2,
+                //   controller: statusEmployeeController,
+                //   hintText: "Masukan status kepegawaian",
+                //   gapLabel: 2,
+                //   fontSize: 20,
+                //   inputBorder: UnderlineInputBorder(
+                //     borderSide: BorderSide(
+                //       color: ColorAsset.neutralNegative80,
+                //     ),
+                //   ),
+                //   contentPadding: const EdgeInsets.symmetric(vertical: 10),
+                //   hintStyle: StyleAsset.heading4SemiBold,
+                // ),
+                // verticalSpace(10),
+                // TextFieldPrimary(
+                //   label: "Manager",
+                //   labelStyle: StyleAsset.paragraph2,
+                //   controller: managerController,
+                //   hintText: "Masukan manager",
+                //   gapLabel: 2,
+                //   fontSize: 20,
+                //   inputBorder: UnderlineInputBorder(
+                //     borderSide: BorderSide(
+                //       color: ColorAsset.neutralNegative80,
+                //     ),
+                //   ),
+                //   contentPadding: const EdgeInsets.symmetric(vertical: 10),
+                //   hintStyle: StyleAsset.heading4SemiBold,
+                // ),
+                // verticalSpace(10),
               ],
             ),
           ),
