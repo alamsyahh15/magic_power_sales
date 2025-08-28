@@ -2,6 +2,7 @@ import 'package:flutter/material.dart' hide TextButton;
 import 'package:magic_power_sales/config/config.dart';
 import 'package:magic_power_sales/config/constant.dart';
 import 'package:magic_power_sales/config/data/local_db.dart';
+import 'package:magic_power_sales/config/providers/transaction/transaction.dart';
 import 'package:magic_power_sales/config/repositories/auth_repository.dart';
 import 'package:magic_power_sales/ui_features/pages/auth/forgot_password.dart';
 import 'package:magic_power_sales/ui_features/pages/auth/register.dart';
@@ -9,6 +10,7 @@ import 'package:magic_power_sales/ui_features/pages/main_dashboard_page.dart';
 import 'package:magic_power_sales/ui_features/widgets/button/primary_button.dart';
 import 'package:magic_power_sales/ui_features/widgets/button/text_button.dart';
 import 'package:magic_power_sales/ui_features/widgets/input/textfield_primary.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -22,6 +24,24 @@ class _LoginPageState extends State<LoginPage> {
       passwordController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool rememberMe = false;
+
+  void login() async {
+    FocusScope.of(context).unfocus();
+    if (formKey.currentState!.validate()) {
+      Map<String, dynamic> request = {
+        "identifier": usernameControler.text,
+        "password": passwordController.text,
+      };
+      var res = await AuthRepository.login(request);
+      if (res.code == 200) {
+        AuthRepository.currentProfile().then((user) {
+          if (user != null) LocalDB.user = user;
+          nextRemoveUntil(const MainDashboardPage());
+          context.read<TransactionProvider>().validatedSalesInfo();
+        });
+      }
+    }
+  }
 
   @override
   void initState() {
@@ -102,22 +122,7 @@ class _LoginPageState extends State<LoginPage> {
                           return PrimaryButton(
                             label: "Login",
                             isLoading: loading.value,
-                            onTap: () async {
-                              FocusScope.of(context).unfocus();
-                              if (formKey.currentState!.validate()) {
-                                Map<String, dynamic> request = {
-                                  "identifier": usernameControler.text,
-                                  "password": passwordController.text,
-                                };
-                                var res = await AuthRepository.login(request);
-                                if (res.code == 200) {
-                                  AuthRepository.currentProfile().then((user) {
-                                    if (user != null) LocalDB.user = user;
-                                    nextRemoveUntil(const MainDashboardPage());
-                                  });
-                                }
-                              }
-                            },
+                            onTap: login,
                           );
                         }),
                     verticalSpace(10),

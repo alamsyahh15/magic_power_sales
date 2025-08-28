@@ -68,7 +68,9 @@ class _HomePageState extends State<HomePage> {
           verticalSpace(20),
           TransactionCard(
             onTap: () {
-              nextScreen(const FormTransactionPage());
+              if (context.read<TransactionProvider>().validatedSalesInfo()) {
+                nextScreen(const FormTransactionPage());
+              }
             },
           ),
           verticalSpace(20),

@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:magic_power_sales/config/color_assets.dart';
 import 'package:magic_power_sales/config/constant.dart';
 import 'package:magic_power_sales/config/custom_snackbar.dart';
+import 'package:magic_power_sales/config/data/local_db.dart';
+import 'package:magic_power_sales/config/helpers/helpers.dart';
 import 'package:magic_power_sales/config/models/distributor.dart';
 import 'package:magic_power_sales/config/models/product.dart';
 import 'package:magic_power_sales/config/models/transaction.dart';
 import 'package:magic_power_sales/config/navigation_services.dart';
 import 'package:magic_power_sales/config/repositories/main_repository.dart';
+import 'package:magic_power_sales/ui_features/pages/profile/employee_account.dart';
 import 'package:magic_power_sales/ui_features/widgets/dialog/success.dart';
 
 class TransactionProvider extends ChangeNotifier {
@@ -20,6 +23,19 @@ class TransactionProvider extends ChangeNotifier {
     WidgetsBinding.instance.addPostFrameCallback((e) async {
       await init();
     });
+  }
+
+  bool validatedSalesInfo() {
+    bool isValid = true;
+    final salesInfo = LocalDB.user.user?.salesInformation;
+    if (isEmpty(salesInfo?.employeeId) ||
+        isEmpty(salesInfo?.branch) ||
+        isEmpty(salesInfo?.division) ||
+        isEmpty(salesInfo?.position)) {
+      isValid = false;
+      nextScreen(const EmployeeAccountPage());
+    }
+    return isValid;
   }
 
   Future<void> init() async {

@@ -84,7 +84,11 @@ Exception loge({
       case DioExceptionType.badResponse:
         if (error.response?.data != null) {
           if (error.response?.data['error']['name'] == "ValidationError") {
-            showInSnackBar("Kombinasi email atau password salah !");
+            if (error.response?.data['error']['message'] != null) {
+              showInSnackBar(error.response?.data['error']['message']);
+            } else {
+              showInSnackBar("Kombinasi email atau password salah !");
+            }
           } else {
             showInSnackBar("${error.response?.data['error']['message']}");
           }
