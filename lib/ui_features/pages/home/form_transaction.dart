@@ -199,9 +199,7 @@ class _FormTransactionPageState extends State<FormTransactionPage> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Catat Transaksi"),
-        ),
+        appBar: AppBar(title: const Text("Catat Transaksi")),
         bottomNavigationBar: BottomNavigation(
           ctn: calculationKarton(products)['karton'] as int,
           pcs: calculationKarton(products)['pieces'] as int,
