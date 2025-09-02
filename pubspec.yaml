@@ -31,10 +31,10 @@ dependencies:
   cached_network_image: ^3.4.1
   cupertino_icons: ^1.0.8
   dio: ^5.8.0+1
-  file_picker: ^8.3.1
-  firebase_core: ^3.13.0
-  firebase_crashlytics: ^4.3.5
-  firebase_remote_config: ^5.4.3
+  file_picker: ^10.3.2
+  firebase_core: ^4.1.0
+  firebase_crashlytics: ^5.0.1
+  firebase_remote_config: ^6.0.1
   flutter:
     sdk: flutter
   flutter_svg: ^2.0.17
@@ -55,7 +55,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^4.0.0
+  flutter_lints: ^6.0.0
   flutter_test:
     sdk: flutter
 
