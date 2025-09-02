@@ -10,7 +10,7 @@ import 'package:magic_power_sales/config/string.dart';
 class SettingProvider extends ChangeNotifier {
   FirebaseRemoteConfig? remoteConfig;
 
-  void initialized() async {
+  Future<void> initialized() async {
     ValueListenable<FirebaseRemoteConfig?> remoteConfig =
         ValueNotifier(await setupRemoteConfig());
     if (remoteConfig.value != null) {

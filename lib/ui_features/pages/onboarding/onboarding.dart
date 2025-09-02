@@ -21,10 +21,12 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    context.read<SettingProvider>().initialized();
-    Future.delayed(const Duration(milliseconds: 500)).whenComplete(
-      () => LocalDB.checkActive(),
-    );
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await context.read<SettingProvider>().initialized();
+      Future.delayed(const Duration(milliseconds: 500)).whenComplete(
+        () => LocalDB.checkActive(),
+      );
+    });
   }
 
   @override
