@@ -33,7 +33,7 @@ class SettingProvider extends ChangeNotifier {
       final data = jsonDecode(result);
       if (Platform.isAndroid) liveStatus = data['status_live_sales'];
       if (Platform.isIOS) liveStatus = data['status_live_ios_sales'];
-      log("Config Setting => App Is Live $liveStatus");
+      log("Config Setting => App Is Live $liveStatus\nBase URL => ${Strings.baseUrl}");
     }
   }
 
