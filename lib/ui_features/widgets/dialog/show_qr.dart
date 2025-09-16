@@ -13,10 +13,12 @@ class ShowQrDialog extends StatefulWidget {
     required this.value,
     this.path,
     required this.endCountdown,
+    this.isScanned = false,
   });
   final String value;
   final String? path;
   final DateTime endCountdown;
+  final bool isScanned;
 
   @override
   State<ShowQrDialog> createState() => _ShowQrDialogState();
@@ -121,18 +123,28 @@ class _ShowQrDialogState extends State<ShowQrDialog> {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 16),
-                Text(
-                  "Waktu scan tinggal tersisa :",
-                  style: StyleAsset.paragraph1.copyWith(
-                    color: ColorAsset.neutral40,
+                if (widget.isScanned)
+                  Text(
+                    "QR Code Telah Di Scan",
+                    style: StyleAsset.paragraph1.copyWith(
+                      color: ColorAsset.success30,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                ),
-                Text(
-                  countdown,
-                  style: StyleAsset.paragraph1.copyWith(
-                    color: ColorAsset.error30,
+                if (!widget.isScanned)
+                  Text(
+                    "Waktu scan tinggal tersisa :",
+                    style: StyleAsset.paragraph1.copyWith(
+                      color: ColorAsset.neutral40,
+                    ),
                   ),
-                ),
+                if (!widget.isScanned)
+                  Text(
+                    countdown,
+                    style: StyleAsset.paragraph1.copyWith(
+                      color: ColorAsset.error30,
+                    ),
+                  ),
               ],
             ),
           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:magic_power_sales/config/config.dart';
+import 'package:magic_power_sales/config/constant.dart';
 import 'package:magic_power_sales/config/data/local_db.dart';
 import 'package:magic_power_sales/config/models/transaction.dart';
 import 'package:magic_power_sales/extension/string_extensions.dart';
@@ -83,6 +84,7 @@ class DetailTransactionPage extends StatelessWidget {
                               LocalDB.user.user?.profilePic?.url),
                           value: "$endTime#${transaction.id}",
                           endCountdown: endTime,
+                          isScanned: transaction.status == StatusTransaction.scanned,
                         );
                       },
                     );

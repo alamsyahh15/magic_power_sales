@@ -153,7 +153,7 @@ class MainRepository {
       "distribution_id": distributorId ?? "",
       "area_code": areaCode ?? "",
       "page": page,
-      "limit": 10,
+      "limit": 25,
     };
     ResponseData? responseData;
     List<Customer> customers = [];

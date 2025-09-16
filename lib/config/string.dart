@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 bool liveStatus = false;
 
 class Strings {
@@ -9,7 +11,7 @@ class Strings {
   static const String prodUrl = "http://159.65.130.83:1337/api";
   static const String devUrl = "http://152.42.179.244:1337/api";
 
-  static String baseUrl = liveStatus ? prodUrl : devUrl;
+  static String baseUrl = kReleaseMode ? prodUrl : devUrl;
 
   static const String pendingStatus = "Pending";
   static const String approvedStatus = "Approved";
