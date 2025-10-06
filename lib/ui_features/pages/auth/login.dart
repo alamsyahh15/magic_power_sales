@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' hide TextButton;
 import 'package:magic_power_sales/config/config.dart';
 import 'package:magic_power_sales/config/constant.dart';
+import 'package:magic_power_sales/config/custom_snackbar.dart';
 import 'package:magic_power_sales/config/data/local_db.dart';
 import 'package:magic_power_sales/config/providers/transaction/transaction.dart';
 import 'package:magic_power_sales/config/repositories/auth_repository.dart';
@@ -36,8 +37,13 @@ class _LoginPageState extends State<LoginPage> {
       if (res.code == 200) {
         AuthRepository.currentProfile().then((user) {
           if (user != null) LocalDB.user = user;
-          nextRemoveUntil(const MainDashboardPage());
-          context.read<TransactionProvider>().validatedSalesInfo();
+          if (user?.user?.role?.type == "sales") {
+            nextRemoveUntil(const MainDashboardPage());
+            context.read<TransactionProvider>().validatedSalesInfo();
+          } else {
+            LocalDB.authGuard(false, isCheckRole: true);
+            showInSnackBar("Role anda tidak memiliki akses di aplikasi ini");
+          }
         });
       }
     }
@@ -52,6 +58,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    // loading.value = false;
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();

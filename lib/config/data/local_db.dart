@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:magic_power_sales/config/config.dart';
+import 'package:magic_power_sales/config/custom_snackbar.dart';
 import 'package:magic_power_sales/config/models/user.dart';
 import 'package:magic_power_sales/config/repositories/auth_repository.dart';
 import 'package:magic_power_sales/ui_features/pages/auth/login.dart';
@@ -23,7 +24,12 @@ class LocalDB {
       var res = await AuthRepository.currentProfile();
       if (res != null) {
         user = res;
-        nextRemoveUntil(const MainDashboardPage());
+        if(user.user?.role?.type == "sales"){
+          nextRemoveUntil(const MainDashboardPage());
+        }else{
+          LocalDB.authGuard(false, isCheckRole: true);
+          showInSnackBar("Role anda tidak memiliki akses di aplikasi ini");
+        }
       }
     } else {
       logout();
@@ -55,12 +61,16 @@ class LocalDB {
     _prefs.remove('area_code');
     _prefs.remove('area_name');
     isLoggedIn = false;
+    user = User();
   }
 
-  static Future<void> authGuard(bool isValid) async {
+  static Future<void> authGuard(bool isValid,
+      {bool isCheckRole = false}) async {
     if (!isValid) {
       logout();
-      nextRemoveUntil(const LoginPage());
+      if (!isCheckRole) {
+        nextRemoveUntil(const LoginPage());
+      }
     }
   }
 }

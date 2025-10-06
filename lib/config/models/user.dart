@@ -51,6 +51,7 @@ class UserData {
   int? tissuePcs;
   int? pointZenny;
   SalesInformation? salesInformation;
+  Role? role;
 
   UserData({
     this.id,
@@ -76,6 +77,7 @@ class UserData {
     this.tissuePcs,
     this.pointZenny,
     this.salesInformation,
+    this.role,
   });
 
   UserData copyWith(
@@ -101,7 +103,9 @@ class UserData {
           int? sprayPcs,
           int? tissuePcs,
           int? pointZenny,
-          SalesInformation? salesInformation}) =>
+          SalesInformation? salesInformation, 
+          
+          Role? role}) =>
       UserData(
         id: id ?? this.id,
         username: username ?? this.username,
@@ -127,6 +131,7 @@ class UserData {
         tissuePcs: tissuePcs ?? this.tissuePcs,
         pointZenny: pointZenny ?? this.pointZenny,
         salesInformation: salesInformation ?? this.salesInformation,
+        role: role ?? this.role,
       );
 
   factory UserData.fromJson(Map<String, dynamic> json) => UserData(
@@ -163,6 +168,7 @@ class UserData {
         salesInformation: json["sales_information"] == null
             ? null
             : SalesInformation.fromJson(json["sales_information"]),
+        role: json["role"] == null ? null : Role.fromJson(json["role"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -189,6 +195,7 @@ class UserData {
         "tissue_pcs": tissuePcs,
         "point_zenny": pointZenny,
         "sales_information": salesInformation?.toJson(),
+        "role": role?.toJson(),
       };
 
   Map<String, dynamic> requestEmployee() => {
@@ -477,5 +484,63 @@ class SalesInformation {
         "grade": grade,
         "status_employee": statusEmployee,
         "manager": manager,
+      };
+}
+
+
+class Role {
+  int? id;
+  String? name;
+  String? description;
+  String? type;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+
+  Role({
+    this.id,
+    this.name,
+    this.description,
+    this.type,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  Role copyWith({
+    int? id,
+    String? name,
+    String? description,
+    String? type,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) =>
+      Role(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        description: description ?? this.description,
+        type: type ?? this.type,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
+      );
+
+  factory Role.fromJson(Map<String, dynamic> json) => Role(
+        id: json["id"],
+        name: json["name"],
+        description: json["description"],
+        type: json["type"],
+        createdAt: json["createdAt"] == null
+            ? null
+            : DateTime.parse(json["createdAt"]),
+        updatedAt: json["updatedAt"] == null
+            ? null
+            : DateTime.parse(json["updatedAt"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "description": description,
+        "type": type,
+        "createdAt": createdAt?.toIso8601String(),
+        "updatedAt": updatedAt?.toIso8601String(),
       };
 }
