@@ -3,6 +3,7 @@ import 'package:magic_power_sales/config/helpers/log_helper.dart';
 import 'package:magic_power_sales/config/models/area_code.dart';
 import 'package:magic_power_sales/config/models/customer.dart';
 import 'package:magic_power_sales/config/models/distributor.dart';
+import 'package:magic_power_sales/config/models/event_campaign.dart';
 import 'package:magic_power_sales/config/models/product.dart';
 import 'package:magic_power_sales/config/models/response_data.dart';
 import 'package:magic_power_sales/config/models/slide_banner.dart';
@@ -90,6 +91,43 @@ class MainRepository {
       );
     }
     return transactions;
+  }
+
+
+
+  static Future<List<EventCampaign>> getPeriodeCampaign() async {
+    String endpoint = '/events';
+    Map<String, dynamic> params = {
+      "populate": "image",
+      "pagination[pageSize]": 100
+    };
+    ResponseData? responseData;
+    int page = 1;
+    int pageCount = 1;
+    List<EventCampaign> eventCampagin = [];
+    
+    try {
+      do {
+        params['pagination[page]'] = page;
+        responseData = await _helper.get(url: endpoint, data: params);
+        if (responseData.code == 200) {
+          final temp = List<EventCampaign>.from(
+              responseData.data['data'].map((e) => EventCampaign.fromJson(e)));
+          eventCampagin.addAll(temp);
+          pageCount = responseData.data['meta']['pagination']['pageCount'];
+          page++;
+        }
+      } while (page <= pageCount);
+      return eventCampagin;
+    } catch (error) {
+      throw loge(
+        error: error,
+        endpoint: endpoint,
+        method: Method.get,
+        responseData: responseData,
+        params: params,
+      );
+    }
   }
 
   static Future<List<Product>> getProducts() async {

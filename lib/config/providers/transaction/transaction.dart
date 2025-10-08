@@ -5,8 +5,10 @@ import 'package:magic_power_sales/config/color_assets.dart';
 import 'package:magic_power_sales/config/constant.dart';
 import 'package:magic_power_sales/config/custom_snackbar.dart';
 import 'package:magic_power_sales/config/data/local_db.dart';
+import 'package:magic_power_sales/config/helpers/date_compare.dart';
 import 'package:magic_power_sales/config/helpers/helpers.dart';
 import 'package:magic_power_sales/config/models/distributor.dart';
+import 'package:magic_power_sales/config/models/event_campaign.dart';
 import 'package:magic_power_sales/config/models/product.dart';
 import 'package:magic_power_sales/config/models/transaction.dart';
 import 'package:magic_power_sales/config/navigation_services.dart';
@@ -18,6 +20,9 @@ class TransactionProvider extends ChangeNotifier {
   List<Transaction> transactions = [], backupTransactions = [];
   List<Product> mainProducts = [];
   List<Distributor> distributors = [];
+  List<EventCampaign> listEvents = [];
+  bool eventIsAvailable = true;
+  EventCampaign? currentEvent;
 
   TransactionProvider() {
     WidgetsBinding.instance.addPostFrameCallback((e) async {
@@ -40,10 +45,22 @@ class TransactionProvider extends ChangeNotifier {
 
   Future<void> init() async {
     await Future.wait([
+      getCampaingPeriod(),
       getTransaction(),
       getProducts(),
       getDistributors(),
     ]);
+  }
+
+  Future getCampaingPeriod() async {
+    List<EventCampaign> events = await MainRepository.getPeriodeCampaign();
+    listEvents = events;
+    // Calculate to running countdown event period by date now
+    if (events.isNotEmpty) {
+      events = events.where((e) => isInDateRange(e.start!, e.end!)).toList();
+      eventIsAvailable = events.isNotEmpty;
+      if (events.isNotEmpty) currentEvent = events.first;
+    }
   }
 
   Future<void> getTransaction() async {
@@ -105,6 +122,7 @@ class TransactionProvider extends ChangeNotifier {
   }
 
   Future<void> createDraftTransaction(Map<String, dynamic> data) async {
+    if (currentEvent != null) data['event'] = currentEvent!.id;
     final result = await MainRepository.createDraftTransaction(data);
     if (result.code == 200) {
       showInSnackBar("Transaksi berhasil dicatat");
